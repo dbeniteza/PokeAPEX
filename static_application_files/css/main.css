@@ -189,7 +189,6 @@
 
     .version_grp_red-blue {
 		color: white;
-        background: rgb(255,0,0);
         background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(0,0,255,1) 100%);
     }
 
@@ -200,7 +199,6 @@
 
     .version_grp_gold {
 		color: white;
-        background: rgb(210,194,26);
         background: linear-gradient(90deg, rgba(210,194,26,1) 0%, rgba(160,160,160,1) 100%);
     }
 
@@ -211,7 +209,6 @@
 
     .version_grp_ruby-sapphire {
 		color: white;
-        background: rgb(184,0,0);
         background: linear-gradient(90deg, rgba(184,0,0,1) 0%, rgba(13,0,184,1) 100%);
     }
 
@@ -222,13 +219,11 @@
 
     .version_grp_firered-leafgreen {
 		color: white;
-        background: rgb(255,114,0);
         background: linear-gradient(90deg, rgba(255,114,0,1) 0%, rgba(75,156,10,1) 100%);
     }
 
     .version_grp_diamond-pearl {
 		color: white;
-        background: rgb(96,119,255);
         background: linear-gradient(90deg, rgba(96,119,255,1) 0%, rgba(252,114,228,1) 100%);
     }
 
@@ -239,38 +234,62 @@
 
     .version_grp_heartgold-soulsilver {
 		color: white;
-        background: rgb(209,154,25);
         background: linear-gradient(90deg, rgba(209,154,25,1) 0%, rgba(184,184,184,1) 100%);
     }
 
     .version_grp_black-white {
 		color: white;
-        background: rgb(66,66,66);
+        background: linear-gradient(90deg, rgba(66,66,66,1) 0%, rgba(242,242,242,1) 100%);
+    }
+
+    .version_grp_black-2-white-2 {
+		color: white;
         background: linear-gradient(90deg, rgba(66,66,66,1) 0%, rgba(242,242,242,1) 100%);
     }
 
     .version_grp_x-y {
 		color: white;
-        background: rgb(31,71,108);
         background: linear-gradient(90deg, rgba(31,71,108,1) 0%, rgba(210,43,69,1) 100%);
     }
 
     .version_grp_omegaruby-alphasapphire {
 		color: white;
-        background: rgb(212,64,15);
         background: linear-gradient(90deg, rgba(212,64,15,1) 0%, rgba(0,140,179,1) 100%);
+    }
+
+    .version_grp_sun-moon {
+		color: white;
+        background: linear-gradient(90deg, rgba(245,148,29,1) 0%, rgba(180,61,235,1) 100%);
     }
 
     .version_grp_ultra-sun-ultra-moon {
 		color: white;
-        background: rgb(245,148,29);
-        background: linear-gradient(90deg, rgba(245,148,29,1) 0%, rgba(180,61,235,1) 100%);
+        background: linear-gradient(90deg, #F5941D 0%, #b43deb 100%);
+    }
+
+    .version_grp_lets-go-pikachu-lets-go-eevee {
+		color: white;
+        background: linear-gradient(90deg, #fff836 0%, #9e6237 100%);
     }
 
     .version_grp_sword-shield {
 		color: white;
-        background: rgb(0,160,233);
         background: linear-gradient(90deg, rgba(0,160,233,1) 0%, rgba(229,0,90,1) 100%);
+    }
+
+    .version_grp_brilliant-diamond-and-shining-pearl {
+		color: white;
+        background: linear-gradient(90deg, rgba(96,119,255,1) 0%, rgba(252,114,228,1) 100%);
+    }
+
+    .version_grp_legends-arceus {
+		color: white;
+        background: #59B388;
+    }
+
+    .version_grp_scarlet-violet {
+		color: white;
+        background: linear-gradient(90deg, #9E2A22 0%, #552277 100%);
     }
 
     .contest-type-cool {
