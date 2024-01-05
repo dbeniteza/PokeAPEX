@@ -175,13 +175,14 @@ AS
 				ELSE REPLACE(INITCAP(i.IDENTIFIER),'-',' ')
 			END AS ITEM_NAME
 			FROM ITEMS i
-			LEFT JOIN ITEM_NAMES itn ON i.ID = itn.ITEM_ID
+			LEFT JOIN ITEM_NAMES itn ON i.ID = itn.ITEM_ID and itn.LOCAL_LANGUAGE_ID = 9 -- english
 			WHERE i.ID = p_item_id;
 		
 		CURSOR moves_cur (p_move_id ITEMS.ID%TYPE) IS
 			SELECT NAME
 			FROM MOVE_NAMES
-			WHERE MOVE_ID = p_move_id;
+			WHERE MOVE_ID = p_move_id
+            AND LOCAL_LANGUAGE_ID = 9; -- english
 		
 		CURSOR types_cur (p_type_id TYPES.ID%TYPE) IS
 			SELECT IDENTIFIER
@@ -196,7 +197,8 @@ AS
 		CURSOR location_cur (p_location_id ITEMS.ID%TYPE) IS
 			SELECT NAME
 			FROM LOCATION_NAMES
-			WHERE LOCATION_ID = p_location_id;
+			WHERE LOCATION_ID = p_location_id
+            AND LOCAL_LANGUAGE_ID = 9; -- english
 
 	BEGIN
 	  
