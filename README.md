@@ -1,2 +1,2 @@
-# Pokédex - Oracle APEX Progressive Web Application
+# PokéAPEX - Oracle APEX Progressive Web Application
 
