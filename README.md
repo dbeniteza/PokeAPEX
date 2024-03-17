@@ -60,8 +60,10 @@ PokéAPEX offers the following key features:
 
 <!-- CONTRIBUTING -->
 <h2 id="contributing"> :scroll: Contributing</h2>
-Contributions to PokéAPEX are welcome! If you'd like to contribute to the development of the application, feel free to fork the repository, make your changes, and submit a pull request. Please take a look to our [contributing](./CONTRIBUTING) guidelines to ensure that your contributions align with the project's goals and coding standards.
+Contributions to PokéAPEX are welcome! If you'd like to contribute to the development of the application, feel free to fork the repository, make your changes, and submit a pull request. Please ensure that your contributions align with the project's goals and coding standards.
 
 <!-- LICENSE -->
 <h2 id="license"> :mortar_board: License</h2>
-This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for both commercial and non-commercial purposes. Refer to the [LICENSE](./LICENSE) file for more information.
+This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for both commercial and non-commercial purposes. Refer to the <a href="https://github.com/dbeniteza/PokeAPEX/blob/main/LICENSE">LICENSE</a> file for more information.
+
+
