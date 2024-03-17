@@ -59,6 +59,11 @@ PokéAPEX offers the following key features:
 </p>
 
 <li><b>Pokédex</b>: Offers a comprehensive Pokédex featuring information on various Pokémon species, allowing users to browse through them and learn more about each one.</li>
+<p align="center">
+    <img width="49%" src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pokedex/01.png" alt="pokedex"/>
+&nbsp;
+    <img width="49%" src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pokedex/02.png" alt="pokedex-2"/>
+</p>
 <li><b>Moves</b>: Provides a database of Pokémon moves, including details such as type, power, accuracy, and effects.</li>
 <p align="center">
     <img width="49%" src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/moves/01.png" alt="moves"/>
@@ -66,7 +71,15 @@ PokéAPEX offers the following key features:
     <img width="49%" src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/moves/02.png" alt="moves-2"/>
 </p>
 <li><b>Abilities</b>: Offers insights into Pokémon abilities, including descriptions and effects.</li>
+<p align="center">
+    <img width="49%" src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/abilities/01.png" alt="abilities"/>
+&nbsp;
+</p>
 <li><b>Items</b>: Provides a catalog of items found in the Pokémon world, including held items, berries, and more.</li>
+<p align="center">
+    <img width="49%" src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/items/01.png" alt="items"/>
+&nbsp;
+</p>
 </ul>
 </p>
 
