@@ -24,7 +24,7 @@
 <h2 id="about-the-project"> :pencil: About The Project</h2>
 
 <p align="justify"> 
-  PokéAPEX is a Progressive Web Application developed with Oracle APEX using [PokéAPI.co](https://pokeapi.co/) and hosted Oracle Cloud Infrastructure.
+  PokéAPEX is a Progressive Web Application developed with Oracle APEX using <a href="https://pokeapi.co" target="_blank">PokéAPI.co</a> and hosted Oracle Cloud Infrastructure.
 </p>
 
 
@@ -52,9 +52,10 @@ PokéAPEX offers the following key features:
 
 <!-- SCREENSHOTS -->
 <h2 id="screenshots"> :camera: Screenshots</h2>
-![-----------------------------------------------------](https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pkmn-details/01.png)
-![-----------------------------------------------------](https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pokemon/01.png)
-
+<p align="center"> 
+<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pkmn-details/01.png" alt="Pokémon details">
+<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pokemon/01.png" alt="Pokémon">
+</p>
 
 
 <!-- CONTRIBUTING -->
