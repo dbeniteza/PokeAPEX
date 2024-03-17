@@ -24,7 +24,7 @@
 <h2 id="about-the-project"> :pencil: About The Project</h2>
 
 <p align="justify"> 
-  PokéAPEX is a Progressive Web Application developed with Oracle APEX using <a href="https://pokeapi.co" target="_blank">PokéAPI.co</a> and hosted Oracle Cloud Infrastructure.
+  PokéAPEX is a Progressive Web Application developed with Oracle APEX using <a href="https://pokeapi.co" target="_blank">PokéAPI.co</a> and hosted in Oracle Cloud Infrastructure.
 </p>
 
 
