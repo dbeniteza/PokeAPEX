@@ -13,8 +13,8 @@
   <ol>
     <li><a href="#about-the-project"> ➤ About The Project</a></li>
     <li><a href="#architecture"> ➤ Architecture</a></li>
-    <li><a href="#features"> ➤ Features</a></li>
     <li><a href="#screenshots"> ➤ Screenshots</a></li>
+    <li><a href="#features"> ➤ Features</a></li>
     <li><a href="#contributing"> ➤ Contributing </a></li>
     <li><a href="#license"> ➤ License </a></li>
   </ol>
@@ -33,6 +33,13 @@
 
 <p align="justify"> 
   TBD - DESCRIBE + ADD OCI DIAGRAM
+</p>
+
+<!-- SCREENSHOTS -->
+<h2 id="screenshots"> :camera: Screenshots</h2>
+<p align="center"> 
+<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pkmn-details/01.png" alt="Pokémon details">
+<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pokemon/01.png" alt="Pokémon">
 </p>
 
 <!-- FEATURES -->
@@ -82,16 +89,6 @@ PokéAPEX offers the following key features:
 </p>
 </ul>
 </p>
-
-
-
-<!-- SCREENSHOTS -->
-<h2 id="screenshots"> :camera: Screenshots</h2>
-<p align="center"> 
-<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pkmn-details/01.png" alt="Pokémon details">
-<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pokemon/01.png" alt="Pokémon">
-</p>
-
 
 <!-- CONTRIBUTING -->
 <h2 id="contributing"> :scroll: Contributing</h2>
