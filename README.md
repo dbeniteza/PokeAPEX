@@ -1,6 +1,6 @@
 <p align="center"> 
   <a href="https://pokeapex.com" target="_blank">
-    <img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/app-icon.png" alt="PokéAPEX Icon" width="150px" height="150px">
+    <img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/app-icon.png" alt="PokéAPEX Icon" width="120px" height="120px">
     </a>
 </p>
 
