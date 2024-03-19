@@ -7,10 +7,10 @@
 <h1 align="center"> PokéAPEX </h1>
 
 
-![Oracle APEX](https://img.shields.io/badge/apex-23.2.3-red?logo=oracle&link=apex.oracle.com)
-![Oracle Database](https://img.shields.io/badge/database-19c-red?logo=oracle&link=oracle.com%2Fdatabase)
-![Oracle Linux](https://img.shields.io/badge/linux-9.3-red?logo=linux&link=oracle.com%2Flinux%2F)
-![NGINX](https://img.shields.io/badge/nginx-1.20.1-green?logo=nginx&link=nginx.com)
+![Oracle APEX](https://img.shields.io/badge/apex-23.2.3-red?logo=oracle)
+![Oracle Database](https://img.shields.io/badge/database-19c-red?logo=oracle)
+![Oracle Linux](https://img.shields.io/badge/linux-9.3-red?logo=linux)
+![NGINX](https://img.shields.io/badge/nginx-1.20.1-green?logo=nginx)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 
