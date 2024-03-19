@@ -6,6 +6,15 @@
 
 <h1 align="center"> PokéAPEX </h1>
 
+
+![Oracle APEX](https://img.shields.io/badge/apex-23.2.3-red?logo=oracle&link=apex.oracle.com)
+![Oracle Database](https://img.shields.io/badge/database-19c-red?logo=oracle&link=oracle.com%2Fdatabase)
+![Oracle Linux](https://img.shields.io/badge/linux-9.3-red?logo=linux&link=oracle.com%2Flinux%2F)
+![NGINX](https://img.shields.io/badge/nginx-1.20.1-green?logo=nginx&link=nginx.com)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+
+
 <!-- TABLE OF CONTENTS -->
 <h2 id="table-of-contents"> :book: Table of Contents</h2>
 <details open="open">
@@ -17,6 +26,7 @@
     <li><a href="#features"> ➤ Features</a></li>
     <li><a href="#contributing"> ➤ Contributing </a></li>
     <li><a href="#license"> ➤ License </a></li>
+    <li><a href="#author"> ➤ Author </a></li>
   </ol>
 </details>
 
@@ -99,3 +109,9 @@ Contributions to PokéAPEX are welcome! If you'd like to contribute to the devel
 This project is licensed under the MIT License. Feel free to use, modify, and distribute the code for both commercial and non-commercial purposes. Refer to the <a href="https://github.com/dbeniteza/PokeAPEX/blob/main/LICENSE">LICENSE</a> file for more information.
 
 
+<!-- AUTHOR -->
+<h2 id="author"> :man_technologist: Author</h2>
+
+- [@dbeniteza](https://www.github.com/dbeniteza)
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/danielbenitezaguila/)
