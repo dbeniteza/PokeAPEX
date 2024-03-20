@@ -41,7 +41,7 @@
 <!-- ARCHITECTURE -->
 <h2 id="architecture"> :computer: Architecture</h2>
 <p align="justify"> 
-<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/architecture/diagram.png" alt="PokéAPEX architecture">
+<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/architecture/diagram.png" alt="PokéAPEX architecture">
 </p>
 
 <!-- SCREENSHOTS -->
