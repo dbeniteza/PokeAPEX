@@ -40,9 +40,8 @@
 
 <!-- ARCHITECTURE -->
 <h2 id="architecture"> :computer: Architecture</h2>
-
 <p align="justify"> 
-  TBD - DESCRIBE + ADD OCI DIAGRAM
+<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/architecture/diagram.png" alt="PokéAPEX architecture">
 </p>
 
 <!-- SCREENSHOTS -->
