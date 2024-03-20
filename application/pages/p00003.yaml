@@ -1,0 +1,1395 @@
+---
+# ====== Page: Ability Details ===============================
+id: 3
+identification: 
+  name: Ability Details
+  alias: ABILITY-DETAILS
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Drawer # 7073618572303526072
+  template-options: 
+  - '#DEFAULT#'
+  - js-dialog-class-t-Drawer--pullOutEnd
+
+dialog: 
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/main.css'
+  inline: |2
+        #hero_region .t-HeroRegion-icon {
+            background-color: &P3_PKMN_COLOR.;
+        }
+    
+        #game_effects_region .t-Region-header {
+            background-color: &P3_PKMN_COLOR.;
+            color: white; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #other_lang_region .t-Region-header {
+            background-color: &P3_PKMN_COLOR.;
+            color: white; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #pkmn_ability_region .t-Region-header {
+            background-color: &P3_PKMN_COLOR.;
+            color: white; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #single_ability_region .t-Region-header {
+            background-color: &P3_PKMN_COLOR.;
+            color: white; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #double_ability_region .t-Region-header {
+            background-color: &P3_PKMN_COLOR.;
+            color: white; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #hidden_ability_region .t-Region-header {
+            background-color: &P3_PKMN_COLOR.;
+            color: white; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Ability details =============================
+  id: 10581084807679809948
+  identification: 
+    title: Ability details
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+      an.NAME as NAME,
+      aft.FLAVOR_TEXT,
+      REGEXP_REPLACE(REGEXP_REPLACE(ap.SHORT_EFFECT,'\{[^\}]+:([^\}]+)\}','\1'), '\[.*?\]', '') as SHORT_EFFECT,
+      REGEXP_REPLACE(REGEXP_REPLACE(ap.EFFECT,'\{[^\}]+:([^\}]+)\}','\1'), '\[.*?\]', '') as EFFECT
+      FROM ABILITIES a
+      INNER JOIN ABILITY_FLAVOR_TEXT aft ON aft.ABILITY_ID = a.ID and aft.LANGUAGE_ID = 9 -- english
+      INNER JOIN ABILITY_PROSE ap ON ap.ABILITY_ID = a.ID and ap.LOCAL_LANGUAGE_ID = 9 -- english
+      INNER JOIN ABILITY_NAMES an on an.ABILITY_ID = a.ID AND an.LOCAL_LANGUAGE_ID = 9 -- english
+      WHERE a.ID = :P3_ABILITY_ID
+      AND aft.VERSION_GROUP_ID = (
+          SELECT MAX(VERSION_GROUP_ID)
+          FROM ABILITY_FLAVOR_TEXT
+          WHERE ABILITY_ID = a.ID and LANGUAGE_ID = 9
+      );
+      
+    page-items-to-submit: 
+    - P3_ABILITY_ID
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes # 7073654454750526091
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 10581085740725809951
+    appearance: 
+      layout: Horizontal (Row)
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <span>
+        <h3 class="a-CardView-title t-Badge pkmn-color-&P3_PKMN_COLOR.">DESCRIPTION</h3>
+        <br>&FLAVOR_TEXT.
+        </span>
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: true
+      html-expression: |
+        <span>
+        <h3 class="a-CardView-title t-Badge pkmn-color-&P3_PKMN_COLOR.">EFFECT</h3>
+        <br>&SHORT_EFFECT.
+        </span>
+        <br><br>
+        <span>
+        <h3 class="a-CardView-title t-Badge pkmn-color-&P3_PKMN_COLOR.">EFFECT DETAILS</h3>
+        <br>&EFFECT.
+        </span>
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: No Icon
+
+    media: 
+      advanced-formatting: false
+      source: No Media
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+- # ====== Region: &P3_ABILITY_NAME. ===========================
+  id: 22968683141565240787
+  identification: 
+    title: '&P3_ABILITY_NAME.'
+    type: Static Content
+
+  source: 
+    html-code: '&P3_ABILITY_HIDDEN.'
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero # 7073687806191526106
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-bullseye
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: hero_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Single Ability ==============================
+  id: 36838037020473712081
+  identification: 
+    title: Single Ability
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: Pokémon with &P3_ABILITY_NAME. # 37945929862438596904
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: single_ability_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Double Ability ==============================
+  id: 36838037073496712082
+  identification: 
+    title: Double Ability
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: Pokémon with &P3_ABILITY_NAME. # 37945929862438596904
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: double_ability_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Hidden Ability ==============================
+  id: 36838037220087712083
+  identification: 
+    title: Hidden Ability
+    type: Static Content
+
+  layout: 
+    sequence: 50
+    parent-region: Pokémon with &P3_ABILITY_NAME. # 37945929862438596904
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: hidden_ability_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Pokémon with &P3_ABILITY_NAME. ==============
+  id: 37945929862438596904
+  identification: 
+    title: Pokémon with &P3_ABILITY_NAME.
+    type: Static Content
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: pkmn_ability_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Single Ability - Cards ======================
+  id: 39054690189818128107
+  identification: 
+    title: Single Ability - Cards
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      main_query.*,
+      '#APP_FILES#types/'||TYPE1||'.png' as TYPE1_IMG,
+      '#APP_FILES#types/'||TYPE2||'.png' as TYPE2_IMG
+      from
+      (
+      SELECT
+          pa.POKEMON_ID,
+          (select an.NAME
+          from ABILITY_NAMES an
+          where an.ABILITY_ID = :P3_ABILITY_ID
+          and an.LOCAL_LANGUAGE_ID = 9 -- english
+          and pa.slot=1 and pa.IS_HIDDEN=0) as ABILITY,
+          case 
+            when p.SPECIES_ID < 1000 then '#'||LPAD(to_char(p.SPECIES_ID), 4, '0')
+            else '#'||to_char(p.SPECIES_ID)
+          end as NUM,
+          'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||p.ID||'.png' as SPRITE,
+          p.SPECIES_ID as PKMN_SPECIES_ID,
+          InitCap(p.IDENTIFIER) as PKMN_NAME,
+          (select lower(t.IDENTIFIER) 
+          from TYPES t
+          inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+          where pt.POKEMON_ID = p.ID
+          and pt.slot=1) as TYPE1,
+          (select lower(t.IDENTIFIER) 
+          from TYPES t
+          inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+          where pt.POKEMON_ID = p.ID
+          and pt.slot=2) as TYPE2,
+          COALESCE(LOWER(pc.IDENTIFIER), 'black') AS COLOR,
+          case
+            when lower(pc.IDENTIFIER) in ('white') then 'gray'
+            when pc.IDENTIFIER is null then 'black'
+            else lower(pc.IDENTIFIER)
+          end as CSS_COLOR,
+          case
+            when lower(pc.IDENTIFIER) in ('gray','pink','white','yellow') then 'black'
+            else 'white'
+          end as CSS_TEXT_COLOR,
+          ps.GENERATION_ID as GEN_ID,
+          ps.EVOLUTION_CHAIN_ID as EVOLUTION_CHAIN_ID,
+          p.IS_DEFAULT
+      FROM POKEMON_ABILITIES pa
+      INNER JOIN POKEMON p on p.ID = pa.POKEMON_ID
+      LEFT JOIN POKEMON_SPECIES ps ON ps.ID = p.ID
+      LEFT JOIN POKEMON_COLORS pc on pc.ID = ps.COLOR_ID  
+      WHERE pa.ABILITY_ID = :P3_ABILITY_ID
+      AND p.IS_DEFAULT = 1 -- NOTE : don't show PKMN variations
+      AND 1 = (select count(SLOT) from POKEMON_ABILITIES where POKEMON_ID = pa.POKEMON_ID)
+      order by p.SPECIES_ID
+      ) main_query
+
+  layout: 
+    sequence: 10
+    parent-region: Single Ability # 36838037020473712081
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    - t-CardsRegion--styleC
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 39054691629193128122
+    appearance: 
+      layout: Float
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <h3 class="a-CardView-title ">&NUM. &PKMN_NAME.</h3>
+        
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: true
+      html-expression: |
+        <span class="a-CardView-badge a-CardView-badgeValue type-&TYPE1. margin-auto"><img src="&TYPE1_IMG." height="16">&TYPE1.</span>
+        {if TYPE2/}
+        <span class="a-CardView-badge a-CardView-badgeValue type-&TYPE2. margin-auto"><img src="&TYPE2_IMG." height="16">&TYPE2.</span>
+        {endif/}
+
+    secondary-body: 
+      advanced-formatting: true
+      html-expression: 'Ability: &ABILITY.'
+
+    icon-and-badge: 
+      icon-source: No Icon
+
+    media: 
+      advanced-formatting: false
+      source: Image URL
+      url: '&SPRITE.'
+      position: Body
+      appearance: Auto
+      sizing: Fit
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    actions: 
+    - # ====== Action: Full Card ===================================
+      id: 39054691795425128123
+      identification: 
+        type: Full Card
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::P2_PKMN_NUMBER,P2_PKMN_NAME,P2_PKMN_SPECIES_ID,P2_PKMN_GENERATION_ID,P2_PKMN_IS_DEFAULT,P2_PKMN_EVO_CHAIN_ID,P2_PKMN_COLOR,P2_PKMN_TEXT_COLOR,P2_PKMN_CSS_COLOR:&POKEMON_ID.,&PKMN_NAME.,&PKMN_SPECIES_ID.,&GEN_ID.,&IS_DEFAULT.,&EVOLUTION_CHAIN_ID.,&COLOR.,&CSS_TEXT_COLOR.,&CSS_COLOR.'
+          page: 2 # Pokémon Details
+          values: 
+            p2_pkmn_number: '&POKEMON_ID.'
+            p2_pkmn_name: '&PKMN_NAME.'
+            p2_pkmn_species_id: '&PKMN_SPECIES_ID.'
+            p2_pkmn_generation_id: '&GEN_ID.'
+            p2_pkmn_is_default: '&IS_DEFAULT.'
+            p2_pkmn_evo_chain_id: '&EVOLUTION_CHAIN_ID.'
+            p2_pkmn_color: '&COLOR.'
+            p2_pkmn_text_color: '&CSS_TEXT_COLOR.'
+            p2_pkmn_css_color: '&CSS_COLOR.'
+
+- # ====== Region: Double Ability - Cards ======================
+  id: 39054691830116128124
+  identification: 
+    title: Double Ability - Cards
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      main_query.*,
+      '#APP_FILES#types/'||TYPE1||'.png' as TYPE1_IMG,
+      '#APP_FILES#types/'||TYPE2||'.png' as TYPE2_IMG
+      from
+      (
+      SELECT
+      	pa.POKEMON_ID,
+          (select an.NAME
+          from POKEMON_ABILITIES psub
+          inner join ABILITY_NAMES an on an.ABILITY_ID = psub.ABILITY_ID and an.LOCAL_LANGUAGE_ID = 9 -- english
+          where psub.pokemon_id = pa.POKEMON_ID
+          and psub.slot=1 and psub.IS_HIDDEN=0) as ABILITY1,
+          (select an.NAME
+          from POKEMON_ABILITIES psub
+          inner join ABILITY_NAMES an on an.ABILITY_ID = psub.ABILITY_ID and an.LOCAL_LANGUAGE_ID = 9 -- english
+          where psub.pokemon_id = pa.POKEMON_ID
+          and psub.slot=2 and psub.IS_HIDDEN=0) as ABILITY2,
+          (select an.NAME
+          from POKEMON_ABILITIES psub
+          inner join ABILITY_NAMES an on an.ABILITY_ID = psub.ABILITY_ID and an.LOCAL_LANGUAGE_ID = 9 -- english
+          where psub.pokemon_id = pa.POKEMON_ID
+          and psub.IS_HIDDEN=1) as ABILITY_HIDDEN,
+      	case 
+      	  when p.SPECIES_ID < 1000 then '#'||LPAD(to_char(p.SPECIES_ID), 4, '0')
+      	  else '#'||to_char(p.SPECIES_ID)
+      	end as NUM,
+      	'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||p.ID||'.png' as SPRITE,
+      	p.SPECIES_ID as PKMN_SPECIES_ID,
+      	InitCap(p.IDENTIFIER) as PKMN_NAME,
+      	(select lower(t.IDENTIFIER) 
+      	from TYPES t
+      	inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+      	where pt.POKEMON_ID = p.ID
+      	and pt.slot=1) as TYPE1,
+      	(select lower(t.IDENTIFIER) 
+      	from TYPES t
+      	inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+      	where pt.POKEMON_ID = p.ID
+      	and pt.slot=2) as TYPE2,
+      	COALESCE(LOWER(pc.IDENTIFIER), 'black') AS COLOR,
+      	case
+      	  when lower(pc.IDENTIFIER) in ('white') then 'gray'
+      	  when pc.IDENTIFIER is null then 'black'
+      	  else lower(pc.IDENTIFIER)
+      	end as CSS_COLOR,
+      	case
+      	  when lower(pc.IDENTIFIER) in ('gray','pink','white','yellow') then 'black'
+      	  else 'white'
+      	end as CSS_TEXT_COLOR,
+      	ps.GENERATION_ID as GEN_ID,
+      	ps.EVOLUTION_CHAIN_ID as EVOLUTION_CHAIN_ID,
+      	p.IS_DEFAULT
+      FROM POKEMON_ABILITIES pa
+      INNER JOIN POKEMON p on p.ID = pa.POKEMON_ID
+      LEFT JOIN POKEMON_SPECIES ps ON ps.ID = p.ID
+      LEFT JOIN POKEMON_COLORS pc on pc.ID = ps.COLOR_ID  
+      WHERE pa.ABILITY_ID = :P3_ABILITY_ID
+      AND p.IS_DEFAULT = 1 -- NOTE : don't show PKMN variations
+      AND pa.POKEMON_ID IN (
+          SELECT psub.POKEMON_ID
+          FROM POKEMON_ABILITIES psub
+          WHERE psub.slot IN (1, 2) 
+          GROUP BY psub.POKEMON_ID
+          HAVING COUNT(DISTINCT psub.slot) = 2
+          AND SUM(CASE 
+              WHEN psub.slot = 1 AND psub.ABILITY_ID = :P3_ABILITY_ID THEN 1 
+              WHEN psub.slot = 2 AND psub.ABILITY_ID = :P3_ABILITY_ID THEN 1
+              ELSE 0 END) >= 1
+      )order by p.SPECIES_ID
+      ) main_query
+
+  layout: 
+    sequence: 10
+    parent-region: Double Ability # 36838037073496712082
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    - t-CardsRegion--styleC
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 39092082041118749475
+    appearance: 
+      layout: Float
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <h3 class="a-CardView-title ">&NUM. &PKMN_NAME.</h3>
+        
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: true
+      html-expression: |
+        <span class="a-CardView-badge a-CardView-badgeValue type-&TYPE1. margin-auto"><img src="&TYPE1_IMG." height="16">&TYPE1.</span>
+        {if TYPE2/}
+        <span class="a-CardView-badge a-CardView-badgeValue type-&TYPE2. margin-auto"><img src="&TYPE2_IMG." height="16">&TYPE2.</span>
+        {endif/}
+
+    secondary-body: 
+      advanced-formatting: true
+      html-expression: |
+        Ability 1: &ABILITY1.<br>
+        Ability 2: &ABILITY2.<br>
+        Hidden Ability: &ABILITY_HIDDEN.
+
+    icon-and-badge: 
+      icon-source: No Icon
+
+    media: 
+      advanced-formatting: false
+      source: Image URL
+      url: '&SPRITE.'
+      position: Body
+      appearance: Auto
+      sizing: Fit
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    actions: 
+    - # ====== Action: Full Card ===================================
+      id: 39092082209849749476
+      identification: 
+        type: Full Card
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::P2_PKMN_NUMBER,P2_PKMN_NAME,P2_PKMN_SPECIES_ID,P2_PKMN_GENERATION_ID,P2_PKMN_IS_DEFAULT,P2_PKMN_EVO_CHAIN_ID,P2_PKMN_COLOR,P2_PKMN_TEXT_COLOR,P2_PKMN_CSS_COLOR:&POKEMON_ID.,&PKMN_NAME.,&PKMN_SPECIES_ID.,&GEN_ID.,&IS_DEFAULT.,&EVOLUTION_CHAIN_ID.,&COLOR.,&CSS_TEXT_COLOR.,&CSS_COLOR.'
+          page: 2 # Pokémon Details
+          values: 
+            p2_pkmn_number: '&POKEMON_ID.'
+            p2_pkmn_name: '&PKMN_NAME.'
+            p2_pkmn_species_id: '&PKMN_SPECIES_ID.'
+            p2_pkmn_generation_id: '&GEN_ID.'
+            p2_pkmn_is_default: '&IS_DEFAULT.'
+            p2_pkmn_evo_chain_id: '&EVOLUTION_CHAIN_ID.'
+            p2_pkmn_color: '&COLOR.'
+            p2_pkmn_text_color: '&CSS_TEXT_COLOR.'
+            p2_pkmn_css_color: '&CSS_COLOR.'
+
+- # ====== Region: Hidden Ability - Cards ======================
+  id: 39092082263684749477
+  identification: 
+    title: Hidden Ability - Cards
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      main_query.*,
+      '#APP_FILES#types/'||TYPE1||'.png' as TYPE1_IMG,
+      '#APP_FILES#types/'||TYPE2||'.png' as TYPE2_IMG
+      from
+      (
+      SELECT
+          pa.POKEMON_ID,
+          (select an.NAME
+          from POKEMON_ABILITIES psub
+          inner join ABILITY_NAMES an on an.ABILITY_ID = psub.ABILITY_ID and an.LOCAL_LANGUAGE_ID = 9 -- english
+          where psub.pokemon_id = pa.POKEMON_ID
+          and psub.slot=1 and psub.IS_HIDDEN=0) as ABILITY1,
+          (select an.NAME
+          from POKEMON_ABILITIES psub
+          inner join ABILITY_NAMES an on an.ABILITY_ID = psub.ABILITY_ID and an.LOCAL_LANGUAGE_ID = 9 -- english
+          where psub.pokemon_id = pa.POKEMON_ID
+          and psub.slot=2 and psub.IS_HIDDEN=0) as ABILITY2,
+          (select an.NAME
+          from POKEMON_ABILITIES psub
+          inner join ABILITY_NAMES an on an.ABILITY_ID = psub.ABILITY_ID and an.LOCAL_LANGUAGE_ID = 9 -- english
+          where psub.pokemon_id = pa.POKEMON_ID
+          and psub.IS_HIDDEN=1) as ABILITY_HIDDEN,
+      	case 
+      	  when p.SPECIES_ID < 1000 then '#'||LPAD(to_char(p.SPECIES_ID), 4, '0')
+      	  else '#'||to_char(p.SPECIES_ID)
+      	end as NUM,
+      	'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||p.ID||'.png' as SPRITE,
+      	p.SPECIES_ID as PKMN_SPECIES_ID,
+      	InitCap(p.IDENTIFIER) as PKMN_NAME,
+      	(select lower(t.IDENTIFIER) 
+      	from TYPES t
+      	inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+      	where pt.POKEMON_ID = p.ID
+      	and pt.slot=1) as TYPE1,
+      	(select lower(t.IDENTIFIER) 
+      	from TYPES t
+      	inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+      	where pt.POKEMON_ID = p.ID
+      	and pt.slot=2) as TYPE2,
+      	COALESCE(LOWER(pc.IDENTIFIER), 'black') AS COLOR,
+      	case
+      	  when lower(pc.IDENTIFIER) in ('white') then 'gray'
+      	  when pc.IDENTIFIER is null then 'black'
+      	  else lower(pc.IDENTIFIER)
+      	end as CSS_COLOR,
+      	case
+      	  when lower(pc.IDENTIFIER) in ('gray','pink','white','yellow') then 'black'
+      	  else 'white'
+      	end as CSS_TEXT_COLOR,
+      	ps.GENERATION_ID as GEN_ID,
+      	ps.EVOLUTION_CHAIN_ID as EVOLUTION_CHAIN_ID,
+      	p.IS_DEFAULT
+      FROM POKEMON_ABILITIES pa
+      INNER JOIN POKEMON p on p.ID = pa.POKEMON_ID
+      LEFT JOIN POKEMON_SPECIES ps ON ps.ID = p.ID
+      LEFT JOIN POKEMON_COLORS pc on pc.ID = ps.COLOR_ID  
+      WHERE pa.ABILITY_ID = :P3_ABILITY_ID
+      AND p.IS_DEFAULT = 1 -- NOTE : don't show PKMN variations
+      --AND pa.IS_HIDDEN = 1
+      AND 1 = (select count(SLOT) from POKEMON_ABILITIES where POKEMON_ID = pa.POKEMON_ID and ABILITY_ID = :P3_ABILITY_ID and IS_HIDDEN = 1)
+      order by p.SPECIES_ID
+      ) main_query
+
+  layout: 
+    sequence: 10
+    parent-region: Hidden Ability # 36838037220087712083
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    - t-CardsRegion--styleC
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 39092082413528749478
+    appearance: 
+      layout: Float
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <h3 class="a-CardView-title ">&NUM. &PKMN_NAME.</h3>
+        
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: true
+      html-expression: |
+        <span class="a-CardView-badge a-CardView-badgeValue type-&TYPE1. margin-auto"><img src="&TYPE1_IMG." height="16">&TYPE1.</span>
+        {if TYPE2/}
+        <span class="a-CardView-badge a-CardView-badgeValue type-&TYPE2. margin-auto"><img src="&TYPE2_IMG." height="16">&TYPE2.</span>
+        {endif/}
+
+    secondary-body: 
+      advanced-formatting: true
+      html-expression: |
+        Ability 1: &ABILITY1.<br>
+        Ability 2: &ABILITY2.<br>
+        Hidden Ability: &ABILITY_HIDDEN.
+
+    icon-and-badge: 
+      icon-source: No Icon
+
+    media: 
+      advanced-formatting: false
+      source: Image URL
+      url: '&SPRITE.'
+      position: Body
+      appearance: Auto
+      sizing: Fit
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    actions: 
+    - # ====== Action: Full Card ===================================
+      id: 39092082444870749479
+      identification: 
+        type: Full Card
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::P2_PKMN_NUMBER,P2_PKMN_NAME,P2_PKMN_SPECIES_ID,P2_PKMN_GENERATION_ID,P2_PKMN_IS_DEFAULT,P2_PKMN_EVO_CHAIN_ID,P2_PKMN_COLOR,P2_PKMN_TEXT_COLOR,P2_PKMN_CSS_COLOR:&POKEMON_ID.,&PKMN_NAME.,&PKMN_SPECIES_ID.,&GEN_ID.,&IS_DEFAULT.,&EVOLUTION_CHAIN_ID.,&COLOR.,&CSS_TEXT_COLOR.,&CSS_COLOR.'
+          page: 2 # Pokémon Details
+          values: 
+            p2_pkmn_number: '&POKEMON_ID.'
+            p2_pkmn_name: '&PKMN_NAME.'
+            p2_pkmn_species_id: '&PKMN_SPECIES_ID.'
+            p2_pkmn_generation_id: '&GEN_ID.'
+            p2_pkmn_is_default: '&IS_DEFAULT.'
+            p2_pkmn_evo_chain_id: '&EVOLUTION_CHAIN_ID.'
+            p2_pkmn_color: '&COLOR.'
+            p2_pkmn_text_color: '&CSS_TEXT_COLOR.'
+            p2_pkmn_css_color: '&CSS_COLOR.'
+
+- # ====== Region: Other languages =============================
+  id: 75461010774171864191
+  identification: 
+    title: Other languages
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      (select lnames.NAME from LANGUAGE_NAMES lnames where lnames.language_id = an.local_language_id and lnames.local_language_id = 9) as LANGUAGE_NAME,
+      an.NAME
+      from ABILITY_NAMES an
+      inner join ABILITIES a on a.ID = an.ABILITY_ID
+      where a.ID = :P3_ABILITY_ID
+      and an.local_language_id <= 10
+      order by 1
+
+  layout: 
+    sequence: 90
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: other_lang_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+      - t-Report--inline
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: None
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: LANGUAGE_NAME ===============================
+    id: 38630535249603628592
+    identification: 
+      column-name: LANGUAGE_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Language Name
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NAME ========================================
+    id: 38630535630449628592
+    identification: 
+      column-name: NAME
+      type: Plain Text
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Game Effects ================================
+  id: 75795137898151935268
+  identification: 
+    title: Game Effects
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      distinct GAME_DESCRIPTION,
+      LISTAGG(InitCap(replace(VERSION_GRP,'-',' ')), ' ') WITHIN GROUP (ORDER BY VERSION_GRP_ORDER) as VERSION_GRP
+      ,MIN(VERSION_GRP_ORDER) AS VERSION_GRP_ORDER
+      from
+      (
+      select
+      aft.FLAVOR_TEXT as GAME_DESCRIPTION,
+      vg.IDENTIFIER as VERSION_GRP,
+      vg.ORDER_ as VERSION_GRP_ORDER
+      from ABILITY_FLAVOR_TEXT aft
+      inner join VERSION_GROUPS vg on vg.ID = aft.VERSION_GROUP_ID and aft.LANGUAGE_ID = 9 -- english
+      where aft.ABILITY_ID = :P3_ABILITY_ID
+      )
+      group by GAME_DESCRIPTION
+      ORDER BY VERSION_GRP_ORDER
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: game_effects_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select
+      aft.FLAVOR_TEXT as GAME_DESCRIPTION
+      from ABILITY_FLAVOR_TEXT aft
+      inner join VERSION_GROUPS vg on vg.ID = aft.VERSION_GROUP_ID
+      where aft.ABILITY_ID = :P3_ABILITY_ID
+      and aft.LANGUAGE_ID = 9 -- english
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 20
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+      - t-Report--inline
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: None
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: VERSION_GRP =================================
+    id: 38964662173261699665
+    identification: 
+      column-name: VERSION_GRP
+      type: Plain Text
+
+    heading: 
+      heading: Version Grp
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VERSION_GRP_ORDER ===========================
+    id: 38964662588287699666
+    identification: 
+      column-name: VERSION_GRP_ORDER
+      type: Hidden Column
+
+    layout: 
+      sequence: 40
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GAME_DESCRIPTION ============================
+    id: 38964663021669699666
+    identification: 
+      column-name: GAME_DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Game Description
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P3_ABILITY_ID ============================
+  id: 10526254625613517707
+  identification: 
+    name: P3_ABILITY_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_ABILITY_NAME ==========================
+  id: 10526254673118517708
+  identification: 
+    name: P3_ABILITY_NAME
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_ABILITY_HIDDEN ========================
+  id: 22968683452455240790
+  identification: 
+    name: P3_ABILITY_HIDDEN
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_PKMN_COLOR ============================
+  id: 23326785007869811332
+  identification: 
+    name: P3_PKMN_COLOR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+

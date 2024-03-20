@@ -1,0 +1,4041 @@
+---
+# ====== Page: Pokémon Details ===============================
+id: 2
+identification: 
+  name: Pokémon Details
+  alias: PKMN-DETAILS
+  title: '&P2_PKMN_NAME.'
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/main.css'
+  inline: |
+    /* -------------------------------------------------------------------------------------- */
+    /* ------------------------------- NAVIGATION MENU ICONS -------------------------------- */
+        .pokemon_icon {
+            background-image: url(#APP_FILES#menu/pokemon.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokeball_icon {
+            background-image: url(#APP_FILES#menu/pokeball.png);
+            background-repeat: no-repeat;
+        }
+    
+        .moves_icon {
+            background-image: url(#APP_FILES#menu/moves.png);
+            background-repeat: no-repeat;
+        }
+    
+        .abilities_icon{
+            background-image: url(#APP_FILES#menu/abilities.png);
+            background-repeat: no-repeat;
+        }
+    
+        .items_icon{
+            background-image: url(#APP_FILES#menu/items.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokedex_icon {
+            background-image: url(#APP_FILES#menu/pokedex.png);
+            background-repeat: no-repeat;
+        }
+    
+    /* -------------------------------------------------------------------------------------- */
+        /* Change the background color of the checked pill button */
+        .apex-item-radio input[type="radio"]:checked+label {
+            background-color: &P2_PKMN_CSS_COLOR. !important;
+        }
+    
+        /* Change the text color of the checked pill button */
+        .apex-item-radio input[type="radio"]:checked+label span {
+            color: &P2_PKMN_TEXT_COLOR. !important;
+        }
+    
+        /* Change the border color of the checked pill button */
+        .apex-item-radio input[type="radio"]:checked+label {
+            border-color: &P2_PKMN_CSS_COLOR. !important;
+        }
+    
+        /* Change header color */
+        /*.t-Header-branding {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; 
+        }*/
+    
+        #hero_region .t-HeroRegion-icon {
+            border-color: &P2_PKMN_CSS_COLOR.;
+            border-style: solid;
+            border-width: thin;
+            background-color: white;
+        }
+    
+        #stats_region .t-Region-header {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #forms_region .t-Region-header {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #abilites_region .t-Region-header {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #evolution_region .t-Region-header {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #typing_region .t-Region-header {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #pokedex_region .t-Region-header {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #moves_region .t-Region-header {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #moves_region [headers="move_class_column"]  {
+            background-color: grey;
+        }
+    
+        #sprites_region .t-Region-header {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #models_region .t-Region-header {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #icons_region .t-Region-header {
+            background-color: &P2_PKMN_CSS_COLOR.;
+            color: &P2_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Typing ======================================
+  id: 7796823133520984215
+  identification: 
+    title: Typing
+    type: Static Content
+
+  layout: 
+    sequence: 140
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: typing_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Base Stats ==================================
+  id: 7796823356842984217
+  identification: 
+    title: Base Stats
+    type: Chart
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      STAT_VALUE,
+      CASE 
+          WHEN STAT_NAME = 'ATTACK' THEN 'Attack'
+          WHEN STAT_NAME = 'DEFENSE' THEN 'Defense'
+          WHEN STAT_NAME = 'SPECIAL-ATTACK' THEN 'Sp. Atk'
+          WHEN STAT_NAME = 'SPECIAL-DEFENSE' THEN 'Sp. Def'
+          WHEN STAT_NAME = 'SPEED' THEN 'Speed'
+          ELSE 'HP'
+      END as STAT_NAME_FORMATTED,
+      CASE
+          WHEN STAT_VALUE >= 0 AND STAT_VALUE <= 40 THEN '#FA5858' -- red
+          WHEN STAT_VALUE > 40 AND STAT_VALUE <= 60 THEN '#FAAC58' -- orange
+          WHEN STAT_VALUE > 60 AND STAT_VALUE <= 80 THEN '#F7D358' -- light orange
+          WHEN STAT_VALUE > 80 AND STAT_VALUE <= 100 THEN '#F4FA58' -- yellow
+          WHEN STAT_VALUE > 100 AND STAT_VALUE <= 120 THEN '#82FA58' -- light green
+          WHEN STAT_VALUE > 120 THEN '#58FAAC' -- green
+          ELSE 'black'
+      END AS STAT_COLOR
+      FROM (
+        select 
+        upper(s.IDENTIFIER) as STAT_NAME,
+        ps.BASE_STAT as STAT_VALUE
+        from POKEMON_STATS ps
+        inner join STATS s on ps.STAT_ID = s.ID
+        where POKEMON_ID = :P2_PKMN_NUMBER
+        
+      )
+    page-items-to-submit: 
+    - P2_PKMN_NUMBER
+
+  layout: 
+    sequence: 60
+    parent-region: Data # 9878589920184159997
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: stats_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 7796823491224984218
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Horizontal
+      stack: false
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: false
+      show-group-name: false
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Stats =======================================
+      id: 7796823606086984219
+      identification: 
+        name: Stats
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          select 
+          STAT_VALUE,
+          CASE 
+              WHEN STAT_NAME = 'ATTACK' THEN 'Attack'
+              WHEN STAT_NAME = 'DEFENSE' THEN 'Defense'
+              WHEN STAT_NAME = 'SPECIAL-ATTACK' THEN 'Sp. Atk'
+              WHEN STAT_NAME = 'SPECIAL-DEFENSE' THEN 'Sp. Def'
+              WHEN STAT_NAME = 'SPEED' THEN 'Speed'
+              ELSE 'HP'
+          END as STAT_NAME_FORMATTED,
+          CASE
+              WHEN STAT_VALUE >= 0 AND STAT_VALUE <= 40 THEN '#FA5858' -- red
+              WHEN STAT_VALUE > 40 AND STAT_VALUE <= 60 THEN '#FAAC58' -- orange
+              WHEN STAT_VALUE > 60 AND STAT_VALUE <= 80 THEN '#F7D358' -- light orange
+              WHEN STAT_VALUE > 80 AND STAT_VALUE <= 100 THEN '#F4FA58' -- yellow
+              WHEN STAT_VALUE > 100 AND STAT_VALUE <= 120 THEN '#82FA58' -- light green
+              WHEN STAT_VALUE > 120 THEN '#58FAAC' -- green
+              ELSE 'black'
+          END AS STAT_COLOR
+          FROM (
+            select 
+            upper(s.IDENTIFIER) as STAT_NAME,
+            ps.BASE_STAT as STAT_VALUE
+            from POKEMON_STATS ps
+            inner join STATS s on ps.STAT_ID = s.ID
+            where POKEMON_ID = :P2_PKMN_NUMBER
+            
+          )
+
+      column-mapping: 
+        label: STAT_NAME_FORMATTED
+        value: STAT_VALUE
+
+      appearance: 
+        color: '&STAT_COLOR.'
+        assigned-to-y2-axis: false
+
+      label: 
+        show: true
+        position: Automatic
+        font-family: Verdana
+        font-color: '#000000'
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 7796823797370984221
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 7796823888552984222
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: None
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: No
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: false
+
+- # ====== Region: Abilities - Cards ===========================
+  id: 7796823975287984223
+  identification: 
+    title: Abilities - Cards
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      a.ID,
+      an.NAME as NAME,
+      case
+        when pa.IS_HIDDEN = 0 then ''
+        else '(HIDDEN)'
+      end as HIDDEN,
+      case
+        when pa.IS_HIDDEN = 0 then ''
+        else '-hidden'
+      end as HIDDEN_CSS
+      from POKEMON_ABILITIES pa
+      inner join ABILITIES a on pa.ABILITY_ID = a.ID
+      inner join ABILITY_NAMES an on an.ABILITY_ID = a.ID and an.LOCAL_LANGUAGE_ID = 9 -- english
+      where pa.POKEMON_ID = :P2_PKMN_NUMBER
+      order by pa.SLOT
+    page-items-to-submit: 
+    - P2_PKMN_NUMBER
+
+  layout: 
+    sequence: 10
+    parent-region: Abilities # 22968683359966240789
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 22968681957088240775
+    appearance: 
+      layout: Grid
+      grid-columns: 2 Columns
+
+    card: 
+      css-classes: 
+      - ability&HIDDEN_CSS.
+      primary-key-column-1: NAME
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <span class="t-BadgeList-value"> 
+            <span>&NAME.</span><span class="ability&HIDDEN_CSS.">&nbsp; &HIDDEN.</span>
+        </span>
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: false
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: No Icon
+
+    media: 
+      advanced-formatting: false
+      source: No Media
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    actions: 
+    - # ====== Action: Full Card ===================================
+      id: 22968682065013240776
+      identification: 
+        type: Full Card
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.::P3_ABILITY_ID,P3_PKMN_COLOR,P3_ABILITY_NAME,P3_ABILITY_HIDDEN:&ID.,&P2_PKMN_COLOR.,&NAME.,&HIDDEN.'
+          page: 3 # Ability Details
+          values: 
+            p3_ability_id: '&ID.'
+            p3_pkmn_color: '&P2_PKMN_COLOR.'
+            p3_ability_name: '&NAME.'
+            p3_ability_hidden: '&HIDDEN.'
+
+- # ====== Region: PKMN Image ==================================
+  id: 9878589731763159996
+  identification: 
+    title: PKMN Image
+    type: Static Content
+
+  source: 
+    html-code: '<img class="pkmn-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/&P2_PKMN_NUMBER..png">'
+
+  layout: 
+    sequence: 20
+    parent-region: Data # 9878589920184159997
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Data ========================================
+  id: 9878589920184159997
+  identification: 
+    title: Data
+    type: Static Content
+
+  layout: 
+    sequence: 110
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Typing ======================================
+  id: 21772600179332758480
+  identification: 
+    title: Typing
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT 
+      CASE
+          when DAMAGE_FROM > 1 then 'x'||to_char(DAMAGE_FROM)
+          when DAMAGE_FROM = 0.5 then '0.5'
+          when DAMAGE_FROM = 0.25 then '0.25'
+          when DAMAGE_FROM = 0 then '0'
+          else to_char(DAMAGE_FROM)
+      END as DAMAGE_FROM,
+      CASE
+          when DAMAGE_FROM = 4 then 'u-color-39'
+          when DAMAGE_FROM = 2 then 'u-color-7'
+          when DAMAGE_FROM = 0.5 then 'u-color-3'
+          when DAMAGE_FROM = 0.25 then 'u-color-5'
+          when DAMAGE_FROM = 0 then 'u-color-15'
+          else '--ut-report-cell-alt-background-color9'
+      END as DAMAGE_COLOR,
+      LISTAGG('<span class="a-CardView-badge a-CardView-badgeValue type-'||PKMN_TYPE||'" style="display:inline-block;"><img src="#APP_FILES#types/'||PKMN_TYPE||'.png" height="16">'||PKMN_TYPE||'</span>', '') WITHIN GROUP (ORDER BY PKMN_TYPE) as TYPES
+      FROM TABLE(PKMN_DATA.get_typing_info(:P2_PKMN_NUMBER))
+      group by DAMAGE_FROM
+      order by DAMAGE_FROM desc;
+
+  layout: 
+    sequence: 10
+    parent-region: Typing # 7796823133520984215
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: DAMAGE_FROM =================================
+    id: 21772601070252758489
+    identification: 
+      column-name: DAMAGE_FROM
+      type: Plain Text
+
+    heading: 
+      heading: Damage<br>From
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: '<span class="a-CardView-badge a-CardView-badgeValue #DAMAGE_COLOR#">#DAMAGE_FROM#</span>'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DAMAGE_COLOR ================================
+    id: 21772601126207758490
+    identification: 
+      column-name: DAMAGE_COLOR
+      type: Hidden Column
+
+    layout: 
+      sequence: 30
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPES =======================================
+    id: 22968682948975240785
+    identification: 
+      column-name: TYPES
+      type: Plain Text
+
+    heading: 
+      heading: Types
+      alignment: center
+
+    layout: 
+      sequence: 40
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+- # ====== Region: Pokemon Info ================================
+  id: 21772602015498758498
+  identification: 
+    title: Pokemon Info
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      main_query.*,
+      '#APP_FILES#generations/gen_'||GENERATION||'.png' as GEN_IMG,
+      '#APP_FILES#types/'||TYPE1||'.png' as TYPE1_IMG,
+      '#APP_FILES#types/'||TYPE2||'.png' as TYPE2_IMG
+      from
+      (
+      select 
+      case 
+        when p.ID < 1000 then '#'||LPAD(to_char(p.ID), 4, '0')
+        else '#'||to_char(p.ID)
+      end as ID,
+      psn.GENUS as SPECIES,
+      ( SELECT
+          LISTAGG('<span class="a-CardView-badge a-CardView-badgeValue type-'||lower(t.IDENTIFIER)||'"><img src="#APP_FILES#types/'||lower(t.IDENTIFIER)||'.png" height="16">'||lower(t.IDENTIFIER)||'</span>', ' ') WITHIN GROUP (ORDER BY pt.SLOT)
+        FROM  TYPES t
+        JOIN  POKEMON_TYPES pt ON pt.TYPE_ID = t.ID
+        where pt.POKEMON_ID = :P2_PKMN_NUMBER 
+      ) as TYPE,
+      (select lower(t.IDENTIFIER) 
+      from TYPES t
+      inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+      where pt.POKEMON_ID = p.ID
+      and pt.slot=1) as TYPE1,
+      (select lower(t.IDENTIFIER) 
+      from TYPES t
+      inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+      where pt.POKEMON_ID = p.ID
+      and pt.slot=2) as TYPE2,
+      CASE
+        WHEN p.HEIGHT < 10 THEN TO_CHAR((p.HEIGHT  / 10), '0.9') || ' m'
+        ELSE TO_CHAR (p.HEIGHT  / 10) || ' m' 
+      END AS HEIGHT_IN_METERS,
+      CASE
+        WHEN WEIGHT < 10 THEN TO_CHAR((p.WEIGHT  / 10), '0.9') || ' kg'
+        ELSE TO_CHAR (p.WEIGHT / 10) || ' kg' 
+      END AS WEIGHT_IN_KG,
+      psp.GENERATION_ID as GENERATION,
+      ( SELECT
+            LISTAGG('<span class="a-CardView-badge a-CardView-badgeValue ability">'||an.NAME||'</span>', ' ') WITHIN GROUP (ORDER BY a.ID)
+        FROM  ABILITIES a
+        JOIN  POKEMON_ABILITIES pa ON pa.ABILITY_ID = a.ID
+        JOIN ABILITY_NAMES an on an.ABILITY_ID = a.ID and an.LOCAL_LANGUAGE_ID = 9 -- english
+        where pa.POKEMON_ID = :P2_PKMN_NUMBER 
+        and pa.IS_HIDDEN = 0
+      ) as ABILITIY,
+      ( SELECT
+          LISTAGG(INITCAP(an.NAME), ' ') WITHIN GROUP (ORDER BY a.ID)
+        FROM  ABILITIES a
+        JOIN  POKEMON_ABILITIES pa ON pa.ABILITY_ID = a.ID
+        JOIN ABILITY_NAMES an on an.ABILITY_ID = a.ID and an.LOCAL_LANGUAGE_ID = 9 -- english
+        where pa.POKEMON_ID = :P2_PKMN_NUMBER 
+        and pa.IS_HIDDEN = 1
+      ) as HIDDEN_ABILITY,
+      case
+        when psp.gender_rate = -1 then NULL
+        else to_char(ROUND(((8 - psp.gender_rate) / 8.0) * 100, 2))||'%' 
+      end as MALE,
+      case
+        when psp.gender_rate = -1 then NULL
+        else to_char(ROUND((psp.gender_rate / 8.0) * 100, 2))||'%' 
+      end as FEMALE,
+      (  SELECT
+          LISTAGG('<span class="a-CardView-badge a-CardView-badgeValue">'||INITCAP(egp.NAME)||'</span>', ' ') WITHIN GROUP (ORDER BY eg.ID) AS EGG_GROUPS
+         FROM  POKEMON_EGG_GROUPS peg
+         INNER JOIN  EGG_GROUPS eg on peg.EGG_GROUP_ID = eg.ID
+         INNER JOIN EGG_GROUP_PROSE egp on egp.EGG_GROUP_ID = eg.ID and egp.LOCAL_LANGUAGE_ID = 9 -- english
+         where peg.SPECIES_ID = :P2_PKMN_SPECIES_ID
+      ) AS EGG_GROUPS,
+      (
+         select INITCAP(phn.NAME)
+         from POKEMON_HABITAT_NAMES phn
+         where phn.POKEMON_HABITAT_ID = ph.ID and phn.LOCAL_LANGUAGE_ID = 9 -- english
+      ) as HABITAT,
+      ph.ID as HABITAT_ID,
+      pc.IDENTIFIER as COLOR,
+      psp.SHAPE_ID as SHAPE,
+      (  select 
+         LISTAGG(ps.effort || ' ' || sn.NAME, ', ') WITHIN GROUP (ORDER BY sn.STAT_ID)
+         from POKEMON_STATS ps
+         inner join STAT_NAMES sn on sn.STAT_ID = ps.STAT_ID and sn.LOCAL_LANGUAGE_ID = 9 -- english
+         where ps.POKEMON_ID = p.ID
+         and ps.EFFORT > 0
+      ) as EV_YIELD,
+      psp.CAPTURE_RATE,
+      psp.BASE_HAPPINESS,
+      (  select INITCAP(grp.NAME) 
+         from GROWTH_RATE_PROSE grp 
+         where grp.GROWTH_RATE_ID=psp.GROWTH_RATE_ID and grp.LOCAL_LANGUAGE_ID = 9 -- english
+      ) as GROWTH_RATE
+      FROM POKEMON p
+      inner join POKEMON_SPECIES psp on p.ID = psp.ID
+      inner join POKEMON_SPECIES_NAMES psn on psn.POKEMON_SPECIES_ID = psp.ID and psn.LOCAL_LANGUAGE_ID = 9 -- english
+      inner join POKEMON_COLORS pc on psp.COLOR_ID = pc.ID
+      left join POKEMON_HABITATS ph on psp.HABITAT_ID = ph.ID
+      WHERE p.ID = :P2_PKMN_SPECIES_ID
+      ) main_query
+    page-items-to-submit: 
+    - P2_PKMN_NUMBER
+
+  layout: 
+    sequence: 40
+    parent-region: Data # 9878589920184159997
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Value Attribute Pairs - Column # 7073963110794526146
+      template-options: 
+      - '#DEFAULT#'
+      - t-AVPList--leftAligned
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: None
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: GEN_IMG =====================================
+    id: 16599162178232510
+    identification: 
+      column-name: GEN_IMG
+      type: Hidden Column
+
+    layout: 
+      sequence: 210
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE1 =======================================
+    id: 16599221520232511
+    identification: 
+      column-name: TYPE1
+      type: Hidden Column
+
+    layout: 
+      sequence: 220
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE2 =======================================
+    id: 16599315731232512
+    identification: 
+      column-name: TYPE2
+      type: Hidden Column
+
+    layout: 
+      sequence: 230
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE1_IMG ===================================
+    id: 16599477100232513
+    identification: 
+      column-name: TYPE1_IMG
+      type: Hidden Column
+
+    layout: 
+      sequence: 240
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE2_IMG ===================================
+    id: 16599572606232514
+    identification: 
+      column-name: TYPE2_IMG
+      type: Hidden Column
+
+    layout: 
+      sequence: 250
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: HEIGHT_IN_METERS ============================
+    id: 21772602390956758502
+    identification: 
+      column-name: HEIGHT_IN_METERS
+      type: Plain Text
+
+    heading: 
+      heading: Height
+      alignment: start
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: WEIGHT_IN_KG ================================
+    id: 21772602443743758503
+    identification: 
+      column-name: WEIGHT_IN_KG
+      type: Plain Text
+
+    heading: 
+      heading: Weight
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 21772603061585758509
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: ID
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GENERATION ==================================
+    id: 21772603225498758510
+    identification: 
+      column-name: GENERATION
+      type: Plain Text
+
+    heading: 
+      heading: Generation
+      alignment: end
+
+    layout: 
+      sequence: 20
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: '<img src="#GEN_IMG#"> '
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: EGG_GROUPS ==================================
+    id: 21772603236560758511
+    identification: 
+      column-name: EGG_GROUPS
+      type: Plain Text
+
+    heading: 
+      heading: Egg Groups
+      alignment: start
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: HABITAT =====================================
+    id: 21772603395571758512
+    identification: 
+      column-name: HABITAT
+      type: Plain Text
+
+    heading: 
+      heading: Habitat
+      alignment: start
+
+    layout: 
+      sequence: 130
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {if HABITAT_ID/}
+        #HABITAT# <img src="#APP_FILES#habitat/habitat_#HABITAT_ID#.png"  height="18px">
+        {else/}
+        -
+        {endif/}
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COLOR =======================================
+    id: 21772603457617758513
+    identification: 
+      column-name: COLOR
+      type: Plain Text
+
+    heading: 
+      heading: Color
+      alignment: start
+
+    layout: 
+      sequence: 150
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        <span aria-hidden="true" class="fa fa-square" style="color:#COLOR#"></span> #COLOR#
+        
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SHAPE =======================================
+    id: 21772603605683758514
+    identification: 
+      column-name: SHAPE
+      type: Plain Text
+
+    heading: 
+      heading: Shape
+      alignment: start
+
+    layout: 
+      sequence: 160
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {if SHAPE/}
+        <img src="#APP_FILES#shapes/shape_#SHAPE#.png">
+        {else/}
+        -
+        {endif/}
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: HIDDEN_ABILITY ==============================
+    id: 22968682294979240778
+    identification: 
+      column-name: HIDDEN_ABILITY
+      type: Plain Text
+
+    heading: 
+      heading: Hidden Ability
+      alignment: start
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: <span class="a-CardView-badge a-CardView-badgeValue ability-hidden">#HIDDEN_ABILITY#</span>
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE ========================================
+    id: 22968682349594240779
+    identification: 
+      column-name: TYPE
+      type: Plain Text
+
+    heading: 
+      heading: Type
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        <span class="a-CardView-badge a-CardView-badgeValue type-#TYPE1#"><img src="#TYPE1_IMG#" height="16">#TYPE1#</span>
+        {if TYPE2/}
+        <span class="a-CardView-badge a-CardView-badgeValue type-#TYPE2#"><img src="#TYPE2_IMG#" height="16">#TYPE2#</span>
+        {endif/}
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ABILITIY ====================================
+    id: 22968682454877240780
+    identification: 
+      column-name: ABILITIY
+      type: Plain Text
+
+    heading: 
+      heading: Abilitiy
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: HABITAT_ID ==================================
+    id: 22968683100518240786
+    identification: 
+      column-name: HABITAT_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 140
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MALE ========================================
+    id: 26561756636489483891
+    identification: 
+      column-name: MALE
+      type: Plain Text
+
+    heading: 
+      heading: Gender Distribution
+      alignment: start
+
+    layout: 
+      sequence: 110
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {if MALE/}
+        <span class="fa fa-mars u-color-31" aria-hidden="true"></span>&nbsp; #MALE# &nbsp;<span aria-hidden="true" class="fa fa-venus u-color-10"></span>&nbsp; #FEMALE#
+        {else/}
+        Genderless
+        {endif/}
+        
+        
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FEMALE ======================================
+    id: 26561756820640483892
+    identification: 
+      column-name: FEMALE
+      type: Hidden Column
+
+    layout: 
+      sequence: 120
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CAPTURE_RATE ================================
+    id: 26561756911124483893
+    identification: 
+      column-name: CAPTURE_RATE
+      type: Plain Text
+
+    heading: 
+      heading: Capture Rate
+      alignment: end
+
+    layout: 
+      sequence: 180
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: BASE_HAPPINESS ==============================
+    id: 26561756977131483894
+    identification: 
+      column-name: BASE_HAPPINESS
+      type: Plain Text
+
+    heading: 
+      heading: Base Happiness
+      alignment: end
+
+    layout: 
+      sequence: 190
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GROWTH_RATE =================================
+    id: 26561757149470483896
+    identification: 
+      column-name: GROWTH_RATE
+      type: Plain Text
+
+    heading: 
+      heading: Growth Rate
+      alignment: start
+
+    layout: 
+      sequence: 200
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SPECIES =====================================
+    id: 28696208369672053789
+    identification: 
+      column-name: SPECIES
+      type: Plain Text
+
+    heading: 
+      heading: Species
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: EV_YIELD ====================================
+    id: 42952910520198622889
+    identification: 
+      column-name: EV_YIELD
+      type: Plain Text
+
+    heading: 
+      heading: EV Yield
+      alignment: start
+
+    layout: 
+      sequence: 170
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: &P2_PKMN_NAME. ==============================
+  id: 21772602537254758504
+  identification: 
+    title: '&P2_PKMN_NAME.'
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: Data # 9878589920184159997
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero # 7073687806191526106
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  image: 
+    file-url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/&P2_PKMN_NUMBER..png'
+
+  advanced: 
+    static-id: hero_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Forms =======================================
+  id: 22968682601039240781
+  identification: 
+    title: Forms
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      p.ID,
+      pf.FORM_IDENTIFIER,
+      NVL(pfn.POKEMON_NAME,pfn.FORM_NAME) as NAME,
+      p.IS_DEFAULT
+      from POKEMON p
+      inner join POKEMON_FORMS pf on pf.POKEMON_ID = p.ID and p.SPECIES_ID = :P2_PKMN_SPECIES_ID
+      inner join POKEMON_FORM_NAMES pfn on pfn.POKEMON_FORM_ID = pf.ID and pfn.LOCAL_LANGUAGE_ID = 9 -- english
+      
+    page-items-to-submit: 
+    - P2_PKMN_SPECIES_ID
+
+  layout: 
+    sequence: 10
+    parent-region: Forms # 28696208146522053787
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 22968682737060240783
+    appearance: 
+      layout: Float
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <span class="t-BadgeList-value"> 
+            <span>&NAME.</span>
+        </span>
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: false
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: Image URL
+      image-url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/&ID..png'
+      icon-position: Start
+
+    media: 
+      advanced-formatting: false
+      source: No Media
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    actions: 
+    - # ====== Action: Full Card ===================================
+      id: 22968682829251240784
+      identification: 
+        type: Full Card
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::P2_PKMN_NUMBER,P2_PKMN_NAME,P2_PKMN_SPECIES_ID,P2_PKMN_IS_DEFAULT:&ID.,&NAME.,&P2_PKMN_SPECIES_ID.,&IS_DEFAULT.'
+          page: 2 # Pokémon Details
+          values: 
+            p2_pkmn_number: '&ID.'
+            p2_pkmn_name: '&NAME.'
+            p2_pkmn_species_id: '&P2_PKMN_SPECIES_ID.'
+            p2_pkmn_is_default: '&IS_DEFAULT.'
+
+      server-side-condition: 
+        type: Item != Value
+        item: P2_PKMN_NUMBER
+        value: '&ID.'
+        execute-condition: For Each Row
+
+- # ====== Region: Abilities ===================================
+  id: 22968683359966240789
+  identification: 
+    title: Abilities
+    type: Static Content
+
+  layout: 
+    sequence: 70
+    parent-region: Data # 9878589920184159997
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: abilites_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Moves Report ================================
+  id: 22968684141831240797
+  identification: 
+    title: Moves Report
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      m.ID,
+      case
+        when pm.LEVEL_ = 0 then 'Evol.'
+        else to_char(pm.LEVEL_)
+      end as LEVEL_,
+      (select 
+      CASE
+          WHEN MACHINE_NUMBER < 100 THEN 'TM' || LPAD(to_char(MACHINE_NUMBER), 2, '0')
+          ELSE 'HM' || SUBSTR(TO_CHAR(MACHINE_NUMBER), -2)
+      END
+      from MACHINES mch where mch.MOVE_ID=m.ID 
+      and mch.VERSION_GROUP_ID=pm.VERSION_GROUP_ID
+      ) as TM_HM,
+      (select MACHINE_NUMBER 
+      from MACHINES mch where mch.MOVE_ID=m.ID 
+      and mch.VERSION_GROUP_ID=pm.VERSION_GROUP_ID
+      ) as MACHINE_NUMBER,
+      mn.NAME as MOVE,
+      lower(t.IDENTIFIER) as TYPE,
+      mdc.IDENTIFIER as CLASS,
+      m.POWER,
+      m.PP,
+      m.ACCURACY
+      from MOVES m
+      inner join POKEMON_MOVES pm on pm.MOVE_ID = m.ID
+      inner join MOVE_DAMAGE_CLASSES mdc on mdc.ID = m.DAMAGE_CLASS_ID
+      inner join TYPES t on t.ID = m.TYPE_ID
+      inner join MOVE_NAMES mn on mn.MOVE_ID = m.ID and mn.LOCAL_LANGUAGE_ID = 9 -- english
+      where pm.POKEMON_ID = :P2_PKMN_NUMBER
+      and pm.VERSION_GROUP_ID = :P2_VERSION_GROUP 
+      and pm.POKEMON_MOVE_METHOD_ID = :P2_MOVE_METHOD -- POKEMON_MOVE_METHODS table
+      order by pm.LEVEL_, MACHINE_NUMBER
+      
+
+  layout: 
+    sequence: 10
+    parent-region: Moves # 23765899043037496778
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report # 7073712033569526118
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 22968685475045240810
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.::P4_MOVE_ID,P4_MOVE_NAME,P4_PKMN_CSS_COLOR,P4_PKMN_TEXT_COLOR:#ID#,#MOVE#,&P2_PKMN_CSS_COLOR.,&P2_PKMN_TEXT_COLOR.'
+        page: 4 # Move Details
+        values: 
+          p4_move_id: '#ID#'
+          p4_move_name: '#MOVE#'
+          p4_pkmn_css_color: '&P2_PKMN_CSS_COLOR.'
+          p4_pkmn_text_color: '&P2_PKMN_TEXT_COLOR.'
+
+      link-icon: <span role="img" aria-label="View" class="fa fa-search" title="View"></span>
+
+    pagination: 
+      type: None
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 23765905231977497288
+      identification: 
+        name: Primary Report
+        alias: 237583447
+
+    columns: 
+    - # ====== Column: MOVE ========================================
+      id: 22968686411440240819
+      identification: 
+        column-name: MOVE
+        type: Plain Text
+
+      heading: 
+        heading: Move
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: None
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TYPE ========================================
+      id: 22968686434960240820
+      identification: 
+        column-name: TYPE
+        type: Plain Text
+
+      heading: 
+        heading: Type
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: '<span class="a-CardView-badge a-CardView-badgeValue type-#TYPE#" style="display:inline-block;"><img src="#APP_FILES#types/#TYPE#.png" height="16">#TYPE#</span>'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: None
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLASS =======================================
+      id: 22968686608250240821
+      identification: 
+        column-name: CLASS
+        type: Plain Text
+
+      heading: 
+        heading: Category
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <img src="#APP_FILES#move_class/#CLASS#.png" height="20">
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: None
+
+      advanced: 
+        static-id: move_class_column
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: POWER =======================================
+      id: 22968686707783240822
+      identification: 
+        column-name: POWER
+        type: Plain Text
+
+      heading: 
+        heading: Power
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: None
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PP ==========================================
+      id: 22968686762775240823
+      identification: 
+        column-name: PP
+        type: Plain Text
+
+      heading: 
+        heading: PP
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: None
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ACCURACY ====================================
+      id: 22968686833464240824
+      identification: 
+        column-name: ACCURACY
+        type: Plain Text
+
+      heading: 
+        heading: Accuracy
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: None
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LEVEL_ ======================================
+      id: 23773467321405781809
+      identification: 
+        column-name: LEVEL_
+        type: Plain Text
+
+      heading: 
+        heading: Level
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: None
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      server-side-condition: 
+        type: Item = Value
+        item: P2_MOVE_METHOD
+        value: 1
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ID ==========================================
+      id: 24420563998240209079
+      identification: 
+        column-name: ID
+        type: Hidden Column
+
+      heading: 
+        heading: ID
+
+      layout: 
+        sequence: 100
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TM_HM =======================================
+      id: 26561756491767483889
+      identification: 
+        column-name: TM_HM
+        type: Plain Text
+
+      heading: 
+        heading: TM/HM
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: '#TM_HM#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: None
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      server-side-condition: 
+        type: Item = Value
+        item: P2_MOVE_METHOD
+        value: 4
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MACHINE_NUMBER ==============================
+      id: 26561756596778483890
+      identification: 
+        column-name: MACHINE_NUMBER
+        type: Plain Text
+
+      heading: 
+        heading: Machine Number
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+- # ====== Region: Moves =======================================
+  id: 23765899043037496778
+  identification: 
+    title: Moves
+    type: Static Content
+
+  layout: 
+    sequence: 160
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: moves_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P2_PKMN_IS_DEFAULT
+    value: 1
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Sprites =====================================
+  id: 26561757295238483897
+  identification: 
+    title: Sprites
+    type: Static Content
+
+  layout: 
+    sequence: 170
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: sprites_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: '(:P2_PKMN_IS_DEFAULT = 1 and :P2_PKMN_GENERATION_ID <= 5)'
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Sprites =====================================
+  id: 26561757361172483898
+  identification: 
+    title: Sprites
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      main_query.*,
+      '#APP_FILES#generations/gen_'||GENERATION_ID||'.png' as GEN_IMG,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||VERSION_COVER_PKMN1||'.png' as VERSION_COVER_PKMN1_IMG,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||VERSION_COVER_PKMN2||'.png' as VERSION_COVER_PKMN2_IMG
+      from
+      (
+      select
+      GENERATION_ID,GENERATION_NAME,VERSION_ID, VERSION_GRP_NAME, VERSION_HEADER,
+      case
+      	when VERSION_GRP_NAME='red-blue' or VERSION_GRP_NAME='firered-leafgreen' then '6'   -- charizard
+      	when VERSION_GRP_NAME='yellow' then '25'  -- pikachu
+      	when VERSION_GRP_NAME='gold' or VERSION_GRP_NAME='heartgold-soulsilver' then '250'   -- ho-oh
+      	when VERSION_GRP_NAME='crystal' then '245' -- suicune
+      	when VERSION_GRP_NAME='ruby-sapphire' then '383' -- groudon
+      	when VERSION_GRP_NAME='emerald' then '384' -- rayquaza
+      	when VERSION_GRP_NAME='diamond-pearl' then '483' -- dialga
+      	when VERSION_GRP_NAME='platinum' then '487' -- giratina
+      	when VERSION_GRP_NAME='black-white' then '643' -- reshiram
+      end as VERSION_COVER_PKMN1,
+      case
+      	when VERSION_GRP_NAME='red-blue' then '9'   -- blastoise
+      	when VERSION_GRP_NAME='yellow' then null  -- NULL
+      	when VERSION_GRP_NAME='gold' or VERSION_GRP_NAME='heartgold-soulsilver' then '249' -- lugia
+      	when VERSION_GRP_NAME='crystal' then null -- NULL
+      	when VERSION_GRP_NAME='ruby-sapphire' then '382' -- kyogre
+      	when VERSION_GRP_NAME='emerald' then null -- NULL
+      	when VERSION_GRP_NAME='firered-leafgreen' then '3'   -- venusaur
+      	when VERSION_GRP_NAME='diamond-pearl' then '484' -- palkia
+      	when VERSION_GRP_NAME='platinum' then null -- NULL
+      	when VERSION_GRP_NAME='black-white' then '644' -- zekrom
+      end as VERSION_COVER_PKMN2,
+      case
+        when GENERATION_ID=5 then 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/animated/'||:P2_PKMN_SPECIES_ID||'.gif'
+        else 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/'||:P2_PKMN_SPECIES_ID||'.png' 
+      end as FRONT_DEFAULT,
+      case
+        when GENERATION_ID=1 then 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/transparent/back/'||:P2_PKMN_SPECIES_ID||'.png'
+        when GENERATION_ID=5 then 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/animated/back/'||:P2_PKMN_SPECIES_ID||'.gif' 
+        else 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/back/'||:P2_PKMN_SPECIES_ID||'.png' 
+      end as BACK_DEFAULT,
+      case
+        when GENERATION_ID=5 then 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/animated/shiny/'||:P2_PKMN_SPECIES_ID||'.gif' 
+        else 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/shiny/'||:P2_PKMN_SPECIES_ID||'.png' 
+      end as FRONT_SHINY,
+      case
+        when GENERATION_ID=5 then 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/animated/back/shiny/'||:P2_PKMN_SPECIES_ID||'.gif'
+        else 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/back/shiny/'||:P2_PKMN_SPECIES_ID||'.png'
+      end as BACK_SHINY,
+      CASE
+        when VERSION_GRP_NAME = 'emerald' then null -- no back sprite for 'emerald'
+        else '-'
+      END as SPRITE_EMERALD_BACK,
+      CASE
+        when  GENERATION_ID < 2 then null -- shinies introduced in generation-ii
+        else '-'
+      END as SPRITE_SHINY_FRONT,
+      CASE
+        when VERSION_GRP_NAME = 'emerald' then null -- no back sprite for 'emerald'
+        when GENERATION_ID < 2 then null -- shinies introduced in generation-ii
+        else '-'
+      END as SPRITE_SHINY_BACK
+      from (
+          select 
+          vg.GENERATION_ID as GENERATION_ID,
+          g.IDENTIFIER as GENERATION_NAME,
+          vg.ID as VERSION_ID,
+          case
+            when vg.IDENTIFIER='gold-silver' then 'gold'
+            else vg.IDENTIFIER
+          END as VERSION_GRP_NAME,
+      	LISTAGG(vn.NAME, ' / ') WITHIN GROUP (ORDER BY vn.VERSION_ID) AS VERSION_HEADER
+          from VERSION_GROUPS vg
+          inner join GENERATIONS g on g.ID = vg.GENERATION_ID
+      	INNER JOIN VERSIONS v ON vg.ID = v.VERSION_GROUP_ID
+      	INNER JOIN VERSION_NAMES vn ON v.ID = vn.VERSION_ID and vn.LOCAL_LANGUAGE_ID = 9 -- english
+          where g.ID <= 5 -- starting generation-vi there are 3D models
+          and g.ID >= :P2_PKMN_GENERATION_ID -- PKMN from new generations don't appear in previous generations
+          and vg.IDENTIFIER not in ('colosseum','xd','black-2-white-2')
+      	GROUP BY vg.GENERATION_ID, g.IDENTIFIER, vg.ID, vg.IDENTIFIER
+      )
+      order by GENERATION_ID, VERSION_ID
+      ) main_query
+
+  layout: 
+    sequence: 10
+    parent-region: Sprites # 26561757295238483897
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    column-css-classes: 
+    - u-flex
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-flex-grow-1
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 26561757481602483899
+    appearance: 
+      layout: Float
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <img src="&GEN_IMG." class="margin-bottom-sm">
+        <img src="&VERSION_COVER_PKMN1_IMG." height="32px">
+        {if VERSION_COVER_PKMN2/}
+        <img src="&VERSION_COVER_PKMN2_IMG." height="32px" class="&VERSION_COVER_PKMN2." >
+        {endif/}
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: false
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: No Icon
+      badge-column: VERSION_HEADER
+      badge-css-classes: 
+      - version_grp_&VERSION_GRP_NAME.
+
+    media: 
+      advanced-formatting: true
+      html-expression: |
+        <table style="border-collapse: collapse;">
+            <tr>
+                <td class="u-alignMiddle" style="border: 1px solid black;"><img src="&FRONT_DEFAULT." height="56px"></td>
+                {if SPRITE_EMERALD_BACK/}
+                <td class="u-alignMiddle" style="border: 1px solid black;"><img src="&BACK_DEFAULT." height="56px"></td>
+                {endif/}
+                {if SPRITE_SHINY_FRONT/}
+                <td class="u-alignMiddle &SPRITE_SHINY_FRONT_HIDDEN." style="border: 1px solid black;"><img src="&FRONT_SHINY." class="&SPRITE_SHINY_FRONT_HIDDEN." height="56px"></td>
+                {endif/}
+                {if SPRITE_SHINY_BACK/}
+                <td class="u-alignMiddle &SPRITE_SHINY_BACK_HIDDEN." style="border: 1px solid black;"><img src="&BACK_SHINY." class="&SPRITE_SHINY_BACK_HIDDEN." height="56px"></td>
+                {endif/}
+            </tr>
+            <tr>
+                <td class="u-textCenter" style="border: 1px solid black; font-size: 10px;">normal</td>
+                {if SPRITE_EMERALD_BACK/}
+                <td class="u-textCenter" style="border: 1px solid black; font-size: 10px;">back</td>
+                {endif/}
+                {if SPRITE_SHINY_FRONT/}
+                <td class="u-textCenter &SPRITE_SHINY_FRONT_HIDDEN." style="border: 1px solid black; font-size: 10px;">shiny</td>
+                {endif/}
+                {if SPRITE_SHINY_BACK/}
+                <td class="u-textCenter &SPRITE_SHINY_BACK_HIDDEN." style="border: 1px solid black; font-size: 10px;">shiny back</td>
+                {endif/}
+            </tr>
+        </table>
+      position: Body
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+- # ====== Region: 3D Models ===================================
+  id: 26561757737382483902
+  identification: 
+    title: 3D Models
+    type: Static Content
+
+  layout: 
+    sequence: 180
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: models_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: '(:P2_PKMN_IS_DEFAULT = 1 and :P2_PKMN_GENERATION_ID <= 7)'
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: 3D Models ===================================
+  id: 26561757835121483903
+  identification: 
+    title: 3D Models
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      main_query.*,
+      '#APP_FILES#generations/gen_'||GENERATION_ID||'.png' as GEN_IMG,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||VERSION_COVER_PKMN1||'.png' as VERSION_COVER_PKMN1_IMG,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||VERSION_COVER_PKMN2||'.png' as VERSION_COVER_PKMN2_IMG
+      from
+      (
+      select
+      GENERATION_ID, GENERATION_NAME, VERSION_GRP_NAME, VERSION_HEADER,VERSION_ID,
+      case
+      	when VERSION_GRP_NAME='x-y' then '716'  -- xerneas
+          when VERSION_GRP_NAME='omegaruby-alphasapphire' then '10078' -- primal groudon
+      	when VERSION_GRP_NAME='ultra-sun-ultra-moon' then '791' -- solgaleo
+      end as VERSION_COVER_PKMN1,
+      case
+      	when VERSION_GRP_NAME='x-y' then '717'   -- yvetal
+          when VERSION_GRP_NAME='omegaruby-alphasapphire' then '10077' -- primal kyogre
+      	when VERSION_GRP_NAME='ultra-sun-ultra-moon' then '792' -- lunala
+      end as VERSION_COVER_PKMN2,
+      LISTAGG('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/'||:P2_PKMN_SPECIES_ID||NVL2(FORM_IDENTIFIER,'-'||FORM_IDENTIFIER,'')||'.png','@') WITHIN GROUP (ORDER BY FORM_IDENTIFIER DESC) as FRONT_DEFAULT,
+      LISTAGG('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/'||VERSION_GRP_NAME||'/shiny/'||:P2_PKMN_SPECIES_ID||NVL2(FORM_IDENTIFIER,'-'||FORM_IDENTIFIER,'')||'.png','@') WITHIN GROUP (ORDER BY FORM_IDENTIFIER DESC) as FRONT_SHINY
+      --,FORM_IDENTIFIER, FORM_NAME -- hide these columns
+      from (
+        SELECT
+            vg.GENERATION_ID AS GENERATION_ID,
+            g.IDENTIFIER as GENERATION_NAME,
+            vg.ID as VERSION_ID,
+            case
+              when vg.IDENTIFIER='omega-ruby-alpha-sapphire' then 'omegaruby-alphasapphire'
+              else vg.IDENTIFIER
+            END as VERSION_GRP_NAME,
+            null as FORM_IDENTIFIER,
+            null as FORM_NAME,
+            LISTAGG(vn.NAME, ' / ') WITHIN GROUP (ORDER BY vn.VERSION_ID) AS VERSION_HEADER
+        FROM VERSION_NAMES vn
+        INNER JOIN VERSIONS v ON v.ID = vn.VERSION_ID and vn.LOCAL_LANGUAGE_ID = 9 -- english
+        INNER JOIN VERSION_GROUPS vg ON vg.ID = v.VERSION_GROUP_ID
+        INNER JOIN GENERATIONS g on g.ID = vg.GENERATION_ID
+        WHERE vg.IDENTIFIER in ('x-y','omega-ruby-alpha-sapphire','ultra-sun-ultra-moon') -- gen 8 and gen 9 3D models not loaded in pokeapi
+        and g.ID >= :P2_PKMN_GENERATION_ID -- PKMN from new generations don't appear in previous
+        GROUP BY vg.GENERATION_ID, g.IDENTIFIER, vg.ID, vg.IDENTIFIER
+        UNION
+        -- Additional rows for POKEMON_FORMS in 'x-y', 'omega-ruby-alpha-sapphire' and 'ultra-sun-ultra-moon'
+        SELECT
+            6 AS GENERATION_ID,
+            'generation-vi' as GENERATION_NAME,
+            15 as VERSION_ID,
+            'x-y' as VERSION_GRP_NAME,
+            pf.FORM_IDENTIFIER,
+            NVL(pfn.POKEMON_NAME,pfn.FORM_NAME) as FORM_NAME,
+            'X / Y' AS VERSION_HEADER
+        FROM POKEMON p
+        INNER JOIN POKEMON_FORMS pf on pf.POKEMON_ID = p.ID and p.SPECIES_ID = :P2_PKMN_SPECIES_ID
+        INNER JOIN POKEMON_FORM_NAMES pfn on pfn.POKEMON_FORM_ID = pf.ID and pfn.LOCAL_LANGUAGE_ID = 9 -- english
+        INNER JOIN VERSION_GROUPS vg on vg.ID = pf.INTRODUCED_IN_VERSION_GROUP_ID and vg.GENERATION_ID in (6,7) -- gen 6 and 7
+        WHERE IS_BATTLE_ONLY = 1 or IS_MEGA = 1
+        UNION
+        SELECT
+            6 AS GENERATION_ID,
+            'generation-vi' as GENERATION_NAME,
+            16 as VERSION_ID,
+            'omegaruby-alphasapphire' as VERSION_GRP_NAME,
+            pf.FORM_IDENTIFIER,
+            NVL(pfn.POKEMON_NAME,pfn.FORM_NAME) as FORM_NAME,
+            'Omega Ruby / Alpha Sapphire' AS VERSION_HEADER
+        FROM POKEMON p
+        INNER JOIN POKEMON_FORMS pf on pf.POKEMON_ID = p.ID and p.SPECIES_ID = :P2_PKMN_SPECIES_ID
+        INNER JOIN POKEMON_FORM_NAMES pfn on pfn.POKEMON_FORM_ID = pf.ID and pfn.LOCAL_LANGUAGE_ID = 9 -- english
+        INNER JOIN VERSION_GROUPS vg on vg.ID = pf.INTRODUCED_IN_VERSION_GROUP_ID and vg.GENERATION_ID in (6,7) -- gen 6 and 7
+        WHERE IS_BATTLE_ONLY = 1 or IS_MEGA = 1
+        UNION
+        SELECT
+            7 AS GENERATION_ID,
+            'generation-vii' as GENERATION_NAME,
+            18 as VERSION_ID,
+            'ultra-sun-ultra-moon' as VERSION_GRP_NAME,
+            pf.FORM_IDENTIFIER,
+            NVL(pfn.POKEMON_NAME,pfn.FORM_NAME) as FORM_NAME,
+            'Ultra Sun / Ultra Moon' AS VERSION_HEADER
+        FROM POKEMON p
+        INNER JOIN POKEMON_FORMS pf on pf.POKEMON_ID = p.ID and p.SPECIES_ID = :P2_PKMN_SPECIES_ID
+        INNER JOIN POKEMON_FORM_NAMES pfn on pfn.POKEMON_FORM_ID = pf.ID and pfn.LOCAL_LANGUAGE_ID = 9 -- english
+        INNER JOIN VERSION_GROUPS vg on vg.ID = pf.INTRODUCED_IN_VERSION_GROUP_ID and vg.GENERATION_ID in (6,7) -- gen 6 and 7
+        WHERE IS_BATTLE_ONLY = 1 or IS_MEGA = 1
+      ) 
+      group by GENERATION_ID, GENERATION_NAME, VERSION_GRP_NAME, VERSION_HEADER, VERSION_ID, VERSION_GRP_NAME
+      ORDER BY GENERATION_ID, VERSION_ID
+      ) main_query
+
+  layout: 
+    sequence: 10
+    parent-region: 3D Models # 26561757737382483902
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    column-css-classes: 
+    - u-flex
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-flex-grow-1
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 26561757932148483904
+    appearance: 
+      layout: Float
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <img src="&GEN_IMG." class="margin-bottom-sm">
+        <img src="&VERSION_COVER_PKMN1_IMG." height="32px">
+        {if VERSION_COVER_PKMN2/}
+        <img src="&VERSION_COVER_PKMN2_IMG." height="32px" class="&VERSION_COVER_PKMN2." >
+        {endif/}
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: false
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: No Icon
+      badge-column: VERSION_HEADER
+      badge-css-classes: 
+      - version_grp_&VERSION_GRP_NAME.
+
+    media: 
+      advanced-formatting: true
+      html-expression: |
+        <table style="border-collapse: collapse;">
+            <tr>
+                {loop "@" FRONT_DEFAULT/}
+                    <td class="u-alignMiddle" style="border: 1px solid black;"><img src="&APEX$ITEM."></td>
+                {endloop/}
+                {loop "@" FRONT_SHINY/}
+                    <td class="u-alignMiddle" style="border: 1px solid black;"><img src="&APEX$ITEM."></td>
+                {endloop/}
+            </tr>
+            <tr>
+                {loop "@" FRONT_DEFAULT/}
+                    <td class="u-textCenter" style="border: 1px solid black; font-size: 10px;">normal</td>
+                {endloop/}
+                {loop "@" FRONT_SHINY/}
+                    <td class="u-textCenter" style="border: 1px solid black; font-size: 10px;">shiny</td>
+                {endloop/}
+            </tr>
+        </table>
+      position: Body
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+- # ====== Region: Evolution ===================================
+  id: 28696207687870053782
+  identification: 
+    title: Evolution
+    type: Static Content
+
+  layout: 
+    sequence: 130
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: evolution_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Evolution ===================================
+  id: 28696207918271053784
+  identification: 
+    title: Evolution
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      main_query.*,
+      '#APP_FILES#types/'||TYPE1||'.png' as TYPE1_IMG,
+      '#APP_FILES#types/'||TYPE2||'.png' as TYPE2_IMG
+      from
+      (
+      SELECT 
+      t.PKMN_ID as PKMN_ID,
+      t.EVO_DESC as EVO_DESC,
+      case
+        when EVO_DESC is null then 'hidden'
+        else 'not-hidden'
+      end as ARROW_HIDDEN,
+      case
+        when IS_BABY = 1 then 0
+        else ps.ID
+      end as EVO_ORDER,
+      psn.NAME as NAME,
+      case 
+          when p.ID < 1000 then '#'||LPAD(to_char(p.ID), 4, '0')
+          else '#'||to_char(p.ID)
+      end as NUM,
+      p.SPECIES_ID,
+      (select lower(t.IDENTIFIER) 
+      from TYPES t
+      inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+      where pt.POKEMON_ID = p.ID
+      and pt.slot=1) as TYPE1,
+      (select lower(t.IDENTIFIER) 
+      from TYPES t
+      inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+      where pt.POKEMON_ID = p.ID
+      and pt.slot=2) as TYPE2,
+      lower(pc.IDENTIFIER) as COLOR,
+      case
+        when lower(pc.IDENTIFIER) in ('white') then 'gray'
+        else lower(pc.IDENTIFIER)
+      end as CSS_COLOR,
+      case
+        when lower(pc.IDENTIFIER) in ('gray','pink','white','yellow') then 'black'
+        else 'white'
+      end as CSS_TEXT_COLOR,
+      ps.GENERATION_ID as GENERATION_ID,
+      ps.EVOLUTION_CHAIN_ID as EVOLUTION_CHAIN_ID,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||p.ID||'.png' as SPRITE,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'||p.ID||'.png' as OFFICIAL_ARTWORK,
+      p.IS_DEFAULT
+      from TABLE(PKMN_DATA.get_evolution_info(p_evo_chain_id => :P2_PKMN_EVO_CHAIN_ID)) t
+      inner join POKEMON p on p.ID = t.PKMN_ID
+      inner join POKEMON_SPECIES ps on ps.ID = p.ID
+      inner join POKEMON_SPECIES_NAMES psn on psn.POKEMON_SPECIES_ID = ps.ID and psn.LOCAL_LANGUAGE_ID = 9 -- english
+      inner join POKEMON_COLORS pc on pc.ID = ps.COLOR_ID
+      where p.IS_DEFAULT = 1 -- NOTE : don't show PKMN variations
+      order by EVO_ORDER
+      ) main_query
+
+  layout: 
+    sequence: 10
+    parent-region: Evolution # 28696207687870053782
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 28696208257333053788
+    appearance: 
+      layout: Float
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <h3 class="a-CardView-title ">&NUM. &NAME.
+            <span class="a-CardView-badge a-CardView-badgeValue type-&TYPE1."><img src="&TYPE1_IMG." height="16">&TYPE1.</span>
+            {if TYPE2/}
+            <span class="a-CardView-badge a-CardView-badgeValue type-&TYPE2."><img src="&TYPE2_IMG." height="16">&TYPE2.</span>
+            {endif/}
+        </h3>
+
+    subtitle: 
+      advanced-formatting: true
+      html-expression: '<span class="fa fa-arrow-circle-right &ARROW_HIDDEN." aria-hidden="true" style="color: &P2_PKMN_CSS_COLOR."></span>&nbsp;&EVO_DESC.'
+
+    body: 
+      advanced-formatting: false
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: No Icon
+
+    media: 
+      advanced-formatting: false
+      source: Image URL
+      url: '&OFFICIAL_ARTWORK.'
+      position: Body
+      appearance: Square
+      sizing: Fit
+      css-classes: 
+      - pkmn-card-img
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    actions: 
+    - # ====== Action: Full Card ===================================
+      id: 30345306095683780375
+      identification: 
+        type: Full Card
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::P2_PKMN_NUMBER,P2_PKMN_NAME,P2_PKMN_SPECIES_ID,P2_PKMN_GENERATION_ID,P2_PKMN_IS_DEFAULT,P2_PKMN_EVO_CHAIN_ID,P2_PKMN_COLOR,P2_PKMN_TEXT_COLOR,P2_PKMN_CSS_COLOR:&PKMN_ID.,&NAME.,&SPECIES_ID.,&GENERATION_ID.,&IS_DEFAULT.,&EVOLUTION_CHAIN_ID.,&COLOR.,&CSS_TEXT_COLOR.,&CSS_COLOR.'
+          page: 2 # Pokémon Details
+          values: 
+            p2_pkmn_number: '&PKMN_ID.'
+            p2_pkmn_name: '&NAME.'
+            p2_pkmn_species_id: '&SPECIES_ID.'
+            p2_pkmn_generation_id: '&GENERATION_ID.'
+            p2_pkmn_is_default: '&IS_DEFAULT.'
+            p2_pkmn_evo_chain_id: '&EVOLUTION_CHAIN_ID.'
+            p2_pkmn_color: '&COLOR.'
+            p2_pkmn_text_color: '&CSS_TEXT_COLOR.'
+            p2_pkmn_css_color: '&CSS_COLOR.'
+
+      server-side-condition: 
+        type: Item != Value
+        item: P2_PKMN_NUMBER
+        value: '&PKMN_ID.'
+        execute-condition: For Each Row
+
+- # ====== Region: Forms =======================================
+  id: 28696208146522053787
+  identification: 
+    title: Forms
+    type: Static Content
+
+  layout: 
+    sequence: 80
+    parent-region: Data # 9878589920184159997
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: forms_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: '(:P2_PKMN_GENERATION_ID <= 8)'
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Pokédex =====================================
+  id: 30345306130229780376
+  identification: 
+    title: Pokédex
+    type: Static Content
+
+  layout: 
+    sequence: 150
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible # 7073673344673526099
+    template-options: 
+    - '#DEFAULT#'
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: pokedex_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P2_PKMN_IS_DEFAULT
+    value: 1
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Pokedex Entries =============================
+  id: 30345306248862780377
+  identification: 
+    title: Pokedex Entries
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      NVL(psft.FLAVOR_TEXT,'Pokédex entry not found for '||:P2_PKMN_NAME||' in Pokémon '||vn.NAME) as DEX_DESCRIPTION,
+      vn.NAME as VERSION_NAME,
+      vn.VERSION_ID as VERSION_ID,
+      case
+      	when vn.NAME='Red' then '6'   -- charizard
+      	when vn.NAME='Blue' then '9'   -- blastoise
+      	when vn.NAME='Yellow' then '25'  -- pikachu
+      	when vn.NAME='Gold' then '250'   -- ho-oh
+      	when vn.NAME='Silver'  then '249' -- lugia
+      	when vn.NAME='Crystal' then '245' -- suicune
+      	when vn.NAME='Ruby' then '383' -- groudon
+      	when vn.NAME='Sapphire' then '382' -- kyogre
+      	when vn.NAME='Emerald' then '384' -- rayquaza
+      	when vn.NAME='FireRed' then '6'   -- charizard
+      	when vn.NAME='LeafGreen' then '3'   -- venusaur
+      	when vn.NAME='Diamond' then '483' -- dialga
+      	when vn.NAME='Pearl' then '484' -- palkia
+      	when vn.NAME='Platinum' then '487' -- giratina
+      	when vn.NAME='HeartGold' then '250'   -- ho-oh
+      	when vn.NAME='SoulSilver'  then '249' -- lugia
+      	when vn.NAME='Black' then '643' -- reshiram
+      	when vn.NAME='White' then '644' -- zekrom
+      	when vn.NAME='Black 2' then '10022' -- kyurem-black
+      	when vn.NAME='White 2' then '10023' -- kyurem-white
+      	when vn.NAME='X' then '716'  -- xerneas
+      	when vn.NAME='Y' then '717'   -- yvetal
+          when vn.NAME='Omega Ruby' then '10078' -- primal groudon
+      	when vn.NAME='Alpha Sapphire' then '10077' -- primal kyogre
+      	when vn.NAME='Let''s Go, Pikachu!' then '25' -- pikachu
+      	when vn.NAME='Let''s Go, Eevee!' then '133' -- eevee
+      	when vn.NAME='Sun' then '791' -- solgaleo
+      	when vn.NAME='Moon' then '792' -- lunala
+      	when vn.NAME='Ultra Sun' then '791' -- solgaleo
+      	when vn.NAME='Ultra Moon' then '792' -- lunala
+      	when vn.NAME='Sword' then '888' -- zacian
+      	when vn.NAME='Shield' then '889' -- zamazenta
+          when vn.NAME='Brilliant Diamond' then '483' -- dialga
+      	when vn.NAME='Shining Pearl' then '484' -- palkia
+      	when vn.NAME='Legends: Arceus' then '493' -- arceus
+      	when vn.NAME='Scarlet' then '1007' -- koraidon
+      	when vn.NAME='Violet' then '1008' -- miraidon
+      end as VERSION_COVER
+      from VERSIONS v 
+      inner join VERSION_NAMES vn on vn.VERSION_ID = v.ID and vn.LOCAL_LANGUAGE_ID = 9 -- english
+      LEFT JOIN (
+          SELECT FLAVOR_TEXT, VERSION_ID
+          FROM POKEMON_SPECIES_FLAVOR_TEXT
+          WHERE SPECIES_ID = :P2_PKMN_SPECIES_ID
+          AND LANGUAGE_ID = 9 -- english
+      ) psft ON v.ID = psft.VERSION_ID
+      where v.ID not in (19,20,35,36) -- Colosseum, XD, The Isle of Armor, The Crown Tundra, 
+      order by v.VERSION_GROUP_ID, v.ID
+
+  layout: 
+    sequence: 10
+    parent-region: Pokédex # 30345306130229780376
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 30345306333757780378
+    appearance: 
+      layout: Horizontal (Row)
+
+    title: 
+      advanced-formatting: false
+      column: VERSION_NAME
+      css-classes: 
+      - version_&VERSION_ID.
+
+    subtitle: 
+      advanced-formatting: false
+      column: DEX_DESCRIPTION
+
+    body: 
+      advanced-formatting: false
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: Image URL
+      image-url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/&VERSION_COVER..png'
+      icon-position: Start
+
+    media: 
+      advanced-formatting: false
+      source: No Media
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+- # ====== Region: Icons =======================================
+  id: 30345306427930780379
+  identification: 
+    title: Icons
+    type: Static Content
+
+  layout: 
+    sequence: 190
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: icons_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: '(:P2_PKMN_IS_DEFAULT = 1 and :P2_PKMN_GENERATION_ID <= 8)'
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Icons =======================================
+  id: 30345306594160780380
+  identification: 
+    title: Icons
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      main_query.*,
+      '#APP_FILES#generations/gen_'||GENERATION_ID||'.png' as GEN_IMG,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||VERSION_COVER_PKMN1||'.png' as VERSION_COVER_PKMN1_IMG,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||VERSION_COVER_PKMN2||'.png' as VERSION_COVER_PKMN2_IMG
+      from
+      (
+      select
+      GENERATION_ID, GENERATION_NAME, VERSION_GRP_NAME, VERSION_HEADER, VERSION_ID,
+      case
+      	when VERSION_GRP_NAME='ultra-sun-ultra-moon' then '791' -- solgaleo
+          when VERSION_GRP_NAME='sword-shield' then '888'  -- zacian
+      	when VERSION_GRP_NAME='scarlet-violet' then '1007' -- koraidon
+      end as VERSION_COVER_PKMN1,
+      case
+      	when VERSION_GRP_NAME='ultra-sun-ultra-moon' then '792' -- lunala
+          when VERSION_GRP_NAME='sword-shield' then '889'   -- zamacenta
+      	when VERSION_GRP_NAME='scarlet-violet' then '1008' -- miraidon
+      end as VERSION_COVER_PKMN2,
+      case
+        when VERSION_GRP_NAME='scarlet-violet' then 'https://www.centropkmn.com/pokes/gen9-sprites/'||:P2_PKMN_SPECIES_ID||'.png'
+        else LISTAGG('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||GENERATION_NAME||'/icons/'||:P2_PKMN_SPECIES_ID||NVL2(FORM_IDENTIFIER,'-'||FORM_IDENTIFIER,'')||'.png','@') WITHIN GROUP (ORDER BY FORM_IDENTIFIER DESC)
+      end as ICON
+      --,FORM_IDENTIFIER, FORM_NAME -- hide these columns
+      from (
+        SELECT
+            vg.GENERATION_ID AS GENERATION_ID,
+            g.IDENTIFIER as GENERATION_NAME,
+            vg.ID as VERSION_ID,
+            vg.IDENTIFIER as VERSION_GRP_NAME,
+            null FORM_IDENTIFIER,
+            null FORM_NAME,
+            LISTAGG(vn.NAME, ' / ') WITHIN GROUP (ORDER BY vn.VERSION_ID) AS VERSION_HEADER
+        FROM VERSION_NAMES vn
+        INNER JOIN VERSIONS v ON v.ID = vn.VERSION_ID and vn.LOCAL_LANGUAGE_ID = 9 -- english
+        INNER JOIN VERSION_GROUPS vg ON vg.ID = v.VERSION_GROUP_ID
+        INNER JOIN GENERATIONS g on g.ID = vg.GENERATION_ID
+        WHERE vg.IDENTIFIER in ('ultra-sun-ultra-moon','sword-shield','scarlet-violet') -- gen 9 icons not available at pokeapi
+        GROUP BY vg.GENERATION_ID, g.IDENTIFIER, vg.ID, vg.IDENTIFIER
+          UNION
+        -- Additional rows for POKEMON_FORMS in 'sword-shield' (gmax)
+        SELECT
+            8 AS GENERATION_ID,
+            'generation-viii' as GENERATION_NAME,
+            20 as VERSION_ID,
+            'sword-shield' as VERSION_GRP_NAME,
+            pf.FORM_IDENTIFIER,
+            NVL(pfn.POKEMON_NAME,pfn.FORM_NAME) as FORM_NAME,
+            'Sword / Shield' AS VERSION_HEADER
+        FROM POKEMON p
+        INNER JOIN POKEMON_FORMS pf on pf.POKEMON_ID = p.ID and p.SPECIES_ID = :P2_PKMN_SPECIES_ID
+        INNER JOIN POKEMON_FORM_NAMES pfn on pfn.POKEMON_FORM_ID = pf.ID and pfn.LOCAL_LANGUAGE_ID = 9 -- english
+        INNER JOIN VERSION_GROUPS vg on vg.ID = pf.INTRODUCED_IN_VERSION_GROUP_ID and vg.GENERATION_ID in (7,8) -- gen 7 and 8
+        WHERE IS_BATTLE_ONLY = 1 and IS_MEGA = 0
+      )
+      --new
+      where GENERATION_ID >= :P2_PKMN_GENERATION_ID -- PKMN from new generations don't appear in previous generations
+      group by GENERATION_ID, GENERATION_NAME, VERSION_GRP_NAME, VERSION_HEADER, VERSION_GRP_NAME, VERSION_ID
+      ORDER BY GENERATION_ID, VERSION_ID
+      ) main_query
+
+  layout: 
+    sequence: 10
+    parent-region: Icons # 30345306427930780379
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    column-css-classes: 
+    - u-flex
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-flex-grow-1
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 30345306698276780381
+    appearance: 
+      layout: Float
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <img src="&GEN_IMG." class="margin-bottom-sm">
+        <img src="&VERSION_COVER_PKMN1_IMG." height="32px">
+        {if VERSION_COVER_PKMN2/}
+        <img src="&VERSION_COVER_PKMN2_IMG." height="32px" class="&VERSION_COVER_PKMN2." >
+        {endif/}
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: false
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: No Icon
+      badge-column: VERSION_HEADER
+      badge-css-classes: 
+      - version_grp_&VERSION_GRP_NAME.
+
+    media: 
+      advanced-formatting: true
+      html-expression: |
+        {loop "@" ICON/}
+            <img src="&APEX$ITEM.">
+        {endloop/}
+      position: Body
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+page-items: 
+- # ====== Page Item: P2_PKMN_NUMBER ===========================
+  id: 7796820665559984190
+  identification: 
+    name: P2_PKMN_NUMBER
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_PKMN_NAME =============================
+  id: 21772602657627758505
+  identification: 
+    name: P2_PKMN_NAME
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_PKMN_SPECIES_ID =======================
+  id: 21772602752260758506
+  identification: 
+    name: P2_PKMN_SPECIES_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_PKMN_COLOR ============================
+  id: 22968683278673240788
+  identification: 
+    name: P2_PKMN_COLOR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 60
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_MOVE_METHOD ===========================
+  id: 26561755749038483882
+  identification: 
+    name: P2_MOVE_METHOD
+    type: Radio Group
+
+  label: 
+    label: Move Method
+    alignment: Left
+
+  settings: 
+    number-of-columns: 4
+    page-action-on-selection: Redirect and Set Value
+
+  layout: 
+    sequence: 30
+    region: Moves # 23765899043037496778
+    position: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating # 7073992643625526161
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--large
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      select NAME as d, POKEMON_MOVE_METHOD_ID as r
+      from POKEMON_MOVE_METHOD_PROSE
+      where POKEMON_MOVE_METHOD_ID <= 4
+      and LOCAL_LANGUAGE_ID = 9 -- english
+      order by POKEMON_MOVE_METHOD_ID
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_PKMN_GENERATION_ID ====================
+  id: 26561757590133483900
+  identification: 
+    name: P2_PKMN_GENERATION_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 90
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_VERSION_GROUP =========================
+  id: 26561757665726483901
+  identification: 
+    name: P2_VERSION_GROUP
+    type: Radio Group
+
+  label: 
+    label: Version
+    alignment: Left
+
+  settings: 
+    number-of-columns: 5
+    page-action-on-selection: Redirect and Set Value
+
+  layout: 
+    sequence: 20
+    region: Moves # 23765899043037496778
+    position: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating # 7073992643625526161
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--large
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT
+          LISTAGG(vn.NAME, ' / ') WITHIN GROUP (ORDER BY vn.VERSION_ID) AS D,
+          v.VERSION_GROUP_ID AS R
+      FROM VERSION_NAMES vn
+      INNER JOIN VERSIONS v ON v.ID = vn.VERSION_ID and vn.LOCAL_LANGUAGE_ID = 9 -- english
+      INNER JOIN VERSION_GROUPS vg ON vg.ID = v.VERSION_GROUP_ID
+      WHERE v.VERSION_GROUP_ID NOT IN (22,21,13,12)
+      AND v.VERSION_GROUP_ID IN (select distinct VERSION_GROUP_ID from POKEMON_MOVES where POKEMON_ID = :P2_PKMN_NUMBER)
+      GROUP BY v.VERSION_GROUP_ID
+      ORDER BY v.VERSION_GROUP_ID desc
+      
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query
+    sql-query: |
+      SELECT max(v.VERSION_GROUP_ID) AS R
+      FROM VERSIONS v
+      WHERE v.VERSION_GROUP_ID NOT IN (22,21,13,12)
+      AND v.VERSION_GROUP_ID IN (select distinct VERSION_GROUP_ID from POKEMON_MOVES where POKEMON_ID = :P2_PKMN_NUMBER)
+      
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_PKMN_IS_DEFAULT =======================
+  id: 26561758026980483905
+  identification: 
+    name: P2_PKMN_IS_DEFAULT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 100
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_PKMN_CSS_COLOR ========================
+  id: 28696207343658053779
+  identification: 
+    name: P2_PKMN_CSS_COLOR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 70
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_PKMN_TEXT_COLOR =======================
+  id: 28696207613101053781
+  identification: 
+    name: P2_PKMN_TEXT_COLOR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 80
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_PKMN_EVO_CHAIN_ID =====================
+  id: 28696207770653053783
+  identification: 
+    name: P2_PKMN_EVO_CHAIN_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: Focus to Moves ======================
+  id: 28696207016829053775
+  identification: 
+    name: Focus to Moves
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: EVENT.EVENT.BROWSER.CHANGE
+    selection-type: Item(s)
+    item(s): 
+    - P2_VERSION_GROUP
+
+  server-side-condition: 
+    type: Never
+
+  actions: 
+  - # ====== Action: Set Focus ===================================
+    id: 28696207056918053776
+    identification: 
+      action: Set Focus
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P2_VERSION_GROUP
+
+    execution: 
+      sequence: 10
+      event: Focus to Moves # 28696207016829053775
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

@@ -1,0 +1,33 @@
+---
+- # ====== Authentication: Oracle APEX Accounts ================
+  id: 7073617517721526070
+  identification: 
+    name: Oracle APEX Accounts
+
+  settings: 
+    type: Oracle APEX Accounts
+
+  session-not-valid: 
+    redirect-to: Login Page
+
+  login-processing: 
+    switch-in-session: false
+
+  real-application-security: 
+    ras-mode: Disabled
+
+- # ====== Authentication: Public ==============================
+  id: 42055800808689869628
+  identification: 
+    name: Public
+
+  settings: 
+    type: No Authentication
+    username: pokeuser
+
+  login-processing: 
+    switch-in-session: false
+
+  real-application-security: 
+    ras-mode: Disabled
+

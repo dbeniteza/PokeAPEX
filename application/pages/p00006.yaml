@@ -1,0 +1,542 @@
+---
+# ====== Page: Abilities =====================================
+id: 6
+identification: 
+  name: Abilities
+  alias: ABILITIES
+  title: Abilities
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard # 7073644403113526086
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/main.css'
+  inline: |
+    /* -------------------------------------------------------------------------------------- */
+    /* ------------------------------- NAVIGATION MENU ICONS -------------------------------- */
+        .pokemon_icon {
+            background-image: url(#APP_FILES#menu/pokemon.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokeball_icon {
+            background-image: url(#APP_FILES#menu/pokeball.png);
+            background-repeat: no-repeat;
+        }
+    
+        .moves_icon {
+            background-image: url(#APP_FILES#menu/moves.png);
+            background-repeat: no-repeat;
+        }
+    
+        .abilities_icon{
+            background-image: url(#APP_FILES#menu/abilities.png);
+            background-repeat: no-repeat;
+        }
+    
+        .items_icon{
+            background-image: url(#APP_FILES#menu/items.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokedex_icon {
+            background-image: url(#APP_FILES#menu/pokedex.png);
+            background-repeat: no-repeat;
+        }
+    
+    /* -------------------------------------------------------------------------------------- */
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 37968804627475160535
+  identification: 
+    title: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 7073617731268526070
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar # 7073734259208526131
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb # 7073996741312526163
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Abilities ===================================
+  id: 37968805386054160538
+  identification: 
+    title: Abilities
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+          a.ID,
+          an.NAME AS NAME,
+          a.GENERATION_ID AS GENERATION,
+          aft.FLAVOR_TEXT AS DESCRIPTION
+      FROM ABILITIES a
+      INNER JOIN ABILITY_NAMES an ON an.ABILITY_ID = a.ID AND an.LOCAL_LANGUAGE_ID = 9 -- english
+      INNER JOIN (
+          SELECT
+              aft.*,
+              ROW_NUMBER() OVER (PARTITION BY aft.ABILITY_ID ORDER BY aft.version_group_id DESC) AS rn
+          FROM
+              ABILITY_FLAVOR_TEXT aft
+          WHERE
+              aft.LANGUAGE_ID = 9
+      ) aft ON aft.ABILITY_ID = a.ID AND aft.rn = 1
+      ORDER BY an.NAME;
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--inline
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 100000
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: GENERATION ==================================
+    id: 37945929311425596898
+    identification: 
+      column-name: GENERATION
+      type: Plain Text
+
+    heading: 
+      heading: Generation
+      alignment: center
+
+    layout: 
+      sequence: 11
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: '<img src="#APP_FILES#generations/gen_#GENERATION#.png" > '
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 37945929430020596900
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: start
+
+    layout: 
+      sequence: 31
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NAME ========================================
+    id: 37945929542449596901
+    identification: 
+      column-name: NAME
+      type: Link
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 21
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.::P3_ABILITY_ID,P3_ABILITY_NAME,P3_PKMN_COLOR,P3_ABILITY_HIDDEN:#ID#,#NAME#,black,#2b2b2b,'
+        page: 3 # Ability Details
+        values: 
+          p3_ability_id: '#ID#'
+          p3_ability_name: '#NAME#'
+          p3_pkmn_color: black
+          p3_ability_hidden: '#2b2b2b'
+
+      link-text: '#NAME#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 37968807352136160541
+    identification: 
+      column-name: ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Search ======================================
+  id: 37968805501094160538
+  identification: 
+    title: Search
+    type: Smart Filters
+
+  source: 
+    filtered-region: Abilities # 37968805386054160538
+
+  layout: 
+    sequence: 10
+    parent-region: Breadcrumb # 37968804627475160535
+    position: SMART_FILTERS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid) # 7073655876796526092
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      maximum-suggestion-chips: 0
+      more-filters-suggestion-chip: false
+      compact-numbers-threshold: 10000
+      show-total-row-count: No
+
+  facets: 
+  - # ====== Facet: P6_GENERATION ================================
+    id: 37945929408487596899
+    identification: 
+      name: P6_GENERATION
+      type: Checkbox Group
+
+    label: 
+      label: Generation
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        ' <img src="#APP_FILES#generations/gen_'||ID||'.png" > ' d,
+        ID r
+        from GENERATIONS
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: GENERATION
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Facet: P6_SEARCH ====================================
+    id: 37968806025412160539
+    identification: 
+      name: P6_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): NAME,DESCRIPTION
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  filters: 
+  - # ====== Filter: P6_GENERATION ===============================
+    id: 37945929408487596899
+    identification: 
+      name: P6_GENERATION
+      type: Checkbox Group
+
+    label: 
+      label: Generation
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        ' <img src="#APP_FILES#generations/gen_'||ID||'.png" > ' d,
+        ID r
+        from GENERATIONS
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: Dynamic
+      show-label: true
+
+    source: 
+      database-column: GENERATION
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Filter: P6_SEARCH ===================================
+    id: 37968806025412160539
+    identification: 
+      name: P6_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): NAME,DESCRIPTION
+
+    security: 
+      store-value-encrypted-in-session-state: true
+

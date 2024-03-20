@@ -1,0 +1,311 @@
+---
+# ====== Page: Pokédex =======================================
+id: 9
+identification: 
+  name: Pokédex
+  alias: POKEDEX
+  title: Pokédex
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/main.css'
+  inline: |
+    /* -------------------------------------------------------------------------------------- */
+    /* ------------------------------- NAVIGATION MENU ICONS -------------------------------- */
+        .pokemon_icon {
+            background-image: url(#APP_FILES#menu/pokemon.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokeball_icon {
+            background-image: url(#APP_FILES#menu/pokeball.png);
+            background-repeat: no-repeat;
+        }
+    
+        .moves_icon {
+            background-image: url(#APP_FILES#menu/moves.png);
+            background-repeat: no-repeat;
+        }
+    
+        .abilities_icon{
+            background-image: url(#APP_FILES#menu/abilities.png);
+            background-repeat: no-repeat;
+        }
+    
+        .items_icon{
+            background-image: url(#APP_FILES#menu/items.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokedex_icon {
+            background-image: url(#APP_FILES#menu/pokedex.png);
+            background-repeat: no-repeat;
+        }
+    
+    /* -------------------------------------------------------------------------------------- */
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 42952247593271270788
+  identification: 
+    title: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 7073617731268526070
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar # 7073734259208526131
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb # 7073996741312526163
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Pokédex =====================================
+  id: 69507081801144620071
+  identification: 
+    title: Pokédex
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      main_query.*,
+      '#APP_FILES#generations/gen_'||GENERATION_ID||'.png' as GEN_IMG,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||VERSION_COVER_PKMN1||'.png' as VERSION_COVER_PKMN1_IMG,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||VERSION_COVER_PKMN2||'.png' as VERSION_COVER_PKMN2_IMG
+      from
+      (
+      select
+      VERSION_GROUP_ID,
+      VERSION_GRP_NAME,
+      GENERATION_ID,
+      replace(replace(VERSION_HEADER,':'),',') as VERSION_HEADER,
+      case
+      	when VERSION_GRP_NAME='red-blue' or VERSION_GRP_NAME='firered-leafgreen' then '6'   -- charizard
+      	when VERSION_GRP_NAME='yellow' then '25'  -- pikachu
+      	when VERSION_GRP_NAME='gold' or VERSION_GRP_NAME='heartgold-soulsilver' then '250'   -- ho-oh
+      	when VERSION_GRP_NAME='crystal' then '245' -- suicune
+      	when VERSION_GRP_NAME='ruby-sapphire' then '383' -- groudon
+      	when VERSION_GRP_NAME='emerald' then '384' -- rayquaza
+      	when VERSION_GRP_NAME='diamond-pearl' then '483' -- dialga
+      	when VERSION_GRP_NAME='platinum' then '487' -- giratina
+      	when VERSION_GRP_NAME='black-white' then '643' -- reshiram
+          when VERSION_GRP_NAME='black-2-white-2' then '10022' -- kyurem-black
+          when VERSION_GRP_NAME='x-y' then '716'  -- xerneas
+          when VERSION_GRP_NAME='omegaruby-alphasapphire' then '10078' -- primal groudon
+          when VERSION_GRP_NAME='sun-moon' then '791' -- solgaleo
+          when VERSION_GRP_NAME='ultra-sun-ultra-moon' then '791' -- solgaleo
+          when VERSION_GRP_NAME='lets-go-pikachu-lets-go-eevee' then '25' -- pikachu
+          when VERSION_GRP_NAME='sword-shield' then '888' -- zacian
+          when VERSION_GRP_NAME='brilliant-diamond-and-shining-pearl' then '483' -- dialga
+          when VERSION_GRP_NAME='legends-arceus' then '493' -- arceus
+          when VERSION_GRP_NAME='scarlet-violet' then '1007' -- koraidon
+      end as VERSION_COVER_PKMN1,
+      case
+      	when VERSION_GRP_NAME='red-blue' then '9'   -- blastoise
+      	when VERSION_GRP_NAME='yellow' then null  -- NULL
+      	when VERSION_GRP_NAME='gold' or VERSION_GRP_NAME='heartgold-soulsilver' then '249' -- lugia
+      	when VERSION_GRP_NAME='crystal' then null -- NULL
+      	when VERSION_GRP_NAME='ruby-sapphire' then '382' -- kyogre
+      	when VERSION_GRP_NAME='emerald' then null -- NULL
+      	when VERSION_GRP_NAME='firered-leafgreen' then '3'   -- venusaur
+      	when VERSION_GRP_NAME='diamond-pearl' then '484' -- palkia
+      	when VERSION_GRP_NAME='platinum' then null -- NULL
+      	when VERSION_GRP_NAME='black-white' then '644' -- zekrom
+          when VERSION_GRP_NAME='black-2-white-2' then '10023' -- kyurem-white
+          when VERSION_GRP_NAME='x-y' then '717'   -- yvetal
+          when VERSION_GRP_NAME='omegaruby-alphasapphire' then '10077' -- primal kyogre
+          when VERSION_GRP_NAME='sun-moon' then '792' -- lunala
+          when VERSION_GRP_NAME='ultra-sun-ultra-moon' then '792' -- lunala
+          when VERSION_GRP_NAME='lets-go-pikachu-lets-go-eevee' then '133' -- eevee
+          when VERSION_GRP_NAME='sword-shield' then '889' -- zamazenta
+          when VERSION_GRP_NAME='brilliant-diamond-and-shining-pearl' then '484' -- palkia
+          when VERSION_GRP_NAME='legends-arceus' then null -- NULL
+          when VERSION_GRP_NAME='scarlet-violet' then '1008' -- miraidon
+      end as VERSION_COVER_PKMN2,
+      LISTAGG(REGION_NAME, ' | ') WITHIN GROUP (ORDER BY REGION_ID) as REGIONS
+      from (
+        select
+        distinct vgr.VERSION_GROUP_ID,
+        case
+          when vg.IDENTIFIER='gold-silver' then 'gold'
+          when vg.IDENTIFIER='omega-ruby-alpha-sapphire' then 'omegaruby-alphasapphire'
+          else vg.IDENTIFIER
+        END as VERSION_GRP_NAME,
+        vg.GENERATION_ID as GENERATION_ID,
+        rn.REGION_ID,
+        rn.NAME as REGION_NAME,
+        LISTAGG(vn.NAME, ' & ') WITHIN GROUP (ORDER BY vn.VERSION_ID) as VERSION_HEADER
+        from REGION_NAMES rn
+        inner join VERSION_GROUP_REGIONS vgr on vgr.REGION_ID = rn.REGION_ID and rn.LOCAL_LANGUAGE_ID = 9 -- english
+        inner join VERSIONS v on v.VERSION_GROUP_ID = vgr.VERSION_GROUP_ID
+        inner join VERSION_NAMES vn on vn.VERSION_ID = v.ID and vn.LOCAL_LANGUAGE_ID = 9 -- english
+        inner join VERSION_GROUPS vg on vg.ID = vgr.VERSION_GROUP_ID
+        where vgr.VERSION_GROUP_ID not in (21,22) -- remove sword-shield dlcs
+        group by vgr.VERSION_GROUP_ID, vg.IDENTIFIER, vg.GENERATION_ID, rn.NAME,rn.REGION_ID
+        order by vgr.VERSION_GROUP_ID
+      )
+      group by VERSION_GROUP_ID, VERSION_GRP_NAME, GENERATION_ID, VERSION_HEADER
+      order by VERSION_GROUP_ID
+      ) main_query
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 42952885331971612653
+    appearance: 
+      layout: Grid
+      grid-columns: Auto
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <img src="&GEN_IMG." class="margin-bottom-sm">
+        <img src="&VERSION_COVER_PKMN1_IMG." height="32px">
+        {if VERSION_COVER_PKMN2/}
+        <img src="&VERSION_COVER_PKMN2_IMG." height="32px" class="&VERSION_COVER_PKMN2." >
+        {endif/}
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: false
+      column: VERSION_HEADER
+      css-classes: 
+      - version_grp_&VERSION_GRP_NAME.
+      - a-CardView-badge
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: No Icon
+      badge-column: REGIONS
+
+    media: 
+      advanced-formatting: false
+      source: No Media
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    actions: 
+    - # ====== Action: Full Card ===================================
+      id: 42952909464619622879
+      identification: 
+        type: Full Card
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.::P10_VERSION_GROUP_ID,P10_VERSION_HEADER,P10_REGIONS,P10_POKEDEX_NAME,P10_POKEDEX_ID,P10_VERSION_GRP,P10_GENERATION_ID:&VERSION_GROUP_ID.,&VERSION_HEADER.,&REGIONS.,All,0,&VERSION_GRP_NAME.,&GENERATION_ID.'
+          page: 10 # Pokédex Details
+          values: 
+            p10_version_group_id: '&VERSION_GROUP_ID.'
+            p10_version_header: '&VERSION_HEADER.'
+            p10_regions: '&REGIONS.'
+            p10_pokedex_name: All
+            p10_pokedex_id: 0
+            p10_version_grp: '&VERSION_GRP_NAME.'
+            p10_generation_id: '&GENERATION_ID.'
+

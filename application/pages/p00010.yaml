@@ -1,0 +1,673 @@
+---
+# ====== Page: Pokédex Details ===============================
+id: 10
+identification: 
+  name: Pokédex Details
+  alias: POKÉDEX-DETAILS
+  title: '&P10_VERSION_HEADER. Pokédex'
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/main.css'
+  inline: |
+    /* -------------------------------------------------------------------------------------- */
+    /* ------------------------------- NAVIGATION MENU ICONS -------------------------------- */
+        .pokemon_icon {
+            background-image: url(#APP_FILES#menu/pokemon.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokeball_icon {
+            background-image: url(#APP_FILES#menu/pokeball.png);
+            background-repeat: no-repeat;
+        }
+    
+        .moves_icon {
+            background-image: url(#APP_FILES#menu/moves.png);
+            background-repeat: no-repeat;
+        }
+    
+        .abilities_icon{
+            background-image: url(#APP_FILES#menu/abilities.png);
+            background-repeat: no-repeat;
+        }
+    
+        .items_icon{
+            background-image: url(#APP_FILES#menu/items.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokedex_icon {
+            background-image: url(#APP_FILES#menu/pokedex.png);
+            background-repeat: no-repeat;
+        }
+    
+    /* -------------------------------------------------------------------------------------- */
+    
+        #pokedex_list_region .t-Region-header {
+            background-color: black;
+            color: white; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #pokedex_selected_region .t-Region-header {
+            background-color: black;
+            color: white; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: &P10_REGIONS. Pokédex =======================
+  id: 42952909550526622880
+  identification: 
+    title: '&P10_REGIONS. Pokédex'
+    type: List View
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+          0 AS POKEDEX_ID,
+          to_number(:P10_VERSION_GROUP_ID) AS VERSION_GROUP_ID,
+          'All' AS DEX_NAME,
+          NULL AS DEX_DESCRIPTION,
+          COUNT(pdn.SPECIES_ID) AS DEX_COUNT
+      FROM
+          POKEDEX_PROSE pp
+          INNER JOIN POKEMON_DEX_NUMBERS pdn ON pdn.POKEDEX_ID = pp.POKEDEX_ID
+          INNER JOIN POKEDEX_VERSION_GROUPS pvg ON pvg.POKEDEX_ID = pp.POKEDEX_ID AND pvg.VERSION_GROUP_ID = :P10_VERSION_GROUP_ID
+      WHERE
+          pp.LOCAL_LANGUAGE_ID = 9 -- english
+          AND pvg.VERSION_GROUP_ID = :P10_VERSION_GROUP_ID
+      union
+      SELECT
+          pp.POKEDEX_ID,
+          pvg.VERSION_GROUP_ID,
+          pp.NAME as DEX_NAME,
+          pp.DESCRIPTION AS DEX_DESCRIPTION,
+          count(pdn.SPECIES_ID) as DEX_COUNT
+      FROM POKEDEX_PROSE pp
+      inner join POKEDEX_VERSION_GROUPS pvg on pvg.POKEDEX_ID = pp.POKEDEX_ID --and pvg.VERSION_GROUP_ID = :P10_VERSION_GROUP_ID
+      inner join POKEMON_DEX_NUMBERS pdn on pdn.POKEDEX_ID = pp.POKEDEX_ID
+      where pp.LOCAL_LANGUAGE_ID = 9 -- english
+      and pvg.VERSION_GROUP_ID = 
+        CASE 
+          WHEN to_number(:P10_VERSION_GROUP_ID) = 23 THEN 8 -- no record in POKEDEX_VERSION_GROUPS for brilliant-diamond-and-shining-pearl. Same dex as diamond-pearl
+          ELSE to_number(:P10_VERSION_GROUP_ID)
+        END
+      group by pp.POKEDEX_ID, pvg.VERSION_GROUP_ID, pp.NAME, pp.DESCRIPTION
+      order by POKEDEX_ID
+
+  layout: 
+    sequence: 100
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: pokedex_list_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      text-column: DEX_NAME
+      supplemental-information-column: DEX_DESCRIPTION
+      counter-column: DEX_COUNT
+      link-target: 
+        url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.::P10_VERSION_GROUP_ID,P10_POKEDEX_ID,P10_POKEDEX_NAME:&VERSION_GROUP_ID.,&POKEDEX_ID.,&DEX_NAME.'
+        page: 10 # Pokédex Details
+        values: 
+          p10_version_group_id: '&VERSION_GROUP_ID.'
+          p10_pokedex_id: '&POKEDEX_ID.'
+          p10_pokedex_name: '&DEX_NAME.'
+
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+- # ====== Region: &P10_POKEDEX_NAME. ==========================
+  id: 42952910153064622886
+  identification: 
+    title: '&P10_POKEDEX_NAME.'
+    type: Static Content
+
+  layout: 
+    sequence: 110
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: pokedex_selected_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 42987867898552332163
+  identification: 
+    title: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 7073617731268526070
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar # 7073734259208526131
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb # 7073996741312526163
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Pokédex Details =============================
+  id: 82035146636205310658
+  identification: 
+    title: Pokédex Details
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      main_query.*,
+      '#APP_FILES#types/'||TYPE1||'.png' as TYPE1_IMG,
+      '#APP_FILES#types/'||TYPE2||'.png' as TYPE2_IMG
+      from
+      (
+      SELECT
+      pp.NAME as DEX_NAME,
+      pp.DESCRIPTION AS DEX_DESCRIPTION,
+      p.ID as POKEMON_ID,
+      case 
+        when pdn.POKEDEX_NUMBER < 100 then '#'||LPAD(to_char(pdn.POKEDEX_NUMBER), 3, '0')
+        else '#'||to_char(pdn.POKEDEX_NUMBER)
+      end as NUM,
+      case
+        when :P10_VERSION_GRP = 'black-2-white-2' then 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||g.IDENTIFIER||'/black-white/'||p.ID||'.png'
+        when :P10_GENERATION_ID < 6 then 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||g.IDENTIFIER||'/'||:P10_VERSION_GRP||'/'||p.ID||'.png' 
+        when :P10_VERSION_GRP = 'sun-moon' then 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/'||g.IDENTIFIER||'/ultra-sun-ultra-moon/'||p.ID||'.png'
+        when :P10_VERSION_GRP = 'scarlet-violet' or :P10_VERSION_GRP = 'brilliant-diamond-and-shining-pearl' then 'https://www.centropkmn.com/pokes/gen9-sprites/'||p.ID||'.png'
+        else 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||p.ID||'.png'
+      end as SPRITE,
+      p.SPECIES_ID as PKMN_SPECIES_ID,
+      InitCap(p.IDENTIFIER) as PKMN_NAME,
+      (select lower(t.IDENTIFIER) 
+      from TYPES t
+      inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+      where pt.POKEMON_ID = p.ID
+      and pt.slot=1) as TYPE1,
+      (select lower(t.IDENTIFIER) 
+      from TYPES t
+      inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+      where pt.POKEMON_ID = p.ID
+      and pt.slot=2) as TYPE2,
+      COALESCE(LOWER(pc.IDENTIFIER), 'black') AS COLOR,
+      case
+        when lower(pc.IDENTIFIER) in ('white') then 'gray'
+        when pc.IDENTIFIER is null then 'black'
+        else lower(pc.IDENTIFIER)
+      end as CSS_COLOR,
+      case
+        when lower(pc.IDENTIFIER) in ('gray','pink','white','yellow') then 'black'
+        else 'white'
+      end as CSS_TEXT_COLOR,
+      ps.GENERATION_ID as GEN_ID,
+      ps.EVOLUTION_CHAIN_ID as EVOLUTION_CHAIN_ID,
+      p.IS_DEFAULT
+      FROM POKEMON p
+      LEFT JOIN POKEMON_SPECIES ps ON ps.ID = p.ID
+      LEFT JOIN POKEMON_COLORS pc on pc.ID = ps.COLOR_ID  
+      inner join POKEMON_DEX_NUMBERS pdn on pdn.SPECIES_ID = ps.ID
+      inner join POKEDEX_VERSION_GROUPS pvg on pvg.POKEDEX_ID = pdn.POKEDEX_ID
+      inner join POKEDEX_PROSE pp on pp.POKEDEX_ID = pdn.POKEDEX_ID and pp.LOCAL_LANGUAGE_ID = 9 -- english
+      inner join VERSION_GROUPS vg ON vg.ID = pvg.VERSION_GROUP_ID
+      inner join GENERATIONS g on g.ID = vg.GENERATION_ID
+      where pvg.VERSION_GROUP_ID = 
+        CASE 
+          WHEN to_number(:P10_VERSION_GROUP_ID) = 23 THEN 8 -- no record in POKEDEX_VERSION_GROUPS for brilliant-diamond-and-shining-pearl. Same dex as diamond-pearl
+          ELSE to_number(:P10_VERSION_GROUP_ID)
+        END
+      and ((:P10_POKEDEX_ID > 0 and pp.POKEDEX_ID = :P10_POKEDEX_ID) or (:P10_POKEDEX_ID = 0))
+      order by pdn.POKEDEX_ID, pdn.POKEDEX_NUMBER
+      ) main_query
+
+  layout: 
+    sequence: 10
+    parent-region: '&P10_POKEDEX_NAME.' # 42952910153064622886
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container # 7073661565914526094
+    template-options: 
+    - '#DEFAULT#'
+    - t-CardsRegion--styleC
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 42988015773911659009
+    appearance: 
+      layout: Grid
+      grid-columns: Auto
+
+    title: 
+      advanced-formatting: true
+      html-expression: <h3 class="a-CardView-title ">&NUM. &PKMN_NAME.</h3>
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: true
+      html-expression: |
+        <span class="a-CardView-badge a-CardView-badgeValue type-&TYPE1. margin-auto"><img src="&TYPE1_IMG." height="16">&TYPE1.</span>
+        {if TYPE2/}
+        <span class="a-CardView-badge a-CardView-badgeValue type-&TYPE2. margin-auto"><img src="&TYPE2_IMG." height="16">&TYPE2.</span>
+        {endif/}
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: No Icon
+
+    media: 
+      advanced-formatting: false
+      source: Image URL
+      url: '&SPRITE.'
+      position: Body
+      appearance: Auto
+      sizing: Fit
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    actions: 
+    - # ====== Action: Full Card ===================================
+      id: 42988016256759659013
+      identification: 
+        type: Full Card
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::P2_PKMN_NUMBER,P2_PKMN_NAME,P2_PKMN_SPECIES_ID,P2_PKMN_GENERATION_ID,P2_PKMN_IS_DEFAULT,P2_PKMN_EVO_CHAIN_ID,P2_PKMN_COLOR,P2_PKMN_TEXT_COLOR,P2_PKMN_CSS_COLOR:&POKEMON_ID.,&PKMN_NAME.,&PKMN_SPECIES_ID.,&GEN_ID.,&IS_DEFAULT.,&EVOLUTION_CHAIN_ID.,&COLOR.,&CSS_TEXT_COLOR.,&CSS_COLOR.'
+          page: 2 # Pokémon Details
+          values: 
+            p2_pkmn_number: '&POKEMON_ID.'
+            p2_pkmn_name: '&PKMN_NAME.'
+            p2_pkmn_species_id: '&PKMN_SPECIES_ID.'
+            p2_pkmn_generation_id: '&GEN_ID.'
+            p2_pkmn_is_default: '&IS_DEFAULT.'
+            p2_pkmn_evo_chain_id: '&EVOLUTION_CHAIN_ID.'
+            p2_pkmn_color: '&COLOR.'
+            p2_pkmn_text_color: '&CSS_TEXT_COLOR.'
+            p2_pkmn_css_color: '&CSS_COLOR.'
+
+page-items: 
+- # ====== Page Item: P10_VERSION_HEADER =======================
+  id: 42952909213564622876
+  identification: 
+    name: P10_VERSION_HEADER
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10_VERSION_GROUP_ID =====================
+  id: 42952909265418622877
+  identification: 
+    name: P10_VERSION_GROUP_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10_REGIONS ==============================
+  id: 42952909368134622878
+  identification: 
+    name: P10_REGIONS
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 70
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10_POKEDEX_ID ===========================
+  id: 42952909680391622881
+  identification: 
+    name: P10_POKEDEX_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 80
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 0
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10_POKEDEX_NAME =========================
+  id: 42952910101244622885
+  identification: 
+    name: P10_POKEDEX_NAME
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 90
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      SELECT
+        case
+          when :P10_POKEDEX_ID is null or :P10_POKEDEX_ID = 0 then 'All'
+          else pp.NAME 
+        end as DEX_NAME
+      FROM POKEDEX_PROSE pp
+      inner join POKEDEX_VERSION_GROUPS pvg on pvg.POKEDEX_ID = pp.POKEDEX_ID and pvg.VERSION_GROUP_ID = :P10_VERSION_GROUP_ID
+      inner join POKEMON_DEX_NUMBERS pdn on pdn.POKEDEX_ID = pp.POKEDEX_ID
+      where pp.LOCAL_LANGUAGE_ID = 9 -- english
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: All
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10_VERSION_GRP ==========================
+  id: 42952910236723622887
+  identification: 
+    name: P10_VERSION_GRP
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10_GENERATION_ID ========================
+  id: 42952910423800622888
+  identification: 
+    name: P10_GENERATION_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 60
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+

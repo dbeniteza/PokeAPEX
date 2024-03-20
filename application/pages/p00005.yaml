@@ -1,0 +1,1024 @@
+---
+# ====== Page: Moves =========================================
+id: 5
+identification: 
+  name: Moves
+  alias: MOVES
+  title: Moves
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column # 7073621488829526075
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/main.css'
+  inline: |
+    /* -------------------------------------------------------------------------------------- */
+    /* ------------------------------- NAVIGATION MENU ICONS -------------------------------- */
+        .pokemon_icon {
+            background-image: url(#APP_FILES#menu/pokemon.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokeball_icon {
+            background-image: url(#APP_FILES#menu/pokeball.png);
+            background-repeat: no-repeat;
+        }
+    
+        .moves_icon {
+            background-image: url(#APP_FILES#menu/moves.png);
+            background-repeat: no-repeat;
+        }
+    
+        .abilities_icon{
+            background-image: url(#APP_FILES#menu/abilities.png);
+            background-repeat: no-repeat;
+        }
+    
+        .items_icon{
+            background-image: url(#APP_FILES#menu/items.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokedex_icon {
+            background-image: url(#APP_FILES#menu/pokedex.png);
+            background-repeat: no-repeat;
+        }
+    
+    /* -------------------------------------------------------------------------------------- */
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 33994690070313961980
+  identification: 
+    title: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 7073617731268526070
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar # 7073734259208526131
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb # 7073996741312526163
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Moves =======================================
+  id: 33994690748402961982
+  identification: 
+    title: Moves
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      distinct replace(mn.NAME,',') as MOVE,
+      m.GENERATION_ID as GENERATION,
+      max(m.ID) as MOVE_ID,
+      lower(t.IDENTIFIER) as TYPE,
+      LISTAGG('<img src="#APP_FILES#move_class/'||mdc.IDENTIFIER||'.png" height="20" style="background-color: grey">', ' ') WITHIN GROUP (ORDER BY m.ID) as CLASS_DISPLAY ,
+      case
+       when LISTAGG(mdc.IDENTIFIER, '-') WITHIN GROUP (ORDER BY mdc.ID) = 'physical-special' or m.PP = 1 then 'Z-Move'
+       else LISTAGG(mdc.IDENTIFIER, '-') WITHIN GROUP (ORDER BY mdc.ID)
+      end as CLASS,
+      m.POWER,
+      m.PP
+      from MOVES m
+      inner join MOVE_NAMES mn on mn.MOVE_ID = m.ID and mn.local_language_id = 9
+      inner join MOVE_DAMAGE_CLASSES mdc on mdc.ID = m.DAMAGE_CLASS_ID
+      inner join TYPES t on t.ID = m.TYPE_ID
+      group by mn.NAME,m.GENERATION_ID,lower(t.IDENTIFIER),upper(t.IDENTIFIER),m.POWER,m.PP
+      order by MOVE
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: moves_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--inline
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 100000
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: MOVE ========================================
+    id: 33994694766524961986
+    identification: 
+      column-name: MOVE
+      type: Link
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.::P4_MOVE_ID,P4_MOVE_NAME,P4_PKMN_TEXT_COLOR,P4_VERSION_GROUP_ID,P4_PKMN_CSS_COLOR:#MOVE_ID#,#MOVE#,white,,black'
+        page: 4 # Move Details
+        values: 
+          p4_move_id: '#MOVE_ID#'
+          p4_move_name: '#MOVE#'
+          p4_pkmn_text_color: white
+          p4_pkmn_css_color: black
+
+      link-text: '#MOVE#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 300
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE ========================================
+    id: 33994695162553961986
+    identification: 
+      column-name: TYPE
+      type: Plain Text
+
+    heading: 
+      heading: Type
+      alignment: center
+
+    layout: 
+      sequence: 40
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: '<span class="a-CardView-badge a-CardView-badgeValue type-#TYPE#" style="display:inline-block;"><img src="#APP_FILES#types/#TYPE#.png" height="16">#TYPE#</span>'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 150
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLASS =======================================
+    id: 33994695549693961987
+    identification: 
+      column-name: CLASS
+      type: Hidden Column
+
+    layout: 
+      sequence: 50
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: POWER =======================================
+    id: 33994695990542961987
+    identification: 
+      column-name: POWER
+      type: Plain Text
+
+    heading: 
+      heading: Power
+      alignment: center
+
+    layout: 
+      sequence: 70
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 100
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PP ==========================================
+    id: 33994696386823961987
+    identification: 
+      column-name: PP
+      type: Plain Text
+
+    heading: 
+      heading: PP
+      alignment: center
+
+    layout: 
+      sequence: 80
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 100
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLASS_DISPLAY ===============================
+    id: 34149353417745975475
+    identification: 
+      column-name: CLASS_DISPLAY
+      type: Plain Text
+
+    heading: 
+      heading: Category
+      alignment: center
+
+    layout: 
+      sequence: 60
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 200
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: MOVE_ID =====================================
+    id: 37673962031594307778
+    identification: 
+      column-name: MOVE_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 10
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GENERATION ==================================
+    id: 37673966304411307820
+    identification: 
+      column-name: GENERATION
+      type: Hidden Column
+
+    layout: 
+      sequence: 20
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Search ======================================
+  id: 33994690853821961982
+  identification: 
+    title: Search
+    type: Faceted Search
+
+  source: 
+    filtered-region: Moves # 33994690748402961982
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+    landmark-label: Filters
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      batch-facet-changes: false
+      compact-numbers-threshold: 10000
+      show-current-facets: Selector
+      current-facets-selector: '#active_facets'
+      show-total-row-count: Yes
+      show-charts: Dialog
+      display-chart-for-top-n-values: 10
+
+  facets: 
+  - # ====== Facet: P5_SEARCH ====================================
+    id: 33994691365510961983
+    identification: 
+      name: P5_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): MOVE,TYPE,CLASS
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Facet: P5_POWER =====================================
+    id: 33994691825416961983
+    identification: 
+      name: P5_POWER
+      type: Range
+
+    label: 
+      label: Power
+      show-label-for-current-facet: true
+
+    settings: 
+      select-multiple: false
+      manual-entry: false
+
+    layout: 
+      sequence: 70
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:0;|0,0 - 40;0|40,40 - 60;40|60,60 - 80;60|80,80 - 100;80|100,100 - 120;100|120,>= 120;120|'
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: POWER
+      data-type: NUMBER
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Facet: P5_TYPE ======================================
+    id: 33994692220347961983
+    identification: 
+      name: P5_TYPE
+      type: Checkbox Group
+
+    label: 
+      label: Type
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        '<span class="a-CardView-badge a-CardView-badgeValue type-'||IDENTIFIER||'"><img src="#APP_FILES#types/'||IDENTIFIER||'.png" height="16">'||IDENTIFIER||'</span>' d, 
+        IDENTIFIER r
+        from TYPES
+        where ID <= 18 -- main 18 types
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: TYPE
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Facet: P5_CLASS =====================================
+    id: 33994692625858961984
+    identification: 
+      name: P5_CLASS
+      type: Checkbox Group
+
+    label: 
+      label: Category
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        '<img src="#APP_FILES#move_class/'||IDENTIFIER||'.png" height="20" style="background-color: grey">' d, 
+        IDENTIFIER r
+        from MOVE_DAMAGE_CLASSES
+        UNION
+        SELECT
+          'Z-Move' AS d,
+          'Z-Move' AS r
+        FROM
+          DUAL
+        order by 1
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Disable
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: CLASS
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Facet: P5_GENERATION ================================
+    id: 37673966427112307822
+    identification: 
+      name: P5_GENERATION
+      type: Checkbox Group
+
+    label: 
+      label: Generation
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 50
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        ' <img src="#APP_FILES#generations/gen_'||ID||'.png"> '||' Gen '||UPPER(TO_CHAR(ID, 'fmrn')) d,
+        ID r
+        from GENERATIONS
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 9
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: GENERATION
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  filters: 
+  - # ====== Filter: P5_SEARCH ===================================
+    id: 33994691365510961983
+    identification: 
+      name: P5_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): MOVE,TYPE,CLASS
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Filter: P5_POWER ====================================
+    id: 33994691825416961983
+    identification: 
+      name: P5_POWER
+      type: Range
+
+    label: 
+      label: Power
+
+    settings: 
+      select-multiple: false
+      manual-entry: false
+
+    layout: 
+      sequence: 70
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:0;|0,0 - 40;0|40,40 - 60;40|60,60 - 80;60|80,80 - 100;80|100,100 - 120;100|120,>= 120;120|'
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: POWER
+      data-type: NUMBER
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Filter: P5_TYPE =====================================
+    id: 33994692220347961983
+    identification: 
+      name: P5_TYPE
+      type: Checkbox Group
+
+    label: 
+      label: Type
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        '<span class="a-CardView-badge a-CardView-badgeValue type-'||IDENTIFIER||'"><img src="#APP_FILES#types/'||IDENTIFIER||'.png" height="16">'||IDENTIFIER||'</span>' d, 
+        IDENTIFIER r
+        from TYPES
+        where ID <= 18 -- main 18 types
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: TYPE
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Filter: P5_CLASS ====================================
+    id: 33994692625858961984
+    identification: 
+      name: P5_CLASS
+      type: Checkbox Group
+
+    label: 
+      label: Category
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        '<img src="#APP_FILES#move_class/'||IDENTIFIER||'.png" height="20" style="background-color: grey">' d, 
+        IDENTIFIER r
+        from MOVE_DAMAGE_CLASSES
+        UNION
+        SELECT
+          'Z-Move' AS d,
+          'Z-Move' AS r
+        FROM
+          DUAL
+        order by 1
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Disable
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: CLASS
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Filter: P5_GENERATION ===============================
+    id: 37673966427112307822
+    identification: 
+      name: P5_GENERATION
+      type: Checkbox Group
+
+    label: 
+      label: Generation
+
+    layout: 
+      sequence: 50
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        ' <img src="#APP_FILES#generations/gen_'||ID||'.png"> '||' Gen '||UPPER(TO_CHAR(ID, 'fmrn')) d,
+        ID r
+        from GENERATIONS
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: GENERATION
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+- # ====== Region: Button Bar ==================================
+  id: 33994692865203961984
+  identification: 
+    title: Button Bar
+    type: Static Content
+
+  source: 
+    html-code: <div id="active_facets"></div>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container # 7073657260856526093
+    template-options: 
+    - '#DEFAULT#'
+    - t-ButtonRegion--noPadding
+    - t-ButtonRegion--noUI
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+buttons: 
+- # ====== Button: RESET =======================================
+  id: 33994693334564961984
+  identification: 
+    button-name: RESET
+    label: Reset
+
+  layout: 
+    sequence: 10
+    region: Button Bar # 33994692865203961984
+    position: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon # 7073995226444526162
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    - t-Button--iconLeft
+    icon: fa-undo
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:5:&APP_SESSION.::&DEBUG.:RR,5::'
+      page: 5 # Moves
+      clear-cache: RR,5
+
+    warn-on-unsaved-changes: Do Not Check
+

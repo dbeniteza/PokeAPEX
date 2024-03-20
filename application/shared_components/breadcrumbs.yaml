@@ -1,0 +1,98 @@
+---
+- # ====== Breadcrumb: Breadcrumb ==============================
+  id: 7073617731268526070
+  identification: 
+    name: Breadcrumb
+
+  entries: 
+  - # ====== Entry: Pokémon ======================================
+    id: 7680811774847059
+    identification: 
+      name: Pokémon
+      page-number: 11
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.::&DEBUG.:11::'
+        page: 11 # Pokémon
+        clear-cache: 11
+
+  - # ====== Entry: Moves ========================================
+    id: 33994690567181961981
+    identification: 
+      name: Moves
+      page-number: 5
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:5:&SESSION.::&DEBUG.:5::'
+        page: 5 # Moves
+        clear-cache: 5
+
+  - # ====== Entry: Abilities ====================================
+    id: 37968805202533160536
+    identification: 
+      name: Abilities
+      page-number: 6
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&SESSION.::&DEBUG.:6::'
+        page: 6 # Abilities
+        clear-cache: 6
+
+  - # ====== Entry: Items ========================================
+    id: 40857951470151860186
+    identification: 
+      name: Items
+      page-number: 7
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:7:&APP_SESSION.::&DEBUG.:::'
+        page: 7 # Items
+
+  - # ====== Entry: Pokédex ======================================
+    id: 42952250982421270788
+    identification: 
+      name: Pokédex
+      page-number: 9
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:9:&SESSION.::&DEBUG.:9::'
+        page: 9 # Pokédex
+        clear-cache: 9
+
+  - # ====== Entry: &P10_VERSION_HEADER. Pokédex (&P10_REGIONS.) =
+    id: 42987868358559332164
+    identification: 
+      name: '&P10_VERSION_HEADER. Pokédex (&P10_REGIONS.)'
+      page-number: 10
+
+    execution: 
+      sequence: 10
+
+    appearance: 
+      parent-entry: Pokédex # 42952250982421270788
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.:::'
+        page: 10 # Pokédex Details
+

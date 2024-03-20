@@ -1,0 +1,639 @@
+---
+- # ====== Static Application File: menu/pokedex.png ===========
+  id: 7679576251824053
+  identification: 
+    file-name: menu/pokedex.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: js/clarity.js ==============
+  id: 19607476175094985
+  identification: 
+    file-name: js/clarity.js
+
+  attributes: 
+    mime-type: text/javascript
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: js/clarity.min.js ==========
+  id: 19610028972132221
+  identification: 
+    file-name: js/clarity.min.js
+
+  attributes: 
+    mime-type: text/javascript
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-32.png ======
+  id: 7074113215856526291
+  identification: 
+    file-name: icons/app-icon-32.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-144-rounded.p
+  id: 7074113447018526292
+  identification: 
+    file-name: icons/app-icon-144-rounded.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-192.png =====
+  id: 7074113741192526292
+  identification: 
+    file-name: icons/app-icon-192.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-256-rounded.p
+  id: 7074114097817526292
+  identification: 
+    file-name: icons/app-icon-256-rounded.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-512.png =====
+  id: 7074114348863526293
+  identification: 
+    file-name: icons/app-icon-512.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/bug.png ==============
+  id: 10511171950678275661
+  identification: 
+    file-name: types/bug.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/dark.png =============
+  id: 10511178448185276330
+  identification: 
+    file-name: types/dark.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/electric.png =========
+  id: 10511181597554277942
+  identification: 
+    file-name: types/electric.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/fighting.png =========
+  id: 10511203639371279599
+  identification: 
+    file-name: types/fighting.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/fire.png =============
+  id: 10511231921205280612
+  identification: 
+    file-name: types/fire.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/flying.png ===========
+  id: 10511239859095281582
+  identification: 
+    file-name: types/flying.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/dragon.png ===========
+  id: 10511636055351033984
+  identification: 
+    file-name: types/dragon.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/fairy.png ============
+  id: 10511640461970035427
+  identification: 
+    file-name: types/fairy.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/ghost.png ============
+  id: 10511677797992039470
+  identification: 
+    file-name: types/ghost.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/poison.png ===========
+  id: 10511749447955043954
+  identification: 
+    file-name: types/poison.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/ground.png ===========
+  id: 10512285601180283619
+  identification: 
+    file-name: types/ground.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/ice.png ==============
+  id: 10512289993376284563
+  identification: 
+    file-name: types/ice.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/normal.png ===========
+  id: 10512317599152285630
+  identification: 
+    file-name: types/normal.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/psychic.png ==========
+  id: 10512350468090288587
+  identification: 
+    file-name: types/psychic.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/rock.png =============
+  id: 10512353419584289487
+  identification: 
+    file-name: types/rock.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/steel.png ============
+  id: 10512374260003047031
+  identification: 
+    file-name: types/steel.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/water.png ============
+  id: 10512378790673047877
+  identification: 
+    file-name: types/water.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: types/grass.png ============
+  id: 10512418350249055660
+  identification: 
+    file-name: types/grass.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: pokeball.png ===============
+  id: 10554447144524511954
+  identification: 
+    file-name: pokeball.png
+
+  attributes: 
+    mime-type: image/png
+
+- # ====== Static Application File: css/main.css ===============
+  id: 15067905636319895333
+  identification: 
+    file-name: css/main.css
+
+  attributes: 
+    mime-type: text/css
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: generations/gen_2.png ======
+  id: 22844456069548676505
+  identification: 
+    file-name: generations/gen_2.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: generations/gen_3.png ======
+  id: 22844457817111677343
+  identification: 
+    file-name: generations/gen_3.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: generations/gen_4.png ======
+  id: 22844461418279677975
+  identification: 
+    file-name: generations/gen_4.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: generations/gen_5.png ======
+  id: 22844466708956678522
+  identification: 
+    file-name: generations/gen_5.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: generations/gen_6.png ======
+  id: 22844469582816679115
+  identification: 
+    file-name: generations/gen_6.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: generations/gen_7.png ======
+  id: 22844472559859679737
+  identification: 
+    file-name: generations/gen_7.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: generations/gen_1.png ======
+  id: 22844714630717362719
+  identification: 
+    file-name: generations/gen_1.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: generations/gen_8.png ======
+  id: 22844742861768367620
+  identification: 
+    file-name: generations/gen_8.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: generations/gen_9.png ======
+  id: 22844743599799368299
+  identification: 
+    file-name: generations/gen_9.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_1.png =========
+  id: 22874753062697741962
+  identification: 
+    file-name: shapes/shape_1.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_5.png =========
+  id: 22874759697274744865
+  identification: 
+    file-name: shapes/shape_5.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_2.png =========
+  id: 22875315212535055436
+  identification: 
+    file-name: shapes/shape_2.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_3.png =========
+  id: 22875318128999056218
+  identification: 
+    file-name: shapes/shape_3.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_4.png =========
+  id: 22875630479412056913
+  identification: 
+    file-name: shapes/shape_4.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_6.png =========
+  id: 22875763359111745504
+  identification: 
+    file-name: shapes/shape_6.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_8.png =========
+  id: 22876737044198747175
+  identification: 
+    file-name: shapes/shape_8.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_7.png =========
+  id: 22877498639859058925
+  identification: 
+    file-name: shapes/shape_7.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_9.png =========
+  id: 22877545397723060572
+  identification: 
+    file-name: shapes/shape_9.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_11.png ========
+  id: 22877553203414061999
+  identification: 
+    file-name: shapes/shape_11.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_10.png ========
+  id: 22877663440811748552
+  identification: 
+    file-name: shapes/shape_10.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_12.png ========
+  id: 22878064625974062613
+  identification: 
+    file-name: shapes/shape_12.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_13.png ========
+  id: 22878688328002750572
+  identification: 
+    file-name: shapes/shape_13.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: shapes/shape_14.png ========
+  id: 22878993022033064169
+  identification: 
+    file-name: shapes/shape_14.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: habitat/habitat_4.png ======
+  id: 23046538096496218968
+  identification: 
+    file-name: habitat/habitat_4.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: habitat/habitat_2.png ======
+  id: 23049287838278582077
+  identification: 
+    file-name: habitat/habitat_2.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: habitat/habitat_3.png ======
+  id: 23049317035160592004
+  identification: 
+    file-name: habitat/habitat_3.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: habitat/habitat_1.png ======
+  id: 23050541620985268390
+  identification: 
+    file-name: habitat/habitat_1.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: habitat/habitat_6.png ======
+  id: 23051028347799288582
+  identification: 
+    file-name: habitat/habitat_6.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: habitat/habitat_5.png ======
+  id: 23051181095014596328
+  identification: 
+    file-name: habitat/habitat_5.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: habitat/habitat_7.png ======
+  id: 23051606004970610264
+  identification: 
+    file-name: habitat/habitat_7.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: habitat/habitat_8.png ======
+  id: 23051616542195613568
+  identification: 
+    file-name: habitat/habitat_8.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: habitat/habitat_9.png ======
+  id: 23051655567628619003
+  identification: 
+    file-name: habitat/habitat_9.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: move_class/physical.png ====
+  id: 23768227788925586761
+  identification: 
+    file-name: move_class/physical.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: move_class/special.png =====
+  id: 23768228535487587753
+  identification: 
+    file-name: move_class/special.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: move_class/status.png ======
+  id: 23768230262006588563
+  identification: 
+    file-name: move_class/status.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: menu/pokemon.png ===========
+  id: 33976223115466112255
+  identification: 
+    file-name: menu/pokemon.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: menu/pokeball.png ==========
+  id: 33976905995068809930
+  identification: 
+    file-name: menu/pokeball.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: menu/moves.png =============
+  id: 33979122325994834932
+  identification: 
+    file-name: menu/moves.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: menu/items.png =============
+  id: 33979661178988148534
+  identification: 
+    file-name: menu/items.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: menu/abilities.png =========
+  id: 33982480808129179294
+  identification: 
+    file-name: menu/abilities.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/charizard_pixel.png ==
+  id: 37944475463028874319
+  identification: 
+    file-name: icons/charizard_pixel.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: poke_dollar.png ============
+  id: 41529986876389184910
+  identification: 
+    file-name: poke_dollar.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: css/main.min.css ===========
+  id: 42957808693220857967
+  identification: 
+    file-name: css/main.min.css
+
+  attributes: 
+    mime-type: text/css
+    file-character-set: Unicode UTF-8
+

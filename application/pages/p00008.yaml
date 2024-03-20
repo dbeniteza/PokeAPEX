@@ -1,0 +1,681 @@
+---
+# ====== Page: Item Details ==================================
+id: 8
+identification: 
+  name: Item Details
+  alias: ITEM-DETAILS
+  title: Item Details
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Drawer # 7073618572303526072
+  template-options: 
+  - '#DEFAULT#'
+  - js-dialog-class-t-Drawer--pullOutEnd
+
+dialog: 
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/main.css'
+  inline: |2
+        #game_effects_region .t-Region-header {
+            background-color: &P8_COLOR.;
+            color: white; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #other_lang_region .t-Region-header {
+            background-color: &P8_COLOR.;
+            color: white; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        .item_img {
+    		background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/&P8_ITEM_IDENTIFIER..png");
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-size: auto;
+        }
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Item details ================================
+  id: 52085174863111252143
+  identification: 
+    title: Item details
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      i.ID,
+      inames.NAME as NAME,
+      i.COST,
+      ift.FLAVOR_TEXT,
+      REGEXP_REPLACE(REGEXP_REPLACE(ip.SHORT_EFFECT,'\{[^\}]+:([^\}]+)\}','\1'), '\[.*?\]', '') as SHORT_EFFECT,
+      REGEXP_REPLACE(REGEXP_REPLACE(ip.EFFECT,'\{[^\}]+:([^\}]+)\}','\1'), '\[.*?\]', '') as EFFECT
+      from ITEMS i
+      inner join ITEM_NAMES inames on inames.ITEM_ID = i.ID and inames.LOCAL_LANGUAGE_ID = 9 -- english
+      inner join ITEM_PROSE ip on ip.ITEM_ID = i.ID and ip.LOCAL_LANGUAGE_ID = 9 -- english
+      inner join ITEM_FLAVOR_TEXT ift on ift.ITEM_ID = i.ID and ift.LANGUAGE_ID = 9 -- english
+      where i.ID = :P8_ITEM_ID
+      and ift.VERSION_GROUP_ID = (
+          SELECT MAX(VERSION_GROUP_ID)
+          FROM ITEM_FLAVOR_TEXT
+          WHERE ITEM_ID = i.ID
+          AND LANGUAGE_ID = 9 -- english
+      );
+    page-items-to-submit: 
+    - P8_ABILITY_ID
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes # 7073654454750526091
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 41511650966687918673
+    appearance: 
+      layout: Horizontal (Row)
+
+    title: 
+      advanced-formatting: true
+      html-expression: |
+        <span>
+        <h3 class="a-CardView-title t-Badge pkmn-color-&P8_COLOR.">DESCRIPTION</h3>
+        <br>&FLAVOR_TEXT.
+        </span>
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: true
+      html-expression: |
+        <span>
+        <h3 class="a-CardView-title t-Badge pkmn-color-&P8_COLOR.">EFFECT</h3>
+        <br>&SHORT_EFFECT.
+        </span>
+        <br><br>
+        <span>
+        <h3 class="a-CardView-title t-Badge pkmn-color-&P8_COLOR.">EFFECT DETAILS</h3>
+        <br>&EFFECT.
+        </span>
+        <br><br>
+        <span>
+        <h3 class="a-CardView-title t-Badge pkmn-color-&P8_COLOR.">COST</h3>
+        <br>&COST. <img src="#APP_FILES#poke_dollar.png" width="8" height="12">
+        </span>
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: No Icon
+
+    media: 
+      advanced-formatting: false
+      source: No Media
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+- # ====== Region: &P8_ITEM_NAME. ==============================
+  id: 64472736852742680130
+  identification: 
+    title: '&P8_ITEM_NAME.'
+    type: Static Content
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero # 7073687806191526106
+    template-options: 
+    - '#DEFAULT#'
+    icon: item_img
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Other languages =============================
+  id: 116965222855640997167
+  identification: 
+    title: Other languages
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      (select lnames.NAME from LANGUAGE_NAMES lnames where lnames.language_id = inames.local_language_id and lnames.local_language_id = 9) as LANGUAGE_NAME,
+      inames.NAME
+      from ITEM_NAMES inames
+      inner join ITEMS i on i.ID = inames.ITEM_ID
+      where i.ID = :P8_ITEM_ID
+      and inames.local_language_id <= 10
+      order by 1
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: other_lang_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+      - t-Report--inline
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: None
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: LANGUAGE_NAME ===============================
+    id: 41511772963273609452
+    identification: 
+      column-name: LANGUAGE_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Language Name
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NAME ========================================
+    id: 41511773378918609452
+    identification: 
+      column-name: NAME
+      type: Plain Text
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Game Effects ================================
+  id: 117298727659700066730
+  identification: 
+    title: Game Effects
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      distinct GAME_DESCRIPTION,
+      LISTAGG(InitCap(replace(VERSION_GRP,'-',' ')), ' ') WITHIN GROUP (ORDER BY VERSION_GRP_ORDER) as VERSION_GRP
+      ,MIN(VERSION_GRP_ORDER) AS VERSION_GRP_ORDER
+      from
+      (
+      select
+      ift.FLAVOR_TEXT as GAME_DESCRIPTION,
+      vg.IDENTIFIER as VERSION_GRP,
+      vg.ORDER_ as VERSION_GRP_ORDER
+      from ITEM_FLAVOR_TEXT ift
+      inner join VERSION_GROUPS vg on vg.ID = ift.VERSION_GROUP_ID and ift.LANGUAGE_ID = 9 -- english
+      where ift.ITEM_ID = :P8_ITEM_ID
+      )
+      group by GAME_DESCRIPTION
+      ORDER BY VERSION_GRP_ORDER
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: game_effects_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select
+      ift.FLAVOR_TEXT as GAME_DESCRIPTION
+      from ITEM_FLAVOR_TEXT ift
+      inner join VERSION_GROUPS vg on vg.ID = ift.VERSION_GROUP_ID
+      where ift.ITEM_ID = :P8_ITEM_ID
+      and ift.LANGUAGE_ID = 9 -- english
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 20
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+      - t-Report--inline
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: None
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: VERSION_GRP =================================
+    id: 41511150653762607937
+    identification: 
+      column-name: VERSION_GRP
+      type: Plain Text
+
+    heading: 
+      heading: Version Grp
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VERSION_GRP_ORDER ===========================
+    id: 41511151026462607938
+    identification: 
+      column-name: VERSION_GRP_ORDER
+      type: Hidden Column
+
+    layout: 
+      sequence: 40
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GAME_DESCRIPTION ============================
+    id: 41511151512919607938
+    identification: 
+      column-name: GAME_DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Game Description
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P8_COLOR =================================
+  id: 36838037484521712086
+  identification: 
+    name: P8_COLOR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P8_ITEM_IDENTIFIER =======================
+  id: 36838037530556712087
+  identification: 
+    name: P8_ITEM_IDENTIFIER
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P8_ITEM_ID ===============================
+  id: 40860302487631280767
+  identification: 
+    name: P8_ITEM_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P8_ITEM_NAME =============================
+  id: 40860318606179282615
+  identification: 
+    name: P8_ITEM_NAME
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+

@@ -1,0 +1,2976 @@
+---
+# ====== Page: Move Details ==================================
+id: 4
+identification: 
+  name: Move Details
+  alias: MOVE-DETAILS
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Drawer # 7073618572303526072
+  template-options: 
+  - '#DEFAULT#'
+  - js-dialog-class-t-Drawer--pullOutEnd
+
+dialog: 
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/main.css'
+  inline: |2
+        #battles_region .t-Region-header {
+            background-color: &P4_PKMN_CSS_COLOR.;
+            color: &P4_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #game_effects_region .t-Region-header {
+            background-color: &P4_PKMN_CSS_COLOR.;
+            color: &P4_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #pkmn_move_region .t-Region-header {
+            background-color: &P4_PKMN_CSS_COLOR.;
+            color: &P4_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #other_lang_region .t-Region-header {
+            background-color: &P4_PKMN_CSS_COLOR.;
+            color: &P4_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #pkmn_levelup .t-Region-header {
+            background-color: &P4_PKMN_CSS_COLOR.;
+            color: &P4_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #pkmn_egg .t-Region-header {
+            background-color: &P4_PKMN_CSS_COLOR.;
+            color: &P4_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #contests_region .t-Region-header {
+            background-color: &P4_PKMN_CSS_COLOR.;
+            color: &P4_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #supercontests_region .t-Region-header {
+            background-color: &P4_PKMN_CSS_COLOR.;
+            color: &P4_PKMN_TEXT_COLOR.; /* Set the text color to ensure readability */
+            font-weight: bold;
+        }
+    
+        #hero_region .t-HeroRegion-icon {
+            background-color: &P4_PKMN_CSS_COLOR.;
+        }
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: &P4_MOVE_NAME. ==============================
+  id: 24420563589100209075
+  identification: 
+    title: '&P4_MOVE_NAME.'
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero # 7073687806191526106
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-star
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: hero_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Battles =====================================
+  id: 24420564302721209082
+  identification: 
+    title: Battles
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      distinct mn.NAME as MOVE,
+      lower(t.IDENTIFIER) as TYPE,
+      LISTAGG('<img src="#APP_FILES#move_class/'||mdc.IDENTIFIER||'.png" height="20" style="background-color: grey">', ' ') WITHIN GROUP (ORDER BY m.ID) as CATEGORY ,
+      m.POWER,
+      m.PP,
+      m.ACCURACY,
+      m.GENERATION_ID as GENERATION,
+      m.PRIORITY,
+      InitCap(replace(mt.IDENTIFIER,'-',' ')) as TARGET,
+      replace(REGEXP_REPLACE(REGEXP_REPLACE(mep.SHORT_EFFECT,'\{[^\}]+:([^\}]+)\}','\1'), '\[.*?\]', ''),'$effect_chance',m.EFFECT_CHANCE) as EFFECT,
+      CASE
+      WHEN m.EFFECT_CHANCE IS NOT NULL THEN
+        to_char(m.EFFECT_CHANCE)||'%'
+      ELSE
+        'None'
+      END as EFFECT_CHANCE
+      from MOVES m
+      inner join MOVE_NAMES mn on mn.MOVE_ID = m.ID and mn.local_language_id = 9 -- english
+      inner join MOVE_DAMAGE_CLASSES mdc on mdc.ID = m.DAMAGE_CLASS_ID
+      inner join TYPES t on t.ID = m.TYPE_ID
+      inner join MOVE_TARGETS mt on mt.ID = m.TARGET_ID
+      left join MOVE_EFFECT_PROSE mep on mep.MOVE_EFFECT_ID=m.EFFECT_ID and mep.LOCAL_LANGUAGE_ID = 9 -- english -- gen 9 effects are not in data
+      where m.ID = :P4_MOVE_ID
+      group by mn.NAME,lower(t.IDENTIFIER),m.POWER,m.PP,m.ACCURACY,m.GENERATION_ID,m.PRIORITY,mt.IDENTIFIER,mep.SHORT_EFFECT,m.EFFECT_CHANCE
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: battles_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Value Attribute Pairs - Column # 7073963110794526146
+      template-options: 
+      - '#DEFAULT#'
+      - t-AVPList--leftAligned
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: MOVE ========================================
+    id: 24420564559143209085
+    identification: 
+      column-name: MOVE
+      type: Hidden Column
+
+    layout: 
+      sequence: 30
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE ========================================
+    id: 24420564633669209086
+    identification: 
+      column-name: TYPE
+      type: Plain Text
+
+    heading: 
+      heading: Type
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: <span class="a-CardView-badge a-CardView-badgeValue type-#TYPE#"><img src="#APP_FILES#types/#TYPE#.png" height="16">#TYPE#</span>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: POWER =======================================
+    id: 24420564865117209088
+    identification: 
+      column-name: POWER
+      type: Plain Text
+
+    heading: 
+      heading: Power
+      alignment: end
+
+    layout: 
+      sequence: 60
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PP ==========================================
+    id: 24420565018868209089
+    identification: 
+      column-name: PP
+      type: Plain Text
+
+    heading: 
+      heading: PP
+      alignment: end
+
+    layout: 
+      sequence: 70
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACCURACY ====================================
+    id: 24420565099956209090
+    identification: 
+      column-name: ACCURACY
+      type: Plain Text
+
+    heading: 
+      heading: Accuracy
+      alignment: end
+
+    layout: 
+      sequence: 90
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GENERATION ==================================
+    id: 24420565260777209092
+    identification: 
+      column-name: GENERATION
+      type: Plain Text
+
+    heading: 
+      heading: Generation
+      alignment: end
+
+    layout: 
+      sequence: 100
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: '<img src="#APP_FILES#generations/gen_#GENERATION#.png" > '
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRIORITY ====================================
+    id: 24420565375206209093
+    identification: 
+      column-name: PRIORITY
+      type: Plain Text
+
+    heading: 
+      heading: Priority
+      alignment: end
+
+    layout: 
+      sequence: 130
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: EFFECT_CHANCE ===============================
+    id: 24420565630421209096
+    identification: 
+      column-name: EFFECT_CHANCE
+      type: Plain Text
+
+    heading: 
+      heading: Effect Chance
+      alignment: end
+
+    layout: 
+      sequence: 120
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: EFFECT ======================================
+    id: 25198606243916721975
+    identification: 
+      column-name: EFFECT
+      type: Plain Text
+
+    heading: 
+      heading: Effect
+      alignment: start
+
+    layout: 
+      sequence: 110
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TARGET ======================================
+    id: 25198606387329721976
+    identification: 
+      column-name: TARGET
+      type: Plain Text
+
+    heading: 
+      heading: Target
+      alignment: start
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CATEGORY ====================================
+    id: 28696208430324053790
+    identification: 
+      column-name: CATEGORY
+      type: Plain Text
+
+    heading: 
+      heading: Category
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+- # ====== Region: Contests ====================================
+  id: 25198607560698721988
+  identification: 
+    title: Contests
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      ct.IDENTIFIER as CONDITION,
+      ce.APPEAL,
+      ce.JAM,
+      cep.FLAVOR_TEXT as EFFECT
+      from MOVES m
+      inner join CONTEST_EFFECTS ce on ce.ID=m.CONTEST_EFFECT_ID
+      inner join CONTEST_TYPES ct on ct.ID=m.CONTEST_TYPE_ID
+      inner join CONTEST_EFFECT_PROSE cep on cep.CONTEST_EFFECT_ID=m.CONTEST_EFFECT_ID and cep.LOCAL_LANGUAGE_ID = 9 -- english
+      inner join MOVE_NAMES mn on mn.MOVE_ID = m.ID and mn.LOCAL_LANGUAGE_ID = 9 -- english
+      where m.ID = :P4_MOVE_ID
+      
+
+  layout: 
+    sequence: 90
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: contests_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      -- simplified query from report
+      select
+      m.ID
+      from MOVES m
+      inner join CONTEST_EFFECTS ce on ce.ID=m.CONTEST_EFFECT_ID
+      inner join CONTEST_TYPES ct on ct.ID=m.CONTEST_TYPE_ID
+      inner join CONTEST_EFFECT_PROSE cep on cep.CONTEST_EFFECT_ID=m.CONTEST_EFFECT_ID
+      inner join MOVE_NAMES mn on mn.MOVE_ID = m.ID
+      where m.ID = :P4_MOVE_ID
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Value Attribute Pairs - Column # 7073963110794526146
+      template-options: 
+      - '#DEFAULT#'
+      - t-AVPList--leftAligned
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CONDITION ===================================
+    id: 25198610126441722014
+    identification: 
+      column-name: CONDITION
+      type: Plain Text
+
+    heading: 
+      heading: Condition
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: <span class="a-CardView-badge a-CardView-badgeValue contest-type-#CONDITION#">#CONDITION#</span>
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: APPEAL ======================================
+    id: 25198610247342722015
+    identification: 
+      column-name: APPEAL
+      type: Plain Text
+
+    heading: 
+      heading: Appeal
+      alignment: end
+
+    layout: 
+      sequence: 50
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: '#APPEAL# &nbsp; <span class="fa fa-heart u-color-9-text" aria-hidden="true"></span>'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: JAM =========================================
+    id: 25198610370081722016
+    identification: 
+      column-name: JAM
+      type: Plain Text
+
+    heading: 
+      heading: Jam
+      alignment: end
+
+    layout: 
+      sequence: 60
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: '#JAM# &nbsp; <span class="fa fa-heart" aria-hidden="true"></span>'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: EFFECT ======================================
+    id: 25198610530950722018
+    identification: 
+      column-name: EFFECT
+      type: Plain Text
+
+    heading: 
+      heading: Effect
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Super Contests ==============================
+  id: 25198609400430722006
+  identification: 
+    title: Super Contests
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      sce.APPEAL,
+      scep.FLAVOR_TEXT as EFFECT
+      from MOVES m
+      inner join SUPER_CONTEST_EFFECTS sce on sce.ID=m.SUPER_CONTEST_EFFECT_ID
+      inner join SUPER_CONTEST_EFFECT_PROSE scep on scep.SUPER_CONTEST_EFFECT_ID=m.SUPER_CONTEST_EFFECT_ID and scep.LOCAL_LANGUAGE_ID = 9 -- english
+      inner join MOVE_NAMES mn on mn.MOVE_ID = m.ID and mn.LOCAL_LANGUAGE_ID = 9 -- english
+      where m.ID = :P4_MOVE_ID
+      
+
+  layout: 
+    sequence: 100
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: supercontests_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      -- simplified query from report
+      select
+      m.ID
+      from MOVES m
+      inner join CONTEST_EFFECTS ce on ce.ID=m.CONTEST_EFFECT_ID
+      inner join CONTEST_TYPES ct on ct.ID=m.CONTEST_TYPE_ID
+      inner join CONTEST_EFFECT_PROSE cep on cep.CONTEST_EFFECT_ID=m.CONTEST_EFFECT_ID
+      inner join MOVE_NAMES mn on mn.MOVE_ID = m.ID
+      where m.ID = :P4_MOVE_ID
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Value Attribute Pairs - Column # 7073963110794526146
+      template-options: 
+      - '#DEFAULT#'
+      - t-AVPList--leftAligned
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: APPEAL ======================================
+    id: 25198610084832722013
+    identification: 
+      column-name: APPEAL
+      type: Plain Text
+
+    heading: 
+      heading: Appeal
+      alignment: end
+
+    layout: 
+      sequence: 10
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: '#APPEAL# &nbsp; <span class="fa fa-heart u-color-9-text" aria-hidden="true"></span>'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: EFFECT ======================================
+    id: 25198610464850722017
+    identification: 
+      column-name: EFFECT
+      type: Plain Text
+
+    heading: 
+      heading: Effect
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Other languages =============================
+  id: 36838036374676712075
+  identification: 
+    title: Other languages
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      (select lnames.NAME from LANGUAGE_NAMES lnames where lnames.language_id = mn.local_language_id and lnames.local_language_id = 9) as LANGUAGE_NAME,
+      mn.NAME
+      from MOVE_NAMES mn
+      inner join MOVES m on m.ID = mn.MOVE_ID
+      where m.ID = :P4_MOVE_ID
+      and mn.local_language_id <= 10
+      order by 1
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: other_lang_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+      - t-Report--inline
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: None
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: LANGUAGE_NAME ===============================
+    id: 36838036430315712076
+    identification: 
+      column-name: LANGUAGE_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Language Name
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NAME ========================================
+    id: 36838036537410712077
+    identification: 
+      column-name: NAME
+      type: Plain Text
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Game Effects ================================
+  id: 36838036656987712078
+  identification: 
+    title: Game Effects
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+      distinct GAME_DESCRIPTION,
+      LISTAGG(InitCap(replace(VERSION_GRP,'-',' ')), ' ') WITHIN GROUP (ORDER BY VERSION_GRP_ORDER) as VERSION_GRP
+      ,MIN(VERSION_GRP_ORDER) AS VERSION_GRP_ORDER
+      from
+      (
+      select
+      mvt.FLAVOR_TEXT as GAME_DESCRIPTION,
+      vg.IDENTIFIER as VERSION_GRP,
+      vg.ORDER_ as VERSION_GRP_ORDER
+      from MOVE_FLAVOR_TEXT mvt
+      inner join VERSION_GROUPS vg on vg.ID = mvt.VERSION_GROUP_ID and mvt.LANGUAGE_ID = 9 -- english
+      where mvt.MOVE_ID = :P4_MOVE_ID
+      )
+      group by GAME_DESCRIPTION
+      ORDER BY VERSION_GRP_ORDER
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: game_effects_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select
+      mvt.FLAVOR_TEXT
+      from MOVE_FLAVOR_TEXT mvt
+      inner join VERSION_GROUPS vg on vg.ID = mvt.VERSION_GROUP_ID
+      where mvt.MOVE_ID = :P4_MOVE_ID
+      and mvt.LANGUAGE_ID = 9 -- english
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 20
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+      - t-Report--inline
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: None
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: GAME_DESCRIPTION ============================
+    id: 36838036809306712079
+    identification: 
+      column-name: GAME_DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Game Description
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VERSION_GRP =================================
+    id: 37673961877901307776
+    identification: 
+      column-name: VERSION_GRP
+      type: Plain Text
+
+    heading: 
+      heading: Version Grp
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VERSION_GRP_ORDER ===========================
+    id: 37673961972982307777
+    identification: 
+      column-name: VERSION_GRP_ORDER
+      type: Hidden Column
+
+    layout: 
+      sequence: 40
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Learnt by Level Up ==========================
+  id: 37673962139270307779
+  identification: 
+    title: Learnt by Level Up
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT *
+      FROM (
+          SELECT
+              pm.POKEMON_ID,
+              case 
+                when p.SPECIES_ID < 1000 then '#'||LPAD(to_char(p.SPECIES_ID), 4, '0')
+                else '#'||to_char(p.SPECIES_ID)
+              end as NUM,
+              'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||p.ID||'.png' as SPRITE,
+              p.SPECIES_ID as PKMN_SPECIES_ID,
+              InitCap(p.IDENTIFIER) as PKMN_NAME,
+              (select lower(t.IDENTIFIER) 
+              from TYPES t
+              inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+              where pt.POKEMON_ID = p.ID
+              and pt.slot=1) as TYPE1,
+              (select lower(t.IDENTIFIER) 
+              from TYPES t
+              inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+              where pt.POKEMON_ID = p.ID
+              and pt.slot=2) as TYPE2,
+              case
+                when pc.IDENTIFIER is null then 'black'
+                else lower(pc.IDENTIFIER) 
+              end as COLOR,
+              case
+                when lower(pc.IDENTIFIER) in ('white') then 'gray'
+                when pc.IDENTIFIER is null then 'black'
+                else lower(pc.IDENTIFIER)
+              end as CSS_COLOR,
+              case
+                when lower(pc.IDENTIFIER) in ('gray','pink','white','yellow') then 'black'
+                else 'white'
+              end as CSS_TEXT_COLOR,
+              vg.GENERATION_ID,
+              pm.LEVEL_,
+              ps.GENERATION_ID as GEN_ID,
+              ps.EVOLUTION_CHAIN_ID as EVOLUTION_CHAIN_ID,
+              p.IS_DEFAULT
+          FROM POKEMON_MOVES pm
+          INNER JOIN POKEMON p on p.ID = pm.POKEMON_ID
+          INNER JOIN VERSION_GROUPS vg on vg.ID = pm.VERSION_GROUP_ID
+          LEFT JOIN POKEMON_SPECIES ps ON ps.ID = p.ID
+          LEFT JOIN POKEMON_COLORS pc on pc.ID = ps.COLOR_ID  
+          WHERE pm.MOVE_ID = :P4_MOVE_ID
+          AND p.IS_DEFAULT = 1 -- NOTE : don't show PKMN variations
+          AND pm.POKEMON_MOVE_METHOD_ID = 1 -- level-up
+      )
+      PIVOT (
+          MAX(LEVEL_) FOR GENERATION_ID IN (
+              -- List of distinct VERSION_GROUP_ID values goes here
+              -- Example: 1 AS GROUP_1, 2 AS GROUP_2, ...
+              1 as gen_1, 
+              2 as gen_2,
+              3 as gen_3,
+              4 as gen_4,
+              5 as gen_5,
+              6 as gen_6,
+              7 as gen_7,
+              8 as gen_8,
+              9 as gen_9
+          )
+      )
+      ORDER BY PKMN_SPECIES_ID;
+      
+
+  layout: 
+    sequence: 10
+    parent-region: Pokémon with &P4_MOVE_NAME. # 79985478147960818902
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: pkmn_levelup
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      -- subquery from the report
+      SELECT
+          pm.POKEMON_ID
+      FROM POKEMON_MOVES pm
+      INNER JOIN POKEMON p on p.ID = pm.POKEMON_ID
+      INNER JOIN POKEMON_SPECIES ps ON ps.ID = p.ID
+      INNER JOIN POKEMON_COLORS pc on pc.ID = ps.COLOR_ID
+      INNER JOIN VERSION_GROUPS vg on vg.ID = pm.VERSION_GROUP_ID
+      WHERE pm.MOVE_ID = :P4_MOVE_ID
+      AND pm.POKEMON_MOVE_METHOD_ID = 1 -- level-up
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 500
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: POKEMON_ID ==================================
+    id: 37673962276562307780
+    identification: 
+      column-name: POKEMON_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 10
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NUM =========================================
+    id: 37673962327510307781
+    identification: 
+      column-name: NUM
+      type: Link
+
+    heading: 
+      heading: Pokémon
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::P2_PKMN_NUMBER,P2_PKMN_NAME,P2_PKMN_SPECIES_ID,P2_PKMN_GENERATION_ID,P2_PKMN_IS_DEFAULT,P2_PKMN_EVO_CHAIN_ID,P2_PKMN_COLOR,P2_PKMN_TEXT_COLOR,P2_PKMN_CSS_COLOR:#POKEMON_ID#,#PKMN_NAME#,#PKMN_SPECIES_ID#,#GEN_ID#,#IS_DEFAULT#,#EVOLUTION_CHAIN_ID#,#COLOR#,#CSS_TEXT_COLOR#,#CSS_COLOR#'
+        page: 2 # Pokémon Details
+        values: 
+          p2_pkmn_number: '#POKEMON_ID#'
+          p2_pkmn_name: '#PKMN_NAME#'
+          p2_pkmn_species_id: '#PKMN_SPECIES_ID#'
+          p2_pkmn_generation_id: '#GEN_ID#'
+          p2_pkmn_is_default: '#IS_DEFAULT#'
+          p2_pkmn_evo_chain_id: '#EVOLUTION_CHAIN_ID#'
+          p2_pkmn_color: '#COLOR#'
+          p2_pkmn_text_color: '#CSS_TEXT_COLOR#'
+          p2_pkmn_css_color: '#CSS_COLOR#'
+
+      link-text: '#NUM#<img src="#SPRITE#" title="#PKMN_NAME#" height="48px"><br>#PKMN_NAME#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PKMN_SPECIES_ID =============================
+    id: 37673962472398307782
+    identification: 
+      column-name: PKMN_SPECIES_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 30
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PKMN_NAME ===================================
+    id: 37673962577124307783
+    identification: 
+      column-name: PKMN_NAME
+      type: Hidden Column
+
+    layout: 
+      sequence: 50
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE1 =======================================
+    id: 37673962688402307784
+    identification: 
+      column-name: TYPE1
+      type: Plain Text
+
+    heading: 
+      heading: Type
+      alignment: center
+
+    layout: 
+      sequence: 60
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {if TYPE2/}
+        <span class="a-CardView-badge a-CardView-badgeValue type-#TYPE1#" style="display:inline-block;"><img src="#APP_FILES#types/#TYPE1#.png" height="16">#TYPE1#</span><br><br>
+        <span class="a-CardView-badge a-CardView-badgeValue type-#TYPE2#" style="display:inline-block;"><img src="#APP_FILES#types/#TYPE2#.png" height="16">#TYPE2#</span>
+        {else/}
+        <span class="a-CardView-badge a-CardView-badgeValue type-#TYPE1#" style="display:inline-block;"><img src="#APP_FILES#types/#TYPE1#.png" height="16">#TYPE1#</span>
+        {endif/}
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 100
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: TYPE2 =======================================
+    id: 37673962743648307785
+    identification: 
+      column-name: TYPE2
+      type: Hidden Column
+
+    layout: 
+      sequence: 70
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COLOR =======================================
+    id: 37673963010474307787
+    identification: 
+      column-name: COLOR
+      type: Hidden Column
+
+    layout: 
+      sequence: 90
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CSS_COLOR ===================================
+    id: 37673963055040307788
+    identification: 
+      column-name: CSS_COLOR
+      type: Hidden Column
+
+    layout: 
+      sequence: 100
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CSS_TEXT_COLOR ==============================
+    id: 37673963147850307789
+    identification: 
+      column-name: CSS_TEXT_COLOR
+      type: Hidden Column
+
+    layout: 
+      sequence: 110
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_1 =======================================
+    id: 37673963301705307790
+    identification: 
+      column-name: GEN_1
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_1.png" > '
+      alignment: center
+
+    layout: 
+      sequence: 120
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_2 =======================================
+    id: 37673963390128307791
+    identification: 
+      column-name: GEN_2
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_2.png" > '
+      alignment: center
+
+    layout: 
+      sequence: 130
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_3 =======================================
+    id: 37673963429985307792
+    identification: 
+      column-name: GEN_3
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_3.png" > '
+      alignment: end
+
+    layout: 
+      sequence: 140
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_4 =======================================
+    id: 37673963567432307793
+    identification: 
+      column-name: GEN_4
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_4.png" > '
+      alignment: end
+
+    layout: 
+      sequence: 150
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_5 =======================================
+    id: 37673963632782307794
+    identification: 
+      column-name: GEN_5
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_5.png" > '
+      alignment: end
+
+    layout: 
+      sequence: 160
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_6 =======================================
+    id: 37673963803267307795
+    identification: 
+      column-name: GEN_6
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_6.png" > '
+      alignment: end
+
+    layout: 
+      sequence: 170
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_7 =======================================
+    id: 37673963886887307796
+    identification: 
+      column-name: GEN_7
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_7.png" > '
+      alignment: end
+
+    layout: 
+      sequence: 180
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_8 =======================================
+    id: 37673963993232307797
+    identification: 
+      column-name: GEN_8
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_8.png" > '
+      alignment: end
+
+    layout: 
+      sequence: 190
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_9 =======================================
+    id: 37673964056029307798
+    identification: 
+      column-name: GEN_9
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_9.png" > '
+      alignment: end
+
+    layout: 
+      sequence: 200
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SPRITE ======================================
+    id: 37673964164263307799
+    identification: 
+      column-name: SPRITE
+      type: Hidden Column
+
+    layout: 
+      sequence: 40
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: EVOLUTION_CHAIN_ID ==========================
+    id: 37945928572324596891
+    identification: 
+      column-name: EVOLUTION_CHAIN_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 210
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IS_DEFAULT ==================================
+    id: 37945928693605596892
+    identification: 
+      column-name: IS_DEFAULT
+      type: Hidden Column
+
+    layout: 
+      sequence: 220
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_ID ======================================
+    id: 37945928927372596895
+    identification: 
+      column-name: GEN_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 230
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Learnt by Egg ===============================
+  id: 37673964317793307800
+  identification: 
+    title: Learnt by Egg
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT *
+      FROM (
+          SELECT
+              pm.POKEMON_ID,
+              case 
+                when p.SPECIES_ID < 1000 then '#'||LPAD(to_char(p.SPECIES_ID), 4, '0')
+                else '#'||to_char(p.SPECIES_ID)
+              end as NUM,
+              'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||p.ID||'.png' as SPRITE,
+              p.SPECIES_ID as PKMN_SPECIES_ID,
+              InitCap(p.IDENTIFIER) as PKMN_NAME,
+              (select lower(t.IDENTIFIER) 
+              from TYPES t
+              inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+              where pt.POKEMON_ID = p.ID
+              and pt.slot=1) as TYPE1,
+              (select lower(t.IDENTIFIER) 
+              from TYPES t
+              inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+              where pt.POKEMON_ID = p.ID
+              and pt.slot=2) as TYPE2,
+              case
+                when pc.IDENTIFIER is null then 'black'
+                else lower(pc.IDENTIFIER) 
+              end as COLOR,
+              case
+                when lower(pc.IDENTIFIER) in ('white') then 'gray'
+                when pc.IDENTIFIER is null then 'black'
+                else lower(pc.IDENTIFIER)
+              end as CSS_COLOR,
+              case
+                when lower(pc.IDENTIFIER) in ('gray','pink','white','yellow') then 'black'
+                else 'white'
+              end as CSS_TEXT_COLOR,
+              vg.GENERATION_ID,
+              pm.LEVEL_,
+              ps.GENERATION_ID as GEN_ID,
+              ps.EVOLUTION_CHAIN_ID as EVOLUTION_CHAIN_ID,
+              p.IS_DEFAULT
+          FROM POKEMON_MOVES pm
+          INNER JOIN POKEMON p on p.ID = pm.POKEMON_ID
+          INNER JOIN VERSION_GROUPS vg on vg.ID = pm.VERSION_GROUP_ID
+          LEFT JOIN POKEMON_SPECIES ps ON ps.ID = p.ID
+          LEFT JOIN POKEMON_COLORS pc on pc.ID = ps.COLOR_ID 
+          WHERE pm.MOVE_ID = :P4_MOVE_ID
+          AND p.IS_DEFAULT = 1 -- NOTE : don't show PKMN variations
+          AND pm.POKEMON_MOVE_METHOD_ID = 2 -- egg
+      )
+      PIVOT (
+          MAX(LEVEL_) FOR GENERATION_ID IN (
+              -- List of distinct VERSION_GROUP_ID values goes here
+              -- Example: 1 AS GROUP_1, 2 AS GROUP_2, ...
+              --1 as gen_1, -- eggs are from Gen II onwards
+              2 as gen_2,
+              3 as gen_3,
+              4 as gen_4,
+              5 as gen_5,
+              6 as gen_6,
+              7 as gen_7,
+              8 as gen_8,
+              9 as gen_9
+          )
+      )
+      ORDER BY PKMN_SPECIES_ID;
+      
+
+  layout: 
+    sequence: 20
+    parent-region: Pokémon with &P4_MOVE_NAME. # 79985478147960818902
+    position: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: pkmn_egg
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      -- subquery from the report
+      SELECT
+          pm.POKEMON_ID
+      FROM POKEMON_MOVES pm
+      INNER JOIN POKEMON p on p.ID = pm.POKEMON_ID
+      INNER JOIN POKEMON_SPECIES ps ON ps.ID = p.ID
+      INNER JOIN POKEMON_COLORS pc on pc.ID = ps.COLOR_ID
+      INNER JOIN VERSION_GROUPS vg on vg.ID = pm.VERSION_GROUP_ID
+      WHERE pm.MOVE_ID = :P4_MOVE_ID
+      AND pm.POKEMON_MOVE_METHOD_ID = 2 -- egg
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 500
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: POKEMON_ID ==================================
+    id: 37673964345550307801
+    identification: 
+      column-name: POKEMON_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 10
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NUM =========================================
+    id: 37673964494842307802
+    identification: 
+      column-name: NUM
+      type: Link
+
+    heading: 
+      heading: Pokémon
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::P2_PKMN_NUMBER,P2_PKMN_NAME,P2_PKMN_SPECIES_ID,P2_PKMN_GENERATION_ID,P2_PKMN_IS_DEFAULT,P2_PKMN_EVO_CHAIN_ID,P2_PKMN_COLOR,P2_PKMN_TEXT_COLOR,P2_PKMN_CSS_COLOR:#POKEMON_ID#,#PKMN_NAME#,#PKMN_SPECIES_ID#,#GEN_ID#,#IS_DEFAULT#,#EVOLUTION_CHAIN_ID#,#COLOR#,#CSS_TEXT_COLOR#,#CSS_COLOR#'
+        page: 2 # Pokémon Details
+        values: 
+          p2_pkmn_number: '#POKEMON_ID#'
+          p2_pkmn_name: '#PKMN_NAME#'
+          p2_pkmn_species_id: '#PKMN_SPECIES_ID#'
+          p2_pkmn_generation_id: '#GEN_ID#'
+          p2_pkmn_is_default: '#IS_DEFAULT#'
+          p2_pkmn_evo_chain_id: '#EVOLUTION_CHAIN_ID#'
+          p2_pkmn_color: '#COLOR#'
+          p2_pkmn_text_color: '#CSS_TEXT_COLOR#'
+          p2_pkmn_css_color: '#CSS_COLOR#'
+
+      link-text: '#NUM#<img src="#SPRITE#" title="#PKMN_NAME#" height="48px"><br>#PKMN_NAME#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PKMN_SPECIES_ID =============================
+    id: 37673964574696307803
+    identification: 
+      column-name: PKMN_SPECIES_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 30
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SPRITE ======================================
+    id: 37673964661508307804
+    identification: 
+      column-name: SPRITE
+      type: Hidden Column
+
+    layout: 
+      sequence: 40
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: PKMN_NAME ===================================
+    id: 37673964777580307805
+    identification: 
+      column-name: PKMN_NAME
+      type: Hidden Column
+
+    layout: 
+      sequence: 50
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE1 =======================================
+    id: 37673964855196307806
+    identification: 
+      column-name: TYPE1
+      type: Plain Text
+
+    heading: 
+      heading: Type
+      alignment: center
+
+    layout: 
+      sequence: 60
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {if TYPE2/}
+        <span class="a-CardView-badge a-CardView-badgeValue type-#TYPE1#" style="display:inline-block;"><img src="#APP_FILES#types/#TYPE1#.png" height="16">#TYPE1#</span><br><br>
+        <span class="a-CardView-badge a-CardView-badgeValue type-#TYPE2#" style="display:inline-block;"><img src="#APP_FILES#types/#TYPE2#.png" height="16">#TYPE2#</span>
+        {else/}
+        <span class="a-CardView-badge a-CardView-badgeValue type-#TYPE1#" style="display:inline-block;"><img src="#APP_FILES#types/#TYPE1#.png" height="16">#TYPE1#</span>
+        {endif/}
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: TYPE2 =======================================
+    id: 37673964946113307807
+    identification: 
+      column-name: TYPE2
+      type: Hidden Column
+
+    layout: 
+      sequence: 70
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COLOR =======================================
+    id: 37673965055361307808
+    identification: 
+      column-name: COLOR
+      type: Hidden Column
+
+    layout: 
+      sequence: 80
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CSS_COLOR ===================================
+    id: 37673965142714307809
+    identification: 
+      column-name: CSS_COLOR
+      type: Hidden Column
+
+    layout: 
+      sequence: 90
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CSS_TEXT_COLOR ==============================
+    id: 37673965278827307810
+    identification: 
+      column-name: CSS_TEXT_COLOR
+      type: Hidden Column
+
+    layout: 
+      sequence: 100
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_2 =======================================
+    id: 37673965455167307812
+    identification: 
+      column-name: GEN_2
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_2.png" > '
+      alignment: center
+
+    layout: 
+      sequence: 120
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {case GEN_2/}
+          {when 0/}
+        	<span class="fa fa-check" aria-hidden="true"></span>
+          {otherwise/}
+        	-
+        {endcase/}
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_3 =======================================
+    id: 37673965614276307813
+    identification: 
+      column-name: GEN_3
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_3.png" > '
+      alignment: center
+
+    layout: 
+      sequence: 130
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {case GEN_3/}
+          {when 0/}
+        	<span class="fa fa-check" aria-hidden="true"></span>
+          {otherwise/}
+        	-
+        {endcase/}
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_4 =======================================
+    id: 37673965688486307814
+    identification: 
+      column-name: GEN_4
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_4.png" > '
+      alignment: center
+
+    layout: 
+      sequence: 140
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {case GEN_4/}
+          {when 0/}
+        	<span class="fa fa-check" aria-hidden="true"></span>
+          {otherwise/}
+        	-
+        {endcase/}
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_5 =======================================
+    id: 37673965786916307815
+    identification: 
+      column-name: GEN_5
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_5.png" > '
+      alignment: center
+
+    layout: 
+      sequence: 150
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {case GEN_5/}
+          {when 0/}
+        	<span class="fa fa-check" aria-hidden="true"></span>
+          {otherwise/}
+        	-
+        {endcase/}
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_6 =======================================
+    id: 37673965904971307816
+    identification: 
+      column-name: GEN_6
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_6.png" > '
+      alignment: center
+
+    layout: 
+      sequence: 160
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {case GEN_6/}
+          {when 0/}
+        	<span class="fa fa-check" aria-hidden="true"></span>
+          {otherwise/}
+        	-
+        {endcase/}
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_7 =======================================
+    id: 37673965960982307817
+    identification: 
+      column-name: GEN_7
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_7.png" > '
+      alignment: center
+
+    layout: 
+      sequence: 170
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {case GEN_7/}
+          {when 0/}
+        	<span class="fa fa-check" aria-hidden="true"></span>
+          {otherwise/}
+        	-
+        {endcase/}
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_8 =======================================
+    id: 37673966110174307818
+    identification: 
+      column-name: GEN_8
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_8.png" > '
+      alignment: center
+
+    layout: 
+      sequence: 180
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {case GEN_8/}
+          {when 0/}
+        	<span class="fa fa-check" aria-hidden="true"></span>
+          {otherwise/}
+        	-
+        {endcase/}
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_9 =======================================
+    id: 37673966201439307819
+    identification: 
+      column-name: GEN_9
+      type: Plain Text
+
+    heading: 
+      heading: '<img src="#APP_FILES#generations/gen_9.png" > '
+      alignment: center
+
+    layout: 
+      sequence: 190
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {case GEN_9/}
+          {when 0/}
+        	<span class="fa fa-check" aria-hidden="true"></span>
+          {otherwise/}
+        	-
+        {endcase/}
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: EVOLUTION_CHAIN_ID ==========================
+    id: 37945928801224596893
+    identification: 
+      column-name: EVOLUTION_CHAIN_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 200
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IS_DEFAULT ==================================
+    id: 37945928865896596894
+    identification: 
+      column-name: IS_DEFAULT
+      type: Hidden Column
+
+    layout: 
+      sequence: 210
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GEN_ID ======================================
+    id: 37945929072281596896
+    identification: 
+      column-name: GEN_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 220
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Pokémon with &P4_MOVE_NAME. =================
+  id: 79985478147960818902
+  identification: 
+    title: Pokémon with &P4_MOVE_NAME.
+    type: Static Content
+
+  layout: 
+    sequence: 130
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: pkmn_move_region
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P4_MOVE_ID ===============================
+  id: 24420563704941209076
+  identification: 
+    name: P4_MOVE_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_VERSION_GROUP_ID ======================
+  id: 24420563771671209077
+  identification: 
+    name: P4_VERSION_GROUP_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_MOVE_NAME =============================
+  id: 24420563923318209078
+  identification: 
+    name: P4_MOVE_NAME
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_PKMN_CSS_COLOR ========================
+  id: 33063597508849011563
+  identification: 
+    name: P4_PKMN_CSS_COLOR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_PKMN_TEXT_COLOR =======================
+  id: 33064272483501700333
+  identification: 
+    name: P4_PKMN_TEXT_COLOR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: No Parent
+    position: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+

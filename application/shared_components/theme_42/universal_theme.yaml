@@ -1,0 +1,167 @@
+---
+# ====== Theme: Universal Theme ==============================
+id: 42
+identification: 
+  theme-number: 42
+  name: Universal Theme
+  identifier: UNIVERSAL_THEME
+
+navigation: 
+  type: List
+  navigation-bar-type: List
+
+javascript: 
+  file-urls: 
+  - '#APEX_FILES#libraries/apex/#MIN_DIRECTORY#widget.stickyWidget#MIN#.js?v=#APEX_VERSION#'
+  - '#THEME_FILES#js/theme42#MIN#.js?v=#APEX_VERSION#'
+
+css: 
+  file-urls: 
+  - '#THEME_FILES#css/Core#MIN#.css?v=#APEX_VERSION#'
+
+component-defaults: 
+  page: Standard # 7073644403113526086
+  navigation-bar-list: Navigation Bar # 7073982517791526155
+  navigation-menu-list-position: Side
+  navigation-menu-list-(top): Top Navigation Menu # 7073988405124526158
+  navigation-menu-list-(side): Side Navigation Menu # 7073982926170526156
+  login-page: Login # 7073629128887526079
+  error-page: Login # 7073629128887526079
+  printer-friendly-page: Standard # 7073644403113526086
+  breadcrumb: 7073996741312526163
+  button: Text # 7073995148758526162
+  legacy-calendar: Calendar # 7073996902962526163
+  default-label: Optional - Floating # 7073992643625526161
+  optional-label: Optional - Floating # 7073992643625526161
+  required-label: Required - Floating # 7073993988885526161
+  list: Links List # 7073976524504526152
+  region: Standard # 7073721871352526124
+  classic-report: Standard # 7073760094890526144
+
+region-defaults: 
+  breadcrumbs: Title Bar # 7073734259208526131
+  charts: Standard # 7073721871352526124
+  forms: Standard # 7073721871352526124
+  lists: Standard # 7073721871352526124
+  reports: Standard # 7073721871352526124
+  wizards: Standard # 7073721871352526124
+  interactive-reports: Interactive Report # 7073712033569526118
+
+dialog-defaults: 
+  dialog-content-region: Blank with Attributes # 7073654454750526091
+  dialog-button-region: Buttons Container # 7073657260856526093
+  dialog-page: Modal Dialog # 7073639170889526083
+
+icons: 
+  library: Font APEX
+
+files: 
+  file-prefix: '#APEX_FILES#themes/theme_42/23.2/'
+
+styles: 
+- # ====== Style: Redwood Light ================================
+  id: 7074088240246526276
+  identification: 
+    name: Redwood Light
+
+  settings: 
+    is-current: false
+    is-public: true
+    accessibility-tested: false
+
+  css: 
+    file-urls: 
+    - '#APEX_FILES#libraries/oracle-fonts/oraclesans-apex#MIN#.css?v=#APEX_VERSION#'
+    - '#THEME_FILES#css/Redwood#MIN#.css?v=#APEX_VERSION#'
+
+  theme-roller-attributes: 
+    read-only: true
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Redwood-Theme.less'
+    output-css-file-url: '#THEME_FILES#css/Redwood-Theme#MIN#.css?v=#APEX_VERSION#'
+
+- # ====== Style: Vita =========================================
+  id: 7074088470863526277
+  identification: 
+    name: Vita
+
+  settings: 
+    is-current: false
+    is-public: true
+    accessibility-tested: true
+
+  theme-roller-attributes: 
+    read-only: true
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita.less'
+    output-css-file-url: '#THEME_FILES#css/Vita#MIN#.css?v=#APEX_VERSION#'
+
+- # ====== Style: Vita - Dark ==================================
+  id: 7074088692263526277
+  identification: 
+    name: Vita - Dark
+
+  settings: 
+    is-current: false
+    is-public: true
+    accessibility-tested: false
+
+  theme-roller-attributes: 
+    read-only: true
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita-Dark.less'
+    output-css-file-url: '#THEME_FILES#css/Vita-Dark#MIN#.css?v=#APEX_VERSION#'
+
+- # ====== Style: Vita - Red ===================================
+  id: 7074088860077526277
+  identification: 
+    name: Vita - Red
+
+  settings: 
+    is-current: false
+    is-public: true
+    accessibility-tested: false
+
+  theme-roller-attributes: 
+    read-only: true
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita-Red.less'
+    output-css-file-url: '#THEME_FILES#css/Vita-Red#MIN#.css?v=#APEX_VERSION#'
+
+- # ====== Style: Vita - Slate =================================
+  id: 7074089117754526277
+  identification: 
+    name: Vita - Slate
+
+  settings: 
+    is-current: false
+    is-public: true
+    accessibility-tested: false
+
+  theme-roller-attributes: 
+    read-only: true
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita-Slate.less'
+    output-css-file-url: '#THEME_FILES#css/Vita-Slate#MIN#.css?v=#APEX_VERSION#'
+
+- # ====== Style: Vita (Pokédex) ===============================
+  id: 33956401853768950530
+  identification: 
+    name: Vita (Pokédex)
+
+  settings: 
+    is-current: true
+    is-public: true
+    accessibility-tested: true
+
+  theme-roller-attributes: 
+    read-only: false
+    input-parameter-file-urls: '#THEME_FILES#less/theme/Vita.less'
+    output-css-file-url: '#THEME_DB_FILES#33948841227576474056.css'
+    json-configuration: '{"classes":[],"vars":{"@g_Accent-BG":"#2b2b2b"},"customCSS":"","useCustomLess":"N"}'
+
+files: 
+- # ====== File: 33948841227576474056.css ======================
+  id: 33956402246104950532
+  identification: 
+    file-name: 33948841227576474056.css
+
+  attributes: 
+    mime-type: text/css
+    file-character-set: Unicode UTF-8
+

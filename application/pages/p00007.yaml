@@ -1,0 +1,690 @@
+---
+# ====== Page: Items =========================================
+id: 7
+identification: 
+  name: Items
+  alias: ITEMS
+  title: Items
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard # 7073644403113526086
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/main.css'
+  inline: |
+    /* -------------------------------------------------------------------------------------- */
+    /* ------------------------------- NAVIGATION MENU ICONS -------------------------------- */
+        .pokemon_icon {
+            background-image: url(#APP_FILES#menu/pokemon.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokeball_icon {
+            background-image: url(#APP_FILES#menu/pokeball.png);
+            background-repeat: no-repeat;
+        }
+    
+        .moves_icon {
+            background-image: url(#APP_FILES#menu/moves.png);
+            background-repeat: no-repeat;
+        }
+    
+        .abilities_icon{
+            background-image: url(#APP_FILES#menu/abilities.png);
+            background-repeat: no-repeat;
+        }
+    
+        .items_icon{
+            background-image: url(#APP_FILES#menu/items.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokedex_icon {
+            background-image: url(#APP_FILES#menu/pokedex.png);
+            background-repeat: no-repeat;
+        }
+    
+    /* -------------------------------------------------------------------------------------- */
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 40857951019347860185
+  identification: 
+    title: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 7073617731268526070
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar # 7073734259208526131
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb # 7073996741312526163
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Items =======================================
+  id: 40857951685342860188
+  identification: 
+    title: Items
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID, IDENTIFIER,
+      ITEM_NAME,
+      SHORT_EFFECT,
+      CATEGORY_NAME,
+      POCKET_NAME,
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/'||IDENTIFIER||'.png' as SPRITE
+      from (
+        select
+        i.ID,
+        --i.IDENTIFIER,
+        ic.IDENTIFIER as CATEGORY_IDENTIFIER,
+        case
+          when REGEXP_LIKE(i.IDENTIFIER, 'hm[0-9]+') or REGEXP_LIKE(i.IDENTIFIER, 'tm[0-9]+') then 'tm-normal'
+          else i.IDENTIFIER
+        end as IDENTIFIER, -- set the sprite route for HM/TM
+        inames.NAME as ITEM_NAME,
+        ip.SHORT_EFFECT,
+        icp.NAME as CATEGORY_NAME,
+        ipn.NAME as POCKET_NAME
+        from ITEMS i
+        inner join ITEM_NAMES inames on inames.ITEM_ID = i.ID and inames.LOCAL_LANGUAGE_ID = 9 -- english
+        inner join ITEM_CATEGORIES ic on ic.ID = i.CATEGORY_ID
+        inner join ITEM_CATEGORY_PROSE icp on icp.ITEM_CATEGORY_ID = i.CATEGORY_ID and icp.LOCAL_LANGUAGE_ID = 9 -- english
+        inner join ITEM_POCKET_NAMES ipn on ipn.ITEM_POCKET_ID = ic.POCKET_ID and ipn.LOCAL_LANGUAGE_ID = 9 -- english
+        inner join ITEM_PROSE ip on ip.ITEM_ID = i.ID and ip.LOCAL_LANGUAGE_ID = 9 -- english
+        order by i.IDENTIFIER
+      )
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 100
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--inline
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 100000
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: First and Second Columns
+      style: Default Break Formatting
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 40857954077143860193
+    identification: 
+      column-name: ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 40
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IDENTIFIER ==================================
+    id: 40857954513480860194
+    identification: 
+      column-name: IDENTIFIER
+      type: Hidden Column
+
+    layout: 
+      sequence: 50
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: ITEM_NAME ===================================
+    id: 40857954840762860194
+    identification: 
+      column-name: ITEM_NAME
+      type: Link
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:8:&SESSION.::&DEBUG.::P8_ITEM_ID,P8_ITEM_NAME,P8_COLOR,P8_ITEM_IDENTIFIER:#ID#,#ITEM_NAME#,black,#IDENTIFIER#'
+        page: 8 # Item Details
+        values: 
+          p8_item_id: '#ID#'
+          p8_item_name: '#ITEM_NAME#'
+          p8_color: black
+          p8_item_identifier: '#IDENTIFIER#'
+
+      link-text: <img src="#SPRITE#" alt="#APP_FILES#menu/items.png">&nbsp;#ITEM_NAME#
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SHORT_EFFECT ================================
+    id: 40857955646549860195
+    identification: 
+      column-name: SHORT_EFFECT
+      type: Plain Text
+
+    heading: 
+      heading: Short Effect
+      alignment: start
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CATEGORY_NAME ===============================
+    id: 40857956518823860195
+    identification: 
+      column-name: CATEGORY_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Category
+      alignment: start
+
+    layout: 
+      sequence: 90
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: POCKET_NAME =================================
+    id: 40857956909306860196
+    identification: 
+      column-name: POCKET_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Pocket
+      alignment: start
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SPRITE ======================================
+    id: 40857957286844860196
+    identification: 
+      column-name: SPRITE
+      type: Hidden Column
+
+    layout: 
+      sequence: 60
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+- # ====== Region: Search ======================================
+  id: 40857951771206860188
+  identification: 
+    title: Search
+    type: Smart Filters
+
+  source: 
+    filtered-region: Items # 40857951685342860188
+
+  layout: 
+    sequence: 10
+    parent-region: Breadcrumb # 40857951019347860185
+    position: SMART_FILTERS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid) # 7073655876796526092
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      maximum-suggestion-chips: 0
+      more-filters-suggestion-chip: false
+      compact-numbers-threshold: 10000
+      show-total-row-count: No
+
+  facets: 
+  - # ====== Facet: P7_SEARCH ====================================
+    id: 40857952286957860191
+    identification: 
+      name: P7_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): ITEM_NAME,SHORT_EFFECT,CATEGORY_NAME,POCKET_NAME
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Facet: P7_CATEGORY_NAME =============================
+    id: 40857953040562860192
+    identification: 
+      name: P7_CATEGORY_NAME
+      type: Checkbox Group
+
+    label: 
+      label: Category
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: CATEGORY_NAME
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P7_POCKET_NAME ===============================
+    id: 40857953518899860192
+    identification: 
+      name: P7_POCKET_NAME
+      type: Checkbox Group
+
+    label: 
+      label: Pocket
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: POCKET_NAME
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  filters: 
+  - # ====== Filter: P7_SEARCH ===================================
+    id: 40857952286957860191
+    identification: 
+      name: P7_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): ITEM_NAME,SHORT_EFFECT,CATEGORY_NAME,POCKET_NAME
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Filter: P7_CATEGORY_NAME ============================
+    id: 40857953040562860192
+    identification: 
+      name: P7_CATEGORY_NAME
+      type: Checkbox Group
+
+    label: 
+      label: Category
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: Dynamic
+      show-label: true
+
+    source: 
+      database-column: CATEGORY_NAME
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P7_POCKET_NAME ==============================
+    id: 40857953518899860192
+    identification: 
+      name: P7_POCKET_NAME
+      type: Checkbox Group
+
+    label: 
+      label: Pocket
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: Dynamic
+      show-label: true
+
+    source: 
+      database-column: POCKET_NAME
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+

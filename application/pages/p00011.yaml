@@ -1,0 +1,1514 @@
+---
+# ====== Page: Pokémon =======================================
+id: 11
+identification: 
+  name: Pokémon
+  alias: POKEMON
+  title: Pokémon
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column # 7073621488829526075
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/main.css'
+  inline: |
+    /* -------------------------------------------------------------------------------------- */
+    /* ------------------------------- NAVIGATION MENU ICONS -------------------------------- */
+        .pokemon_icon {
+            background-image: url(#APP_FILES#menu/pokemon.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokeball_icon {
+            background-image: url(#APP_FILES#menu/pokeball.png);
+            background-repeat: no-repeat;
+        }
+    
+        .moves_icon {
+            background-image: url(#APP_FILES#menu/moves.png);
+            background-repeat: no-repeat;
+        }
+    
+        .abilities_icon{
+            background-image: url(#APP_FILES#menu/abilities.png);
+            background-repeat: no-repeat;
+        }
+    
+        .items_icon{
+            background-image: url(#APP_FILES#menu/items.png);
+            background-repeat: no-repeat;
+        }
+    
+        .pokedex_icon {
+            background-image: url(#APP_FILES#menu/pokedex.png);
+            background-repeat: no-repeat;
+        }
+    
+    /* -------------------------------------------------------------------------------------- */
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 7680302032847056
+  identification: 
+    title: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 7073617731268526070
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar # 7073734259208526131
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb # 7073996741312526163
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Pokémon =====================================
+  id: 7681061334847065
+  identification: 
+    title: Pokémon
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT *
+      FROM (
+      
+        select p.ID, 
+        psn.NAME as NAME, 
+        case 
+            when p.ID < 1000 then '#'||LPAD(to_char(p.ID), 4, '0')
+            else '#'||to_char(p.ID)
+        end as NUM,
+        p.SPECIES_ID,
+        (select lower(t.IDENTIFIER) 
+        from TYPES t
+        inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+        where pt.POKEMON_ID = p.ID
+        and pt.slot=1) as TYPE1,
+        (select lower(t.IDENTIFIER) 
+        from TYPES t
+        inner join POKEMON_TYPES pt on pt.TYPE_ID=t.ID
+        where pt.POKEMON_ID = p.ID
+        and pt.slot=2) as TYPE2,
+        lower(pc.IDENTIFIER) as COLOR,
+        case
+          when lower(pc.IDENTIFIER) in ('white') then 'gray'
+          else lower(pc.IDENTIFIER)
+        end as CSS_COLOR,
+        case
+          when lower(pc.IDENTIFIER) in ('gray','pink','white','yellow') then 'black'
+          else 'white'
+        end as CSS_TEXT_COLOR,
+        ps.GENERATION_ID as GENERATION_ID,
+        ps.EVOLUTION_CHAIN_ID as EVOLUTION_CHAIN_ID,
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/'||p.ID||'.png' as ICON,
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'||p.ID||'.png' as SPRITE,
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'||p.ID||'.png' as OFFICIAL_ARTWORK,
+        p.IS_DEFAULT
+        ,ps.IS_LEGENDARY as LEGENDARY
+        ,ps.IS_MYTHICAL as MYTHICAL
+        ,sn.NAME AS STAT_NAME
+        ,pstat.base_stat
+        FROM POKEMON p
+        INNER JOIN POKEMON_SPECIES ps on ps.ID = p.ID
+        INNER JOIN POKEMON_SPECIES_NAMES psn on psn.POKEMON_SPECIES_ID = ps.ID
+        INNER JOIN POKEMON_COLORS pc on pc.ID = ps.COLOR_ID
+        INNER JOIN POKEMON_STATS pstat ON pstat.POKEMON_ID = p.ID
+        INNER JOIN STAT_NAMES sn ON sn.STAT_ID = pstat.stat_id AND sn.LOCAL_LANGUAGE_ID = 9 -- english
+        where p.IS_DEFAULT = 1 -- NOTE : don't show PKMN variations
+        and psn.LOCAL_LANGUAGE_ID = 9 -- english
+        order by p.ID
+      )
+      PIVOT (
+          MAX(base_stat) FOR STAT_NAME IN ('HP' AS HP, 'Attack' AS Attack, 'Defense' AS Defense, 'Special Attack' AS Special_Attack, 'Special Defense' AS Special_Defense, 'Speed' AS Speed)
+      )
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard # 7073760094890526144
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--inline
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Top and Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 100000
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 7683885461847089
+    identification: 
+      column-name: ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 20
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NAME ========================================
+    id: 7684262823847090
+    identification: 
+      column-name: NAME
+      type: Link
+
+    heading: 
+      heading: Name
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::P2_PKMN_NUMBER,P2_PKMN_NAME,P2_PKMN_SPECIES_ID,P2_PKMN_GENERATION_ID,P2_PKMN_EVO_CHAIN_ID,P2_PKMN_IS_DEFAULT,P2_PKMN_COLOR,P2_PKMN_CSS_COLOR,P2_PKMN_TEXT_COLOR:#ID#,#NAME#,#SPECIES_ID#,#GENERATION_ID#,#EVOLUTION_CHAIN_ID#,#IS_DEFAULT#,#COLOR#,#CSS_COLOR#,#CSS_TEXT_COLOR#'
+        page: 2 # Pokémon Details
+        values: 
+          p2_pkmn_number: '#ID#'
+          p2_pkmn_name: '#NAME#'
+          p2_pkmn_species_id: '#SPECIES_ID#'
+          p2_pkmn_generation_id: '#GENERATION_ID#'
+          p2_pkmn_evo_chain_id: '#EVOLUTION_CHAIN_ID#'
+          p2_pkmn_is_default: '#IS_DEFAULT#'
+          p2_pkmn_color: '#COLOR#'
+          p2_pkmn_css_color: '#CSS_COLOR#'
+          p2_pkmn_text_color: '#CSS_TEXT_COLOR#'
+
+      link-text: '#NAME#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 100
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NUM =========================================
+    id: 7684621879847091
+    identification: 
+      column-name: NUM
+      type: Plain Text
+
+    heading: 
+      heading: '#'
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: <span class="u-alignMiddle">#NUM#</span>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 20
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SPECIES_ID ==================================
+    id: 7685020198847091
+    identification: 
+      column-name: SPECIES_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 80
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE1 =======================================
+    id: 7685469431847091
+    identification: 
+      column-name: TYPE1
+      type: Plain Text
+
+    heading: 
+      heading: Type
+      alignment: center
+
+    layout: 
+      sequence: 80
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: '<span class="a-CardView-badge a-CardView-badgeValue type-#TYPE1#" style="display:inline-block;"><img src="#APP_FILES#types/#TYPE1#.png" height="16">#TYPE1#</span>'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPE2 =======================================
+    id: 7685844461847092
+    identification: 
+      column-name: TYPE2
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 90
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        {if TYPE2/}
+        <span class="a-CardView-badge a-CardView-badgeValue type-#TYPE2#" style="display:inline-block;"><img src="#APP_FILES#types/#TYPE2#.png" height="16">#TYPE2#</span>
+        {else/}
+        -
+        {endif/}
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COLOR =======================================
+    id: 7686261394847093
+    identification: 
+      column-name: COLOR
+      type: Hidden Column
+
+    layout: 
+      sequence: 130
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CSS_COLOR ===================================
+    id: 7686604631847093
+    identification: 
+      column-name: CSS_COLOR
+      type: Hidden Column
+
+    layout: 
+      sequence: 140
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CSS_TEXT_COLOR ==============================
+    id: 7687031882847094
+    identification: 
+      column-name: CSS_TEXT_COLOR
+      type: Hidden Column
+
+    layout: 
+      sequence: 150
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GENERATION_ID ===============================
+    id: 7687407979847094
+    identification: 
+      column-name: GENERATION_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 110
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: EVOLUTION_CHAIN_ID ==========================
+    id: 7687853027847094
+    identification: 
+      column-name: EVOLUTION_CHAIN_ID
+      type: Hidden Column
+
+    layout: 
+      sequence: 160
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SPRITE ======================================
+    id: 7688227447847094
+    identification: 
+      column-name: SPRITE
+      type: Hidden Column
+
+    layout: 
+      sequence: 50
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OFFICIAL_ARTWORK ============================
+    id: 7688686235847095
+    identification: 
+      column-name: OFFICIAL_ARTWORK
+      type: Hidden Column
+
+    layout: 
+      sequence: 170
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IS_DEFAULT ==================================
+    id: 7689076644847095
+    identification: 
+      column-name: IS_DEFAULT
+      type: Hidden Column
+
+    layout: 
+      sequence: 180
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LEGENDARY ===================================
+    id: 7689446221847096
+    identification: 
+      column-name: LEGENDARY
+      type: Hidden Column
+
+    layout: 
+      sequence: 190
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MYTHICAL ====================================
+    id: 7689845659847096
+    identification: 
+      column-name: MYTHICAL
+      type: Hidden Column
+
+    layout: 
+      sequence: 200
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON ========================================
+    id: 7703783924011601
+    identification: 
+      column-name: ICON
+      type: Plain Text
+
+    heading: 
+      heading: Icon
+      alignment: center
+
+    layout: 
+      sequence: 60
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: <span><img src="#SPRITE#" title="#NAME#" height="48px"></span>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 50
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: HP ==========================================
+    id: 7703930344011603
+    identification: 
+      column-name: HP
+      type: Plain Text
+
+    heading: 
+      heading: HP
+      alignment: center
+
+    layout: 
+      sequence: 210
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ATTACK ======================================
+    id: 7704031657011604
+    identification: 
+      column-name: ATTACK
+      type: Plain Text
+
+    heading: 
+      heading: Attack
+      alignment: center
+
+    layout: 
+      sequence: 220
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DEFENSE =====================================
+    id: 7704102561011605
+    identification: 
+      column-name: DEFENSE
+      type: Plain Text
+
+    heading: 
+      heading: Defense
+      alignment: center
+
+    layout: 
+      sequence: 230
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SPECIAL_ATTACK ==============================
+    id: 7704234795011606
+    identification: 
+      column-name: SPECIAL_ATTACK
+      type: Plain Text
+
+    heading: 
+      heading: Sp. Atk
+      alignment: center
+
+    layout: 
+      sequence: 240
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SPECIAL_DEFENSE =============================
+    id: 7704324789011607
+    identification: 
+      column-name: SPECIAL_DEFENSE
+      type: Plain Text
+
+    heading: 
+      heading: Sp. Def
+      alignment: center
+
+    layout: 
+      sequence: 250
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SPEED =======================================
+    id: 7704407165011608
+    identification: 
+      column-name: SPEED
+      type: Plain Text
+
+    heading: 
+      heading: Speed
+      alignment: center
+
+    layout: 
+      sequence: 260
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Search ======================================
+  id: 7681109146847065
+  identification: 
+    title: Search
+    type: Faceted Search
+
+  source: 
+    filtered-region: Pokémon # 7681061334847065
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard # 7073721871352526124
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+    landmark-label: Filters
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      batch-facet-changes: false
+      compact-numbers-threshold: 10000
+      show-current-facets: Selector
+      current-facets-selector: '#active_facets'
+      show-total-row-count: Yes
+      show-charts: Dialog
+      display-chart-for-top-n-values: 10
+
+  facets: 
+  - # ====== Facet: P11_SEARCH ===================================
+    id: 7681676937847076
+    identification: 
+      name: P11_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): NAME,TYPE1,TYPE2
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Facet: P11_TYPE1 ====================================
+    id: 7682002328847078
+    identification: 
+      name: P11_TYPE1
+      type: Checkbox Group
+
+    label: 
+      label: Type 1
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 30
+
+    appearance: 
+      icon: fa-number-1
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        '<span class="a-CardView-badge a-CardView-badgeValue type-'||IDENTIFIER||'"><img src="#APP_FILES#types/'||IDENTIFIER||'.png" height="16">'||IDENTIFIER||'</span>' d, 
+        IDENTIFIER r
+        from TYPES
+        where ID <= 18 -- main 18 types
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: TYPE1
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Facet: P11_TYPE2 ====================================
+    id: 7703867040011602
+    identification: 
+      name: P11_TYPE2
+      type: Checkbox Group
+
+    label: 
+      label: Type 2
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 40
+
+    appearance: 
+      icon: fa-number-2
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        '<span class="a-CardView-badge a-CardView-badgeValue type-'||IDENTIFIER||'"><img src="#APP_FILES#types/'||IDENTIFIER||'.png" height="16">'||IDENTIFIER||'</span>' d, 
+        IDENTIFIER r
+        from TYPES
+        where ID <= 18 -- main 18 types
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: TYPE2
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    depending-on: 
+      facet: P11_TYPE1 # 7682002328847078
+      type: is not null
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Facet: P11_GENERATION ===============================
+    id: 7704561410011609
+    identification: 
+      name: P11_GENERATION
+      type: Checkbox Group
+
+    label: 
+      label: Generation
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 20
+
+    appearance: 
+      icon: fa-badge
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        ' <img src="#APP_FILES#generations/gen_'||ID||'.png"> '||' Gen '||UPPER(TO_CHAR(ID, 'fmrn')) d,
+        ID r
+        from GENERATIONS
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 4
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: GENERATION_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Facet: P11_LEGENDARY ================================
+    id: 7704649217011610
+    identification: 
+      name: P11_LEGENDARY
+      type: Checkbox Group
+
+    label: 
+      label: Legendary
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 50
+
+    appearance: 
+      icon: fa-star
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:Yes;1,No;0'
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 2
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: LEGENDARY
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P11_MYTHICAL =================================
+    id: 7704768919011611
+    identification: 
+      name: P11_MYTHICAL
+      type: Checkbox Group
+
+    label: 
+      label: Mythical
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 60
+
+    appearance: 
+      icon: fa-heart
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:Yes;1,No;0'
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 2
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: MYTHICAL
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  filters: 
+  - # ====== Filter: P11_SEARCH ==================================
+    id: 7681676937847076
+    identification: 
+      name: P11_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): NAME,TYPE1,TYPE2
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Filter: P11_TYPE1 ===================================
+    id: 7682002328847078
+    identification: 
+      name: P11_TYPE1
+      type: Checkbox Group
+
+    label: 
+      label: Type 1
+
+    layout: 
+      sequence: 30
+
+    appearance: 
+      icon: fa-number-1
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        '<span class="a-CardView-badge a-CardView-badgeValue type-'||IDENTIFIER||'"><img src="#APP_FILES#types/'||IDENTIFIER||'.png" height="16">'||IDENTIFIER||'</span>' d, 
+        IDENTIFIER r
+        from TYPES
+        where ID <= 18 -- main 18 types
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: TYPE1
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Filter: P11_TYPE2 ===================================
+    id: 7703867040011602
+    identification: 
+      name: P11_TYPE2
+      type: Checkbox Group
+
+    label: 
+      label: Type 2
+
+    layout: 
+      sequence: 40
+
+    appearance: 
+      icon: fa-number-2
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        '<span class="a-CardView-badge a-CardView-badgeValue type-'||IDENTIFIER||'"><img src="#APP_FILES#types/'||IDENTIFIER||'.png" height="16">'||IDENTIFIER||'</span>' d, 
+        IDENTIFIER r
+        from TYPES
+        where ID <= 18 -- main 18 types
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: TYPE2
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    depending-on: 
+      filter: P11_TYPE1 # 7682002328847078
+      type: is not null
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Filter: P11_GENERATION ==============================
+    id: 7704561410011609
+    identification: 
+      name: P11_GENERATION
+      type: Checkbox Group
+
+    label: 
+      label: Generation
+
+    layout: 
+      sequence: 20
+
+    appearance: 
+      icon: fa-badge
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |
+        select
+        ' <img src="#APP_FILES#generations/gen_'||ID||'.png"> '||' Gen '||UPPER(TO_CHAR(ID, 'fmrn')) d,
+        ID r
+        from GENERATIONS
+        order by ID
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: GENERATION_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: false
+
+  - # ====== Filter: P11_LEGENDARY ===============================
+    id: 7704649217011610
+    identification: 
+      name: P11_LEGENDARY
+      type: Checkbox Group
+
+    label: 
+      label: Legendary
+
+    layout: 
+      sequence: 50
+
+    appearance: 
+      icon: fa-star
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:Yes;1,No;0'
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: LEGENDARY
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P11_MYTHICAL ================================
+    id: 7704768919011611
+    identification: 
+      name: P11_MYTHICAL
+      type: Checkbox Group
+
+    label: 
+      label: Mythical
+
+    layout: 
+      sequence: 60
+
+    appearance: 
+      icon: fa-heart
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:Yes;1,No;0'
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: MYTHICAL
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+- # ====== Region: Button Bar ==================================
+  id: 7682795657847079
+  identification: 
+    title: Button Bar
+    type: Static Content
+
+  source: 
+    html-code: <div id="active_facets"></div>
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    position: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container # 7073657260856526093
+    template-options: 
+    - '#DEFAULT#'
+    - t-ButtonRegion--noPadding
+    - t-ButtonRegion--noUI
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+buttons: 
+- # ====== Button: RESET =======================================
+  id: 7683212092847079
+  identification: 
+    button-name: RESET
+    label: Reset
+
+  layout: 
+    sequence: 10
+    region: Button Bar # 7682795657847079
+    position: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon # 7073995226444526162
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    - t-Button--iconLeft
+    icon: fa-undo
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:11:&APP_SESSION.::&DEBUG.:RR,11::'
+      page: 11 # Pokémon
+      clear-cache: RR,11
+
+    warn-on-unsaved-changes: Do Not Check
+
