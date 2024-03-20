@@ -46,9 +46,9 @@
 
 <!-- SCREENSHOTS -->
 <h2 id="screenshots"> :camera: Screenshots</h2>
-<p align="center"> 
-<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pkmn-details/01.png" alt="Pokémon details">
+<p align="center">
 <img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pokemon/01.png" alt="Pokémon">
+<img src="https://github.com/dbeniteza/PokeAPEX/blob/main/docs/imgs/pkmn-details/01.png" alt="Pokémon details">
 </p>
 
 <!-- FEATURES -->
